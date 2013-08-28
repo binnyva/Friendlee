@@ -1,0 +1,46 @@
+//Framework Specific
+function showMessage(data) {
+	if(data.success) $("#success-message").innerHTML = stripSlashes(data.success);
+	if(data.error) $("#error-message").innerHTML = stripSlashes(data.error);
+}
+function stripSlashes(text) {
+	if(!text) return "";
+	return text.replace(/\\([\'\"])/,"$1");
+}
+
+
+function ajaxError() {
+	alert("Error communicating with server. Please try again");
+}
+function loading() {
+	$("#loading").show();
+}
+function loaded() {
+	$("#loading").hide();
+}
+function makeCalender() {
+	console.log("Make");
+	calendar.opt['display_element'] = this.id;
+	calendar.opt['input'] = "date";
+	calendar.showCalendar();
+}
+
+function setDate(year, month, day) {
+	document.getElementById(calendar.opt["input"]).value = year + "-" + month + "-" + day;
+	calendar.hideCalendar();
+	document.getElementById("change-day-form").submit();
+}
+
+function siteInit() {
+	$("a.confirm").click(function(e) { //If a link has a confirm class, confrm the action
+		var action = (this.title) ? this.title : "do this";
+		action = action.substr(0,1).toLowerCase() + action.substr(1); //Lowercase the first char.
+		
+		if(!confirm("Are you sure you want to " + action + "?")) JSL.event(e).stop();
+	});
+
+	if(document.getElementById("change-day")) calendar.set("change-day", {"onclick": makeCalender, "onDateSelect":setDate});
+	if(window.init && typeof window.init == "function") init(); //If there is a function called init(), call it on load
+}
+$ = jQuery.noConflict();
+jQuery(window).load(siteInit);
