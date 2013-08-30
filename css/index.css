@@ -1,0 +1,27 @@
+fieldset {
+	float:left;
+	width:47%;
+	height:300px;
+}
+
+.data {
+	width:98%;
+	font-size:150%;
+}
+
+.previous-day {
+	float:left;
+	width:33%;
+}
+.curdate {
+	width:33%;
+	text-align:center;
+	margin:0;
+	padding:0;
+	float:left;
+}
+.next-holder {
+	float:left;
+	width:30%;
+	text-align:right;
+}

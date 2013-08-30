@@ -1,0 +1,41 @@
+ 
+#more-info {
+	display:none;
+}
+
+#score-table {
+	width:40%;
+	margin:0 auto;
+}
+
+#score-table th, #score-table td {
+	text-align:center;
+	padding:5px;
+	margin:5px;
+	border:1px solid #000;
+}
+
+#score-table th {
+	font-size:150%;
+	color:#aaa;
+	background-color:#666;
+}
+
+.count {
+	font-size:170%;
+	color:#555;
+}
+.point {
+	font-size:140%;
+}
+.score {
+	font-size:200%;
+	color:brown;
+}
+
+.total-score {
+	font-weight:bold;
+	font-size:280%;
+	padding:5px;
+	display:block;
+}
