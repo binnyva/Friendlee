@@ -8,3 +8,10 @@ $t_connection = new DBTable('Connection');
 $t_personconnection = new DBTable('PersonConnection');
 $t_note = new DBTable('Note');
 $t_person = new DBTable('Person');
+
+$points = array(
+	'met'		=> 10,
+	'phone'		=> 5,
+	'message'	=> 3,
+	'chat'		=> 2
+);

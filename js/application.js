@@ -36,7 +36,9 @@ function siteInit() {
 		var action = (this.title) ? this.title : "do this";
 		action = action.substr(0,1).toLowerCase() + action.substr(1); //Lowercase the first char.
 		
-		if(!confirm("Are you sure you want to " + action + "?")) JSL.event(e).stop();
+		if(!confirm("Are you sure you want to " + action + "?")) {
+			e.stopPropagation();
+		}
 	});
 
 	if(document.getElementById("change-day")) calendar.set("change-day", {"onclick": makeCalender, "onDateSelect":setDate});

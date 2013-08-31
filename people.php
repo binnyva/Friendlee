@@ -4,4 +4,11 @@ include('common.php');
 $people = new Crud('Person');
 
 $people->setListingFields('name','nickname','email','phone','facebook','level_id','status');
+
+if(i($QUERY, 'action') == 'add') {
+	$_GET['user_id'] = $_SESSION['user_id'];
+	$_GET['status'] = 1;
+	$_GET['level_id'] = 2;
+}
+
 $people->render();

@@ -34,6 +34,7 @@ include($GLOBALS['template']->template);
 <div id="footer"></div>
 
 <script src="<?=$abs?>js/library/jquery.js" type="text/javascript"></script>
+<script src="<?=$abs?>js/library/ajaxify.js" type="text/javascript"></script>
 <script src="<?php echo $abs?>js/library/calendar/calendar.js" type="text/javascript"></script>
 <script src="<?=$abs?>js/application.js" type="text/javascript"></script>
 <?=$js_includes?>

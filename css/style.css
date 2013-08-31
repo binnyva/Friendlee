@@ -105,3 +105,28 @@ ul.horizontal li {
 .no-icon {
 	background-image:none !important;
 }
+
+.delay-20 {
+	color:#08F900;
+	font-weight:bold;
+}
+.delay-40 {
+	color:#91F900;
+	font-weight:bold;
+}
+.delay-60 {
+	color:#fea100;
+	font-weight:bold;
+}
+.delay-80 {
+	color:#F97100;
+	font-weight:bold;
+}
+.delay-100 {
+	color:#F90000;
+	font-weight:bold;
+}
+.delayed {
+	color:#7C0000;
+	font-weight:bold;
+}
