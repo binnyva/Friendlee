@@ -1,14 +1,16 @@
+<link rel="stylesheet" href="js/library/jquery-ui/css/jquery-ui.css" />
 <h1>People</h1>
+<input type="button" onclick="saveOrder()" value="Save Configuration" /><br />
 
-<?php foreach($level as $info) { ?>
+<?php foreach($level as $level_id => $info) { ?>
+<div class="level">
 <h3><?php echo $info['name'] ?></h3>
 
-<ul>
+<ul id="level-<?php echo $level_id ?>" class="friend-level">
 <?php foreach($info['people'] as $person) { ?>
-<li><a href="person.php?id=<?php echo $person['id'] ?>"><?php echo $person['nickname'] ? $person['nickname'] : $person['name'] ?></a></li>
+<li id="person_<?php echo $person['id'] ?>" class="ui-state-default"><a href="person.php?person_id=<?php echo $person['id'] ?>"><?php echo ($person['nickname'] | $person['name']) ?></a></li>
 <?php } ?>
 </ul>
-
+</div>
 <?php } ?>
-
 

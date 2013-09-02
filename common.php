@@ -1,5 +1,5 @@
 <?php
-require('/var/www/html/iframe/common.php');
+require('/var/www/iframe/common.php');
 
 $_SESSION['user_id'] = 1;
 $t_level = new DBTable('Level');

@@ -1,3 +1,4 @@
+$=jQuery.noConflict();
 //Framework Specific
 function showMessage(data) {
 	if(data.success) $("#success-message").innerHTML = stripSlashes(data.success);
@@ -44,5 +45,4 @@ function siteInit() {
 	if(document.getElementById("change-day")) calendar.set("change-day", {"onclick": makeCalender, "onDateSelect":setDate});
 	if(window.init && typeof window.init == "function") init(); //If there is a function called init(), call it on load
 }
-$ = jQuery.noConflict();
 jQuery(window).load(siteInit);
