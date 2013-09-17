@@ -1,16 +1,17 @@
 <h1><?php echo $person['name'] | $person['nickname'] ?></h1>
 
-
+<?php if($last_contact) { ?>
 <p>Last Contact: <?php echo ucfirst($last_contact['type']) . ' on '; showDate($last_contact) ?> <a href="#" id='more-info-last-contact'>+</a></p>
 
 <div id="more-info">
 <ul>
 <?php if($last_met)		{ ?><li>Last Met: <?php	showDate($last_met); ?></li><?php } ?>
 <?php if($last_phone)	{ ?><li>Last Call: <?php showDate($last_phone); ?></li><?php } ?>
-<?php if($last_message) { ?><li>Last Message: <?php	showDate($last_message); ?></li><?php } ?>
+<?php if($last_message) {?><li>Last Message: <?php	showDate($last_message); ?></li><?php } ?>
 <?php if($last_chat)	{ ?><li>Last Chat: <?php showDate($last_chat); ?></li><?php } ?>
 </ul>
 </div>
+<?php } ?>
 
 <table id="score-table">
 <tr><th>Met</th><th>Phone</th><th>Message</th><th>Chat</th></tr>
