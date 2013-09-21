@@ -8,7 +8,7 @@
 
 <ul id="level-<?php echo $level_id ?>" class="friend-level">
 <?php foreach($info['people'] as $person) { ?>
-<li id="person_<?php echo $person['id'] ?>" class="ui-state-default"><a href="person.php?person_id=<?php echo $person['id'] ?>"><?php echo ($person['nickname'] | $person['name']) ?></a></li>
+<li id="person_<?php echo $person['id'] ?>" class="ui-state-default"><a href="person.php?person_id=<?php echo $person['id'] ?>"><?php echo (empty($person['name']) ? $person['nickname'] : $person['name']) ?></a></li>
 <?php } ?>
 </ul>
 </div>

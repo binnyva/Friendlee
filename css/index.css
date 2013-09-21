@@ -26,11 +26,15 @@ fieldset {
 	text-align:right;
 }
 
+#popup-area label, #popup-area input, #popup-area select, #popup-area textarea {
+	margin-top:5px;
+}
+
 #popup-area-holder {
 	position:absolute;
 	top:50px;
-	left:15%;
-	width:70%;
+	left:30%;
+	width:40%;
 	height:300px;
 	border:1px solid black;
 	border-radius: 12px; 
