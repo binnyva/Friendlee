@@ -63,6 +63,8 @@ function openPopup(e) {
 			// Put in a small delay before calling the library function - or the element will not be there.
 			window.setTimeout(function() {
 				if($("#people")) autocomplete("#people", people, ',');
+				
+				$(document).bind( "keydown", escapeKey);
 			}, 500);
 			
 			$("#connection-details").submit(saveDetails);
@@ -71,8 +73,14 @@ function openPopup(e) {
 	});
 	return false;
 }
+
+function escapeKey(e) {
+	if ( e.keyCode === $.ui.keyCode.ESCAPE ) closePopup(e);
+}
+
 function closePopup(e) {
 	e.stopPropagation();
+	$(document).unbind("keydown", escapeKey);
 	$("#popup-area-holder").hide();
 }
 
