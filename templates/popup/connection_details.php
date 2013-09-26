@@ -1,12 +1,3 @@
-<?php /*
-<script type="text/javascript">
-var people = <?php echo json_encode(array_values($all_people)); ?>;
-</script>
-<script type="text/javascript" src="../js/index.js"></script>
-<link href="../js/library/jquery-ui/css/jquery-ui.css" rel="stylesheet" type="text/css">
-<link href="../css/index.css" rel="stylesheet" type="text/css">
-*/ ?>
-
 <form action="<?php echo $config['site_url'] ?>popup/connection_details.php" method="post" class="form-area" id="connection-details">
 
 <?php
@@ -31,6 +22,7 @@ $html->buildInput("end_on", "End Time", 'text', $connection['end_on']);
 
 $html->buildInput("location", "Place", 'text', $connection['location']);
 $html->buildInput("note", 'Note', 'textarea', $connection['note']);
+$html->buildInput("initiated_by", 'Initiated By Me', 'checkbox', $connection['initiated_by'] == 'me');
 
 $html->buildInput("connection_id", '', 'hidden', $connection['id']);
 $html->buildInput("action", '&nbsp;', 'submit', 'Save');
