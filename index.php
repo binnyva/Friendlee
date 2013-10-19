@@ -21,7 +21,7 @@ render();
 
 
 function getPeople($type) {
-	global $QUERY, $sql, $t_person;
+	global $QUERY, $sql, $t_person, $people;
 	
 	if(empty($QUERY[$type])) return;
 	
@@ -40,11 +40,23 @@ function getPeople($type) {
 			'user_id'	=> $_SESSION['user_id']
 		));
 		
-		foreach($all_people as $nickname) {
-			$nickname = trim(strtolower($nickname));
+		foreach($all_people as $nickname_org) {
+			$nickname_org = trim($nickname_org);
+			$nickname = strtolower($nickname_org);
 			if(!$nickname) continue;
 			
-			$ids[] = $t_person->findOne("LOWER(nickname)='$nickname'", 'id');
+			$person_id = $t_person->findOne("LOWER(nickname)='$nickname'", 'id');
+			if(!$person_id) {
+				// If the person is not there in the DB, add him.
+				$person_id = $t_person->set(array(
+						'nickname'	=> $nickname_org,
+						'status'	=> 1,
+						'level_id'	=> 3, // Friend
+						'user_id'	=> $_SESSION['user_id'],
+					))->save();
+				$people[$person_id]['nickname'] = $nickname_org;
+			}
+			$ids[] = $person_id;
 		}
 		if($ids) {
 			foreach($ids as $person_id) {
