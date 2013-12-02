@@ -57,17 +57,15 @@ function openPopup(e) {
 		"dataType": 'html',
 		"success": function(data){
 			loaded();
-			if(data.success) {
-				$("#popup-area").html(data);
-				$("#popup-area-holder").show();
-				
-				// Put in a small delay before calling the library function - or the element will not be there.
-				window.setTimeout(function() {
-					if($("#people")) autocomplete("#people", people, ',');
-				}, 500);
-				
-				$("#connection-details").submit(saveDetails);
-			}
+			$("#popup-area").html(data);
+			$("#popup-area-holder").show();
+			
+			// Put in a small delay before calling the library function - or the element will not be there.
+			window.setTimeout(function() {
+				if($("#people")) autocomplete("#people", people, ',');
+			}, 500);
+			
+			$("#connection-details").submit(saveDetails);
 			showMessage(data);
 		},
 		"error": function(data){loaded(); showMessage(data)},

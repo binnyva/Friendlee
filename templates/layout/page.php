@@ -10,7 +10,16 @@
 <body>
 <div id="loading">loading...</div>
 <div id="header">
+<div id="nav">
+<ul>
+<li><a class="site with-icon" href="<?php echo $config['site_url'] ?>tree.php">People</a></li>
+<li><a class="calendar with-icon" ="<?php echo $config['site_url'] ?>?date=<?php echo date('Y-m-d', strtotime('yesterday')); ?>">Yesterday</a></li>
+<li><a class="add with-icon" href="<?php echo $config['site_url'] ?>">Today</a></li>
+</ul>
+</div>
+
 <h1 id="logo"><a href="<?php echo $abs ?>"><?php echo $title ?></a></h1>
+
 </div>
 
 <div id="content">

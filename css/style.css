@@ -177,3 +177,14 @@ ul.horizontal li {
 	font-size:200%;
 	font-weight:bold;
 }
+
+#nav {
+	float:right;
+}
+#nav ul {
+	list-style:none;
+}
+#nav li {
+	display:inline;
+	padding:0 30px;
+}

@@ -15,3 +15,5 @@ $points = array(
 	'message'	=> 3,
 	'chat'		=> 2
 );
+
+$all_interation_types = array('met','phone','message','chat');

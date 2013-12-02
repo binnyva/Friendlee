@@ -1,6 +1,6 @@
 .level {
 	width:48%;
-	height:300px;
+	min-height:300px;
 	border:1px solid #000;
 	float:left;
 	padding:5px;

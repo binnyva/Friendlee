@@ -23,6 +23,8 @@ $html->buildInput("city_id", 'City', 'select', $person['city_id'], array('option
 $html->buildInput("locality", 'Locality', 'text', $person['locality']);
 $html->buildInput("level_id", "Level", 'select', $person['level_id'], array('options' => $all_levels));
 
+$html->buildInput("note", "Note", 'textarea', $person['note']);
+
 $html->buildInput("person_id", "", 'hidden', $person['id']);
 ?>
 <label for="action">&nbsp;</label><input type="submit" name="action" value="Save" class="big" /><br />
@@ -38,7 +40,7 @@ $html->buildInput("person_id", "", 'hidden', $person['id']);
 <ul>
 <?php if($last_met)		{ ?><li>Last Met: <?php	showDate($last_met); ?></li><?php } ?>
 <?php if($last_phone)	{ ?><li>Last Call: <?php showDate($last_phone); ?></li><?php } ?>
-<?php if($last_message) {?><li>Last Message: <?php	showDate($last_message); ?></li><?php } ?>
+<?php if($last_message) { ?><li>Last Message: <?php	showDate($last_message); ?></li><?php } ?>
 <?php if($last_chat)	{ ?><li>Last Chat: <?php showDate($last_chat); ?></li><?php } ?>
 </ul>
 </div>
@@ -78,7 +80,8 @@ function getDistanceColor($contact, $person) {
 	
 	$type_freq = $frequency[$contact['type']];
 
-	$percent_over = intval($day_count / $type_freq * 100);
+	$percent_over = 0;
+	if($type_freq) $percent_over = intval($day_count / $type_freq * 100);
 	$color_gradiant = array('delay-20','delay-40','delay-60','delay-80','delay-100','delayed');
 
 	if($percent_over < 20) $color = $color_gradiant[0];
