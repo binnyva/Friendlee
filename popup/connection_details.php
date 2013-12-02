@@ -41,10 +41,8 @@ if(i($QUERY, 'action') == 'Save') {
 	$affected_count = $sql->update("Connection", array('intensity'=>$QUERY['intensity'], 'start_on'=>$QUERY['start_on'], 'end_on'=>$QUERY['end_on'], 
 										'location'=>$QUERY['location'], 'note'=>$QUERY['note']), "id=$connection_id");
 										
-	if($affected_count) {
-		showAjaxMessage('Connection updated','success');
-		exit;
-	}
+	showAjaxMessage('Connection updated','success');
+	exit;
 	
 } else {
 	$connection = $t_connection->find($connection_id);

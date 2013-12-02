@@ -1,4 +1,35 @@
-<h1><?php echo $person['name'] | $person['nickname'] ?></h1>
+
+<form action="ajax/change_person_details.php" method="post">
+<div class="camouflage-area">
+
+<input type="text" class="camouflage big" name="nickname" value="<?php echo $person['nickname'] ?>" />
+<input type="submit" name="action" value="Save" class="stealth" />
+<input type="button" name="more" id="show-more-options" value="More Options" class="stealth auto-show" />
+</div>
+
+<div id="more-options-area"  class="form-area hidden">
+<?php
+$html->buildInput("name", 'Name', 'text', $person['name']);
+$html->buildInput("email", 'Email', 'text', $person['email']);
+$html->buildInput("phone", 'Phone', 'text', $person['phone']);
+$html->buildInput("sex", "Sex", 'select', $person['sex'],
+	 		array('options' => array('m' => 'Male','f' => 'Female')));
+
+$html->buildInput("facebook_id", 'Facebook ID', 'text', $person['facebook_id']);
+$html->buildInput("twitter", 'Twitter Handle', 'text', $person['twitter']);
+$html->buildInput("birthday", 'Birthday', 'text', $person['birthday']);
+
+$html->buildInput("city_id", 'City', 'select', $person['city_id'], array('options' => $all_cities));
+$html->buildInput("locality", 'Locality', 'text', $person['locality']);
+$html->buildInput("level_id", "Level", 'select', $person['level_id'], array('options' => $all_levels));
+
+$html->buildInput("person_id", "", 'hidden', $person['id']);
+?>
+<label for="action">&nbsp;</label><input type="submit" name="action" value="Save" class="big" /><br />
+<input type="button" name="more" id="hide-more-options" class="auto-hide" value="Hide Options" /><br />
+</div>
+</form>
+
 
 <?php if($last_contact) { ?>
 <p>Last Contact: <?php echo ucfirst($last_contact['type']) . ' on '; showDate($last_contact) ?> <a href="#" id='more-info-last-contact'>+</a></p>

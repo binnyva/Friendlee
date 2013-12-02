@@ -65,24 +65,46 @@ ul.horizontal li {
 }
 
 /*Messages*/
-#warning-message,.warning {
-	color:orange;
+.message-area {
+	position:absolute;
+	top:20px;
+	left:45%;
+	color:#fff;
+	padding:5px;
+	border-radius:3px;
+}
+#warning-message {
+	background-color:orange;
 	font-weight:bold;
 }
-#error-message,.error, .error-message {
-	color:red;
+#error-message, .error-message {
+	background-color:red;
 	font-weight:bold;
 }
-#success-message,.success, .success-message {
-	color:darkgreen;
+#success-message, .success-message {
+	background-color:darkgreen;
 	font-weight:bold;
 }
 	
-#warning-message,.warning, #success-message,.success,#error-message,.error {
-	padding-left:18px;
-	background-repeat:no-repeat;
-	background-position:top left;
+.warning {
+	color:orange;
+	font-weight:bold;
 }
+.error, .error-message {
+	color:red;
+	font-weight:bold;
+}
+.success, .success-message {
+	color:darkgreen;
+	font-weight:bold;
+}
+
+#warning-message,.warning, #success-message,.success,#error-message,.error {
+	padding-left:20px;
+	background-repeat:no-repeat;
+	background-position:center left;
+}
+
 
 
 /*Icons*/
@@ -106,6 +128,12 @@ ul.horizontal li {
 	background-image:none !important;
 }
 
+.hidden {
+	display:none;
+}
+
+/* Site Specific */
+
 .delay-20 {
 	color:#08F900;
 	font-weight:bold;
@@ -128,5 +156,24 @@ ul.horizontal li {
 }
 .delayed {
 	color:#7C0000;
+	font-weight:bold;
+}
+
+.camouflage {
+	border:2px solid white;
+}
+.stealth {
+	display:none
+}
+.camouflage:hover, .camouflage:focus  {
+	border:2px inset gray;
+}
+.camouflage-area:hover .stealth, .camouflage:focus+.stealth {
+	display:inline;
+}
+
+
+.big {
+	font-size:200%;
 	font-weight:bold;
 }
