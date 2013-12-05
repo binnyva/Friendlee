@@ -66,7 +66,6 @@ function openPopup(e) {
 			}, 500);
 			
 			$("#connection-details").submit(saveDetails);
-			showMessage(data);
 		},
 		"error": function(data){loaded(); showMessage(data)},
 	});

@@ -13,7 +13,7 @@
 <div id="nav">
 <ul>
 <li><a class="site with-icon" href="<?php echo $config['site_url'] ?>tree.php">People</a></li>
-<li><a class="calendar with-icon" ="<?php echo $config['site_url'] ?>?date=<?php echo date('Y-m-d', strtotime('yesterday')); ?>">Yesterday</a></li>
+<li><a class="calendar with-icon" href="<?php echo $config['site_url'] ?>?date=<?php echo date('Y-m-d', strtotime('yesterday')); ?>">Yesterday</a></li>
 <li><a class="add with-icon" href="<?php echo $config['site_url'] ?>">Today</a></li>
 </ul>
 </div>
