@@ -58,11 +58,13 @@ function showConnections($name) {
 			$all_people_connections = $sql->getAll("SELECT person_id FROM PersonConnection WHERE connection_id=$con[id]");
 			foreach($all_people_connections as $pep_con) {
 				$person = $people[$pep_con['person_id']];
-				$all_people[] = '<a href="person.php?person_id='.$pep_con['person_id'].'">'. (empty($person['name']) ? $person['nickname'] : $person['name']) .'</a>';
+				$all_people[] = '<a href="person.php?person_id='.$pep_con['person_id'].'">'
+					. stripslashes((empty($person['name']) ? $person['nickname'] : $person['name'])) 
+					. '</a>';
 			}
 			
 			if($all_people)  print "<li>".implode(', ', $all_people)." <a href='ajax/delete_connection.php?connection_id=$con[id]' "
-									. "class='ajaxify ajaxify-remove-parent ajaxify-confirm delete icon' title='Delete ". (empty($person['name']) ? $person['nickname'] : $person['name']) ." connection'>Delete</a>"
+									. "class='ajaxify ajaxify-remove-parent ajaxify-confirm delete icon' title=\"Delete '". stripslashes(empty($person['name']) ? $person['nickname'] : $person['name']) ."' connection\">Delete</a>"
 									. " <a href='popup/connection_details.php?connection_id=$con[id]' class='popup edit icon'>Details</a></li>";
 		}
 		print "</ul>";

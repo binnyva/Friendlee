@@ -1,4 +1,38 @@
-<h1><?php echo $person['name'] | $person['nickname'] ?></h1>
+
+<form action="ajax/change_person_details.php" method="post">
+<div class="camouflage-area">
+
+<input type="text" class="camouflage big" name="nickname" value="<?php echo $person['nickname'] ?>" />
+<input type="submit" name="action" value="Save" class="stealth" />
+<input type="button" name="more" id="show-more-options" value="More Options" class="stealth auto-show" />
+</div>
+
+<div id="more-options-area"  class="form-area hidden">
+<?php
+$html->buildInput("name", 'Name', 'text', $person['name']);
+$html->buildInput("email", 'Email', 'text', $person['email']);
+$html->buildInput("phone", 'Phone', 'text', $person['phone']);
+$html->buildInput("sex", "Sex", 'select', $person['sex'],
+	 		array('options' => array('m' => 'Male','f' => 'Female')));
+
+$html->buildInput("facebook_id", 'Facebook ID', 'text', $person['facebook_id']);
+$html->buildInput("twitter", 'Twitter Handle', 'text', $person['twitter']);
+$html->buildInput("birthday", 'Birthday', 'text', $person['birthday']);
+
+$html->buildInput("city_id", 'City', 'select', $person['city_id'], array('options' => $all_cities));
+$html->buildInput("locality", 'Locality', 'text', $person['locality']);
+$html->buildInput("level_id", "Level", 'select', $person['level_id'], array('options' => $all_levels));
+
+$html->buildInput("note", "Note", 'textarea', $person['note']);
+
+$html->buildInput("person_id", "", 'hidden', $person['id']);
+?>
+<label for="action">&nbsp;</label><input type="submit" name="action" value="Save" class="big" /><br />
+<a href="ajax/delete_person.php?person_id=<?php echo $person['id'] ?>" class="with-icon delete">Delete <?php echo $person['nickname'] ?></a><br />
+<input type="button" name="more" id="hide-more-options" class="auto-hide" value="Hide Options" /><br />
+</div>
+</form>
+
 
 <?php if($last_contact) { ?>
 <p>Last Contact: <?php echo ucfirst($last_contact['type']) . ' on '; showDate($last_contact) ?> <a href="#" id='more-info-last-contact'>+</a></p>
@@ -7,7 +41,7 @@
 <ul>
 <?php if($last_met)		{ ?><li>Last Met: <?php	showDate($last_met); ?></li><?php } ?>
 <?php if($last_phone)	{ ?><li>Last Call: <?php showDate($last_phone); ?></li><?php } ?>
-<?php if($last_message) {?><li>Last Message: <?php	showDate($last_message); ?></li><?php } ?>
+<?php if($last_message) { ?><li>Last Message: <?php	showDate($last_message); ?></li><?php } ?>
 <?php if($last_chat)	{ ?><li>Last Chat: <?php showDate($last_chat); ?></li><?php } ?>
 </ul>
 </div>
@@ -47,7 +81,8 @@ function getDistanceColor($contact, $person) {
 	
 	$type_freq = $frequency[$contact['type']];
 
-	$percent_over = intval($day_count / $type_freq * 100);
+	$percent_over = 0;
+	if($type_freq) $percent_over = intval($day_count / $type_freq * 100);
 	$color_gradiant = array('delay-20','delay-40','delay-60','delay-80','delay-100','delayed');
 
 	if($percent_over < 20) $color = $color_gradiant[0];

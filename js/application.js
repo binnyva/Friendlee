@@ -1,8 +1,18 @@
 $=jQuery.noConflict();
 //Framework Specific
 function showMessage(data) {
-	if(data.success) $("#success-message").innerHTML = stripSlashes(data.success);
-	if(data.error) $("#error-message").innerHTML = stripSlashes(data.error);
+	console.log(data);
+	var type = 'error';
+	if(data.success) var type = 'success';
+	
+	$("#"+type+"-message").html(stripSlashes(data[type]));
+	$("#"+type+"-message").fadeIn(500);
+	
+	window.setTimeout(function() {
+		$("#"+type+"-message").fadeOut(500);
+	}, 3000); // Amount of time message should be shown.
+	
+	return type;
 }
 function stripSlashes(text) {
 	if(!text) return "";
@@ -41,7 +51,18 @@ function siteInit() {
 			e.stopPropagation();
 		}
 	});
-
+	
+	$(".auto-show").click(function() {
+		var id = $(this).attr("id");
+		var area_id = id.replace(/^show\-/, "") + "-area";
+		$("#" + area_id).show();
+	});
+	$(".auto-hide").click(function() {
+		var id = $(this).attr("id");
+		var area_id = id.replace(/^hide\-/, "") + "-area";
+		$("#" + area_id).hide();
+	});
+	
 	if(document.getElementById("change-day")) calendar.set("change-day", {"onclick": makeCalender, "onDateSelect":setDate});
 	if(window.init && typeof window.init == "function") init(); //If there is a function called init(), call it on load
 }

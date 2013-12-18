@@ -11,7 +11,7 @@ function autocomplete(id, list, splitter) {
 			}
 		})
 		.autocomplete({
-			minLength: 1,
+			minLength: 3,
 			autoFocus: true,
 			source: function( request, response ) {
 				// This will remove the stuff that already appeared in the selection earlier.
@@ -69,7 +69,7 @@ function openPopup(e) {
 			
 			$("#connection-details").submit(saveDetails);
 		},
-		"error": function(data){loaded(); alert("Call Error: "+ data.error);},
+		"error": function(data){loaded(); showMessage(data)},
 	});
 	return false;
 }
@@ -99,7 +99,7 @@ function saveDetails(e) {
 			closePopup(e);
 			showMessage(data);
 		},
-		"error": function(data){loaded(); alert("Call Error: "+ data.error);},
+		"error": function(data){loaded(); showMessage(data);},
 	});
 	
 	return false;
