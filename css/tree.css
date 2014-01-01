@@ -7,19 +7,6 @@
 	margin:5px;
 }
 
-.level ul {
-	list-style:none;
-	padding:0;
-	margin:0;
-	width:100%;
-	height:100%;
-}
-.level li {
-	padding:2px;
-	margin:2px;
-	float:left;
-}
-
 h3 {
 	margin:0;
 }

@@ -37,7 +37,7 @@ showBox('phone');
 function showBox($name, $title='') {
 	if(!$title) $title = format($name);
 	?>
-<fieldset>
+<fieldset class="big-list-holders">
 <legend><?php echo $title; ?></legend>
 <input type="text" class="data" name="<?php echo $name ?>" id="<?php echo $name ?>" value="" />
 
@@ -51,7 +51,7 @@ function showConnections($name) {
 	$all_connections = $sql->getAll("SELECT id FROM Connection WHERE user_id=$_SESSION[user_id] AND DATE(start_on)='$date' AND type='$name'");
 	
 	if($all_connections) {
-		print "<ul>";
+		print "<ul class='big-list'>";
 		foreach($all_connections as $con) {
 			$all_people = array();
 

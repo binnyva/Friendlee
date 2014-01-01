@@ -3,10 +3,10 @@
 <input type="button" onclick="saveOrder()" value="Save Configuration" /><br />
 
 <?php foreach($level as $level_id => $info) { ?>
-<div class="level">
+<div class="level big-list-holders">
 <h3><?php echo $info['name'] ?></h3>
 
-<ul id="level-<?php echo $level_id ?>" class="friend-level">
+<ul id="level-<?php echo $level_id ?>" class="friend-level big-list">
 <?php foreach($info['people'] as $person) { ?>
 <li id="person_<?php echo $person['id'] ?>" class="ui-state-default"><a href="person.php?person_id=<?php echo $person['id'] ?>"><?php echo (empty($person['name']) ? $person['nickname'] : $person['name']) . " ($person[point])" ?></a></li>
 <?php } ?>

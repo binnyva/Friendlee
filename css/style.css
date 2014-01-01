@@ -188,3 +188,25 @@ ul.horizontal li {
 	display:inline;
 	padding:0 30px;
 }
+
+.big-list-holders {
+}
+
+ul.big-list {
+	list-style:none;
+	padding:0;
+	margin:0;
+	width:100%;
+	height:100%;
+}
+ul.big-list li {
+	padding:2px;
+	margin:2px;
+	float:left;
+	background:#eee;
+	border:1px solid #ddd;
+}
+
+ul.big-list li a {
+	color:#777 !important;
+}
