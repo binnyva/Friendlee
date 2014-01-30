@@ -69,6 +69,15 @@ $html->buildInput("person_id", "", 'hidden', $person['id']);
 <tr><td colspan="4"><span class="total-score"><?php echo $total_score ?></span></td></tr>
 </table>
 
+<h3>Interaction Log</h3>
+<ul>
+<?php foreach($interaction_log as $interaction) { ?>
+	<li> <a href='popup/connection_details.php?connection_id=<?php echo $interaction['id']; ?>' class='popup'><?php 
+				echo ucfirst($interaction['type']) ?></a> on <a href="index.php?date=<?php echo date('Y-m-d', strtotime($interaction['start_on'])) ?>"><?php 
+				echo date($config['date_format_php'], strtotime($interaction['start_on'])) ?></a></li>
+<?php } ?>
+</ul>
+
 
 <?php
 function getDistanceColor($contact, $person) {

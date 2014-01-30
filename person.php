@@ -26,6 +26,8 @@ extract($data);
 $frequency = keyFormat($sql->getAll("SELECT `type`, `interval` FROM Frequency WHERE data_type='level' AND element_id='$person[level_id]' AND user_id=$_SESSION[user_id]"), array('type','interval'));
 foreach($all_interation_types as $type) if(!isset($frequency[$type])) $frequency[$type] = 0;
 
+$interaction_log = $sql->getAll("SELECT C.id,C.start_on,C.type FROM Connection C INNER JOIN PersonConnection PC ON C.id=PC.connection_id WHERE PC.person_id=$person_id ORDER BY C.start_on DESC");
+
 $html = new HTML;
 render();
 

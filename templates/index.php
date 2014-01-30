@@ -4,10 +4,19 @@
 var people = <?php echo json_encode($all_people); ?>;
 </script>
 
-<div id="popup-area-holder">
-<a href="#" id="popup-close">x</a>
-<div id="popup-area"></div>
-</div>
+
+<?php
+print "<ul>";
+foreach ($uncontacted_people as $person) {
+	$gap_days = $person['gap'];
+	if($gap_days > 30)
+		$gap_days = floor($gap_days / 30) . ' months, ' . ($gap_days % 30) . ' days';
+	else $gap_days .= ' days';
+
+	print "<li><a href='person.php?person_id=$person[id]'>$person[nickname]</a> - ".ucfirst($person['type'])." $gap_days ago</li>";
+}
+print "</ul>";
+?>
 
 <form action="" method="get" id="change-day-form"><input type="hidden" name="date" id="date" value="" /></form>
 

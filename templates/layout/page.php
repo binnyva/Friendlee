@@ -29,6 +29,12 @@
 ?></div>
 <div class="message-area" id="success-message" <?php echo ($QUERY['success']) ? '':'style="display:none;"';?>><?php echo strip_tags(stripslashes($QUERY['success']))?></div>
 
+
+<div id="popup-area-holder">
+<a href="#" id="popup-close">x</a>
+<div id="popup-area"></div>
+</div>
+
 <!-- Begin Content -->
 <?php 
 /////////////////////////////////// The Template file will appear here ////////////////////////////

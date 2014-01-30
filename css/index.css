@@ -3,8 +3,6 @@ fieldset {
 	width:47%;
 	height:300px;
 }
-
-
 .data {
 	width:98%;
 	font-size:150%;
@@ -25,28 +23,4 @@ fieldset {
 	float:left;
 	width:30%;
 	text-align:right;
-}
-
-#popup-area label, #popup-area input, #popup-area select, #popup-area textarea {
-	margin-top:5px;
-}
-
-#popup-area-holder {
-	position:absolute;
-	top:50px;
-	left:30%;
-	width:40%;
-	height:300px;
-	border:1px solid black;
-	border-radius: 12px; 
-	background-color:#eee;
-	display:none;
-}
-#popup-close{
-	float:right;
-	padding:0 3px 0 3px;
-	margin:5px 10px 0 0;
-	color:black;
-	border:1px solid #000;
-	background-color:#fff;
 }
