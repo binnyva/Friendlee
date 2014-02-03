@@ -4,19 +4,32 @@
 var people = <?php echo json_encode($all_people); ?>;
 </script>
 
-
+<div id="uncontacted-people">
 <?php
-print "<ul>";
-foreach ($uncontacted_people as $person) {
-	$gap_days = $person['gap'];
-	if($gap_days > 30)
-		$gap_days = floor($gap_days / 30) . ' months, ' . ($gap_days % 30) . ' days';
-	else $gap_days .= ' days';
-
-	print "<li><a href='person.php?person_id=$person[id]'>$person[nickname]</a> - ".ucfirst($person['type'])." $gap_days ago</li>";
+print "<ul class='tabs-holder'>";
+$active = 'active-tab';
+foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
+	print "<li class='tab $active' id='uncontacted-people-tab-$level_id'>".$all_levels[$level_id]."</li>";
+	if($active) $active = '';
 }
 print "</ul>";
+
+$active = 'active-tab-content';
+foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
+	print "<div class='tab-content $active' id='uncontacted-people-tab-content-$level_id'><ul>";
+	foreach ($uncontacted_in_level as $person) {
+		$gap_days = $person['gap'];
+		if($gap_days > 30)
+			$gap_days = floor($gap_days / 30) . ' months, ' . ($gap_days % 30) . ' days';
+		else $gap_days .= ' days';
+
+		print "<li><a href='person.php?person_id=$person[id]'>$person[nickname]</a> - ".ucfirst($person['type'])." $gap_days ago</li>";
+	}
+	print "</ul></div>";
+	if($active) $active = '';
+}
 ?>
+</div><br />
 
 <form action="" method="get" id="change-day-form"><input type="hidden" name="date" id="date" value="" /></form>
 

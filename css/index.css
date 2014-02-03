@@ -24,3 +24,38 @@ fieldset {
 	width:30%;
 	text-align:right;
 }
+
+#uncontacted-people .tabs-holder {
+	margin: 0;
+	padding: 0;
+}
+#uncontacted-people .tab {
+	list-style: none;
+	float:left;
+	margin-left: 5px;
+	padding: 0;
+	padding:2px;
+	border:1px solid #000;
+	border-bottom:1px solid #fff;
+	background-color:#f3f3f3;
+}
+#uncontacted-people .tab.active-tab {
+	background-color:#fff;
+}
+#uncontacted-people .tab-content {
+	margin: 3px;
+	clear:both;
+	display: none;
+	border: 1px solid #000;
+	height:100px;
+	overflow: auto;
+	width:400px;
+}
+#uncontacted-people .tab-content.active-tab-content {
+	display:block;
+}
+#uncontacted-people .tab-content ul {
+	list-style: none;
+	margin: 0 0 0 5px;
+	padding: 0;
+}
