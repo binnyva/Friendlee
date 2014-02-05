@@ -1,28 +1,41 @@
 <!DOCTYPE HTML>
-<html><head>
+<html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php echo $title?></title>
 <link href="<?php echo $abs?>css/style.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $abs?>images/silk_theme.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $abs?>js/library/calendar/calendar.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $abs?>bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo $abs?>bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
 <?php echo $css_includes ?>
 </head>
 <body>
 <div id="loading">loading...</div>
-<div id="header">
-<div id="nav">
-<ul>
-<li><a class="site with-icon" href="<?php echo $config['site_url'] ?>tree.php">People</a></li>
-<li><a class="calendar with-icon" href="<?php echo $config['site_url'] ?>?date=<?php echo date('Y-m-d', strtotime('yesterday')); ?>">Yesterday</a></li>
-<li><a class="add with-icon" href="<?php echo $config['site_url'] ?>">Today</a></li>
-</ul>
+
+<div id="header" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div id="nav" class="container">
+	<div class="navbar-header">
+	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	    <span class="sr-only">Toggle navigation</span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	  </button>
+	  <a class="navbar-brand" href="<?php echo $abs ?>"><?php echo $title ?></a>
+	</div>
+	<div class="collapse navbar-collapse">
+		<ul class="nav navbar-nav pull-right">
+		<li><a class="site with-icon" href="<?php echo $config['site_url'] ?>tree.php">People</a></li>
+		<li><a class="calendar with-icon" href="<?php echo $config['site_url'] ?>?date=<?php echo date('Y-m-d', strtotime('yesterday')); ?>">Yesterday</a></li>
+		<li><a class="add with-icon" href="<?php echo $config['site_url'] ?>">Today</a></li>
+		</ul>
+	</div>
+</div>
 </div>
 
-<h1 id="logo"><a href="<?php echo $abs ?>"><?php echo $title ?></a></h1>
-
-</div>
-
-<div id="content">
+<div id="content" class="container">
 <div class="message-area" id="error-message" <?php echo ($QUERY['error']) ? '':'style="display:none;"';?>><?php
 	if(isset($PARAM['error'])) print strip_tags($PARAM['error']); //It comes from the URL
 	else print $QUERY['error']; //Its set in the code(validation error or something.
@@ -48,7 +61,8 @@ include($GLOBALS['template']->template);
 
 <div id="footer"></div>
 
-<script src="<?=$abs?>js/library/jquery.js" type="text/javascript"></script>
+<script src="<?=$abs?>bower_components/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="<?=$abs?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="<?=$abs?>js/library/ajaxify.js" type="text/javascript"></script>
 <script src="<?php echo $abs?>js/library/calendar/calendar.js" type="text/javascript"></script>
 <script src="<?=$abs?>js/application.js" type="text/javascript"></script>

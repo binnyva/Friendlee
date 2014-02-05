@@ -1,0 +1,24 @@
+{
+  "name": "Friendlee",
+  "version": "1.00.A",
+  "homepage": "https://github.com/binnyva/Friendlee",
+  "authors": [
+    "Binny V A <binnyva@gmail.com>"
+  ],
+  "description": "Human Interaction manager.",
+  "main": "index.php",
+  "license": "BSD",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.1.0",
+    "jquery-ui": "~1.10.3",
+    "jquery": "~2.1.0"
+  }
+}
