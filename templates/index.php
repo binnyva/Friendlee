@@ -38,12 +38,15 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 
 <form action="" method="get" id="change-day-form"><input type="hidden" name="date" id="date" value="" /></form>
 
-<div id="date-changer">
-<a class="previous previous-day with-icon" href="?date=<?php echo date('Y-m-d', strtotime($date) - (60*60*24)); ?>">Previous Day(<?php echo date('dS M', strtotime($date) - (60*60*24)); ?>)</a>
-<h3 class="curdate">Data for <?php echo date('dS M(l)', strtotime($date)); ?> <a href="#" id="change-day" class="icon calendar">Change</a></h3>
-<div class="next-holder"><?php if(date('Y-m-d', strtotime($date) + (60*60*24)) <= date('Y-m-d')) { ?><a class="next next-day  with-icon" href="?date=<?php echo date('Y-m-d', strtotime($date) + (60*60*24)); ?>">Next Day(<?php echo date('dS M', strtotime($date) + (60*60*24)); ?>)</a><?php } ?></div>
+<div class="container">
+<ul id="date-changer" class="btn-group btn-group-justified center-block">
+<li class="btn btn-default"><a class="previous previous-day with-icon" href="?date=<?php echo date('Y-m-d', strtotime($date) - (60*60*24)); ?>">Previous Day(<?php echo date('dS M', strtotime($date) - (60*60*24)); ?>)</a></li>
+<li class="btn btn-default"><span class="curdate">Data for <?php echo date('dS M(l)', strtotime($date)); ?> <a href="#" id="change-day" class="icon calendar">Change</a></span></li>
+<?php if(date('Y-m-d', strtotime($date) + (60*60*24)) <= date('Y-m-d')) { ?>
+<li class="btn btn-default"><a class="next next-day with-icon" href="?date=<?php 
+		echo date('Y-m-d', strtotime($date) + (60*60*24)); ?>">Next Day(<?php echo date('dS M', strtotime($date) + (60*60*24)); ?>)</a></li><?php } ?>
+</ul>
 </div>
-<br />
 
 <form action="" method="post">
 <input type="hidden" name="date" value="<?php echo $date ?>" />

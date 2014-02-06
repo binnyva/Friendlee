@@ -1,11 +1,12 @@
 <link rel="stylesheet" href="js/library/jquery-ui/css/jquery-ui.css" />
 <h1>People</h1>
-<input type="button" onclick="saveOrder()" value="Save Configuration" /><br />
+<input type="button" onclick="saveOrder()" value="Save Configuration" class="btn btn-primary" /><br />
 
+<div class="row">
 <?php foreach($level as $level_id => $info) { ?>
-<div class="level big-list-holders">
-<h3><?php echo $info['name'] ?></h3>
-
+<div class="col-md-6"><div class="panel panel-default">
+  <div class="panel-heading"><h3 class="panel-title"><?php echo $info['name'] ?></h3></div>
+  <div class="panel-body level big-list-holders">
 <ul id="level-<?php echo $level_id ?>" class="friend-level big-list">
 <?php foreach($info['people'] as $person) { ?>
 <li id="person_<?php echo $person['id'] ?>" class="ui-state-default btn btn-default"><a href="person.php?person_id=<?php echo $person['id'] ?>"><?php
@@ -13,5 +14,7 @@
 <?php } ?>
 </ul>
 </div>
+</div>
+</div>
 <?php } ?>
-
+</div>
