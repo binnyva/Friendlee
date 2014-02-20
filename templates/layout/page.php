@@ -43,9 +43,11 @@
 <div class="message-area" id="success-message" <?php echo ($QUERY['success']) ? '':'style="display:none;"';?>><?php echo strip_tags(stripslashes($QUERY['success']))?></div>
 
 
-<div id="popup-area-holder">
-<a href="#" id="popup-close">x</a>
-<div id="popup-area"></div>
+<div id="popup-area-holder" class="panel panel-primary">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+<div class="panel-heading" id="popup-title"></div>
+
+<div id="popup-area" class="panel-body"></div>
 </div>
 
 <!-- Begin Content -->

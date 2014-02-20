@@ -1,3 +1,6 @@
+<script type="text/javascript">
+$("#popup-title").html("Connection Details");
+</script>
 <form action="<?php echo $config['site_url'] ?>popup/connection_details.php" method="post" class="form-area" id="connection-details">
 
 <?php
