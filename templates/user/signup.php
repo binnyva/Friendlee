@@ -1,15 +1,19 @@
-<h1>Signup</h1>
+<div class="container">
+	<form method="POST" action="" accept-charset="UTF-8" role="form" class="form-signin">
+	<h3 class="form-signin-heading">Register for an account:</h3>
 
-<form action="" method="post" class="form-area">
-<?php include('_profile_form.php'); ?>
+		<fieldset>
+			<input class="form-control top" placeholder="Username" name="username" type="text" value="<?php echo i($QUERY, 'username'); ?>" required autofocus>
+			<input class="form-control middle" placeholder="Password" name="password" type="password" value="" required>
+			<input class="form-control middle" placeholder="Confirm Password" name="confirm_password" type="password" value="" required>
 
-<!--
-<p>Type the characters you see in the picture below. </p>
-<img src="captcha.php" /><?php $html->buildInput('captcha','Word Verification'); ?>
-<?php $html->buildInput('action', '&nbsp;', 'submit', "Get Another Word"); ?>
--->
+			<input class="form-control middle" placeholder="E-mail" name="email" type="text" value="<?php echo i($QUERY, 'email'); ?>"  required>
+			<input class="form-control bottom" placeholder="Name" name="name" type="text" value="<?php echo i($QUERY, 'name'); ?>" >
+			<input class="btn btn-lg btn-primary btn-block" type="submit" name="action" value="Register">
 
-<p>We will not give away your email address to anyone. We just need it in case you forgot your password.</p>
+		  	<p class="text-center"><a href="login.php">Already have an account?</a></p>
 
-<input type="submit" name="action" value="Register" />
-</form>
+			<p>We will not give away your email address to anyone. We just need it in case you forgot your password.</p>
+	  	</fieldset>
+  	</form>
+</div>

@@ -1,4 +1,3 @@
-<link href="js/library/jquery-ui/css/jquery-ui.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
 var people = <?php echo json_encode($all_people); ?>;

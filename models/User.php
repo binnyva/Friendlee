@@ -42,7 +42,7 @@ class User extends DBTable {
 		
 		$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE username='$username' AND password='$password'");
 		if(!$user_details) { //Query did not run correctly
-			showMessage("Invalid Username/Password", "login.php", "error");
+			showMessage("Invalid Username/Password", "user/login.php", "error");
 
 		} else {
 			//Store the necessy stuff in the sesson
@@ -87,7 +87,7 @@ class User extends DBTable {
 	/**
 	 * Registers the user with the details provided in the arguments. If the specified username is already taken, an error will be shown.
 	 */
-	function register($username, $password, $name, $email, $url) {
+	function register($username, $password, $name, $email) {
 		global $sql, $QUERY;
 		
 		//Check if the username is already taken.
@@ -119,6 +119,8 @@ class User extends DBTable {
 		} else {
 			$QUERY['error'] = "User with username '$username' already exists.";
 		}
+
+		return false;
 	}
 	
 	/**

@@ -1,6 +1,31 @@
-<form action="" method="post">
-<?php foreach($people as $p) { ?>
-	<input type="checkbox" name="person_id[]" id="person_<?php echo $p['id'] ?>" value="1" />
-	<label for="person_<?php echo $p['id'] ?>"><?php echo $p['nickname'] ?></label><br />
-<?php } ?>
+<h3>Trip to <?php echo $current_trip['city_name'] ?> from <?php echo date($config['date_format_php'], strtotime($current_trip['start_on'])); ?></h3>
+
+<form action="" method="POST">
+<input class="btn btn-success" type="submit" name="action" value="Trip Done" />
+<input type="hidden" name="trip_id" value="<?php echo $current_trip['id'] ?>" />
 </form>
+
+<div class="container">
+<div class="row">
+
+<div class="col-xs-6">
+<h4>Met</h4>
+<ul>
+<?php foreach($people as $p) { 
+	if(in_array($p['id'], $connections)) echo "<li>".$p['nickname']."</li>\n";
+} ?>
+</ul>
+</div>
+
+<div class="col-xs-6">
+<h4>Yet to Meet</h4>
+<ul>
+<?php foreach($people as $p) { 
+	if(!in_array($p['id'], $connections)) echo "<li>".$p['nickname']."</li>\n";
+} ?>
+</ul>
+</div>
+
+</div>
+
+</div>
