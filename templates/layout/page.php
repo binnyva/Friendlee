@@ -30,20 +30,21 @@
 		<li><a class="site with-icon" href="<?php echo $config['site_url'] ?>tree.php">People</a></li>
 		<li><a class="calendar with-icon" href="<?php echo $config['site_url'] ?>?date=<?php echo date('Y-m-d', strtotime('yesterday')); ?>">Yesterday</a></li>
 		<li><a class="add with-icon" href="<?php echo $config['site_url'] ?>">Today</a></li>
+		<li><a class="logout with-icon" href="<?php echo $config['site_url'] ?>user/logout.php">Logout</a></li>
 		</ul>
 	</div>
 </div>
 </div>
 
 <div id="content" class="container">
-<div class="message-area" id="error-message" <?php echo ($QUERY['error']) ? 'style="position:relative;left:0;"':'style="display:none;"';?>><?php
+<div class="message-area" id="error-message" <?php echo ($QUERY['error']) ? '':'style="display:none;"';?>><?php
 	if(!empty($PARAM['error'])) print strip_tags($PARAM['error']); //It comes from the URL
 	else print $QUERY['error']; //Its set in the code(validation error or something).
 ?></div>
 <div class="message-area" id="success-message" <?php echo ($QUERY['success']) ? '':'style="display:none;"';?>><?php echo strip_tags(stripslashes($QUERY['success']))?></div>
 
 
-<div id="popup-area-holder" class="panel panel-primary">
+<div id="popup-area-holder" class="panel panel-primary popup-holder">
 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 <div class="panel-heading" id="popup-title"></div>
 

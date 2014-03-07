@@ -2,6 +2,9 @@
 #more-info {
 	display:none;
 }
+#more-options-area {
+	display: none;
+}
 
 #score-table {
 	width:40%;
