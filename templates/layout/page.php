@@ -25,6 +25,7 @@
 	  </button>
 	  <a class="navbar-brand" href="<?php echo $abs ?>"><?php echo $title ?></a>
 	</div>
+	<?php if(!empty($_SESSION['user_id'])) { ?>
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav pull-right">
 		<li><a class="site with-icon" href="<?php echo $config['site_url'] ?>tree.php">People</a></li>
@@ -33,6 +34,7 @@
 		<li><a class="logout with-icon" href="<?php echo $config['site_url'] ?>user/logout.php">Logout</a></li>
 		</ul>
 	</div>
+	<?php } ?>
 </div>
 </div>
 

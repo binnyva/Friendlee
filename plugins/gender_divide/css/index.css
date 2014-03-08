@@ -1,0 +1,48 @@
+.gender {
+	width:18%;
+	height:200px;
+	border:1px solid #000;
+	float:left;
+	padding:5px;
+	margin:5px;
+	overflow:auto;
+}
+
+.gender ul {
+	list-style:none;
+	padding:0;
+	margin:0;
+	width:100%;
+	height:90%;
+}
+.gender li {
+	padding:2px;
+	margin:2px;
+	float:left;
+}
+
+h3 {
+	margin:0;
+}
+
+/*#gender-area-0  {
+	width:300px;
+	height:300px;
+	position:absolute;
+	background-color:#fff;
+	z-index:9;
+}*/
+.size-big  {
+	width:47%;
+	height:500px;
+}
+.size-medium {
+	width:38%;
+	
+}
+.size-normal {
+}
+
+#gender-area-0 {
+	background-color:#fafafa;
+}
