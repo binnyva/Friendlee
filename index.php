@@ -68,6 +68,8 @@ $template->addResource($config['site_url'].'bower_components/jquery-ui/themes/ba
 $template->addResource($config['site_url'].'bower_components/jquery-ui/themes/base/minified/jquery.ui.autocomplete.min.css','css');
 $template->addResource($config['site_url'].'bower_components/jquery-ui/ui/minified/jquery-ui.min.js','js');
 $template->addResource($config['site_url'].'bower_components/jquery-ui/ui/minified/jquery.ui.autocomplete.min.js','js');
+$template->addResource($config['site_url'].'bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css','css');
+$template->addResource($config['site_url'].'bower_components/jquery-ui/themes/base/minified/jquery.ui.autocomplete.min.css','css');
 render();
 
 
@@ -98,15 +100,23 @@ function getPeople($type) {
 			
 			$person_id = $t_person->findOne("LOWER(nickname)='$nickname'", 'id');
 			if(!$person_id) {
+				// A very rough gender detection.	
+				$first_name = @reset(explode(" ", $nickname_org));
+				$last_letter = substr($first_name, -1);
+				$sex = 'm';
+
+				if(in_array($last_letter, array('a','e','i','o','u'))) $sex = 'f';
+
 				// If the person is not there in the DB, add him.
 				$person_id = $t_person->set(array(
 						'nickname'	=> stripslashes($nickname_org),
 						'status'	=> 1,
 						'level_id'	=> 3, // Friend
+						'sex'		=> $sex,
 						'user_id'	=> $_SESSION['user_id'],
 					))->save();
 				$people[$person_id]['nickname'] = $nickname_org;
-				$new_people[] = $nickname_org;
+				$new_people[] = $nickname_org . " (".strtoupper($sex).")";
 			}
 			$ids[] = $person_id;
 		}

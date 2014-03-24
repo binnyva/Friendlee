@@ -3,11 +3,15 @@
 <div class="camouflage-area">
 
 <input type="text" class="camouflage big" name="nickname" value="<?php echo $person['nickname'] ?>" />
-<input type="submit" name="action" value="Save" class="stealth" />
-<input type="button" name="more" id="show-more-options" value="More Options" class="stealth auto-show" />
+<input type="submit" name="action" value="Save" class="stealth btn btn-primary" />
+<input type="button" name="more" id="show-more-options" value="More Options" class="stealth auto-show btn btn-success btn-sm" />
 </div>
 
-<div id="more-options-area"  class="form-area hidden">
+<div id="more-options-area"  class="form-area panel panel-primary popup-holder">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+<div class="panel-heading" id="popup-title">Details for '<?php echo $person['nickname'] ?>'</div>
+
+<div id="popup-area" class="panel-body">
 <?php
 $html->buildInput("name", 'Name', 'text', $person['name']);
 $html->buildInput("email", 'Email', 'text', $person['email']);
@@ -30,6 +34,7 @@ $html->buildInput("person_id", "", 'hidden', $person['id']);
 <label for="action">&nbsp;</label><input type="submit" name="action" value="Save" class="big" /><br />
 <a href="ajax/delete_person.php?person_id=<?php echo $person['id'] ?>" class="with-icon delete">Delete <?php echo $person['nickname'] ?></a><br />
 <input type="button" name="more" id="hide-more-options" class="auto-hide" value="Hide Options" /><br />
+</div>
 </div>
 </form>
 

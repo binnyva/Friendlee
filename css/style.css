@@ -54,11 +54,13 @@ ul.horizontal li {
 /* Messages */
 .message-area {
 	position:absolute;
-	top:20px;
+	z-index:1100;
+	top:30px;
 	left:45%;
 	color:#fff;
-	padding:5px;
+	padding:5px 5px 5px 10px;
 	border-radius:3px;
+	box-shadow: 3px 3px 10px #333 !important;
 }
 #warning-message {
 	background-color:orange;
@@ -154,13 +156,13 @@ ul.horizontal li {
 	border:2px solid white;
 }
 .stealth {
-	display:none
+	display:none !important;
 }
 .camouflage:hover, .camouflage:focus  {
 	border:2px inset gray;
 }
 .camouflage-area:hover .stealth, .camouflage:focus+.stealth {
-	display:inline;
+	display:inline !important;
 }
 
 
@@ -190,15 +192,15 @@ ul.big-list .icon {
 	padding-top:13px;
 }
 
-#popup-area-holder {
+.popup-holder {
 	position:absolute;
 	top:80px;
 	left:30%;
 	width:40%;
-	height:400px;
 	display:none;
 	background:#fff;
 	z-index:50;
+	box-shadow: 3px 3px 10px #888 !important;
 }
 .close {
 	margin-right:10px;
