@@ -64,6 +64,8 @@ if($new_people) {
 	$QUERY['success'] = 'Added new people to the system: ' . implode(', ', $new_people);
 }
 
+$template->addResource($config['site_url'].'bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css','css');
+$template->addResource($config['site_url'].'bower_components/jquery-ui/themes/base/minified/jquery.ui.autocomplete.min.css','css');
 $template->addResource($config['site_url'].'bower_components/jquery-ui/ui/minified/jquery-ui.min.js','js');
 $template->addResource($config['site_url'].'bower_components/jquery-ui/ui/minified/jquery.ui.autocomplete.min.js','js');
 render();
