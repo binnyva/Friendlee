@@ -37,7 +37,7 @@ if(!$current_trip) {
 	}
 }
 
-$people = $t_person->find(array('city_id'=>$current_trip['city_id']));
+$people = $t_person->sort('level_id','point DESC')->find(array('city_id'=>$current_trip['city_id']));
 
 $connections = $sql->getCol("SELECT DISTINCT person_id FROM Connection C INNER JOIN PersonConnection PC ON C.id=PC.connection_id
 	WHERE DATE(C.start_on) >= '$current_trip[start_on]' AND C.type='met'");

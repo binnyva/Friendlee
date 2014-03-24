@@ -29,7 +29,7 @@ $people_last_contact = $sql->getAll("SELECT P.id,P.nickname,P.name,P.level_id, M
 			INNER JOIN PersonConnection PC ON P.id=PC.person_id 
 			INNER JOIN Connection C ON PC.connection_id=C.id 
 			WHERE P.level_id!=4 AND P.user_id=$_SESSION[user_id]
-				GROUP BY PC.person_id");
+				GROUP BY PC.person_id ORDER BY P.level_id");
 
 $uncontacted_people = array();
 foreach($people_last_contact as $person) {
