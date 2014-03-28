@@ -3,6 +3,7 @@
 var people = <?php echo json_encode($all_people); ?>;
 </script>
 
+<?php if($uncontacted_people) { ?>
 <div id="uncontacted-people">
 <ul class='nav nav-tabs'>
 <?php
@@ -34,6 +35,7 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 ?>
 </div>
 </div>
+<?php } ?>
 
 <form action="" method="get" id="change-day-form"><input type="hidden" name="date" id="date" value="" /></form>
 
