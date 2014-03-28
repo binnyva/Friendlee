@@ -16,7 +16,7 @@ if(!empty($QUERY['action'])) {
 }
 
 
-$all_levels = $t_level->get('byid');
+$all_levels = keyFormat($t_level->get('byid'), array('id','name'));
 
 // This will show all the people in various levels who have been uncontacted for X days or more.
 $contact_thresholds = array(

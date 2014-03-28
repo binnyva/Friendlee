@@ -110,7 +110,6 @@ class User extends DBTable {
 				$this->field['password'] = $password;
 				$this->field['name'] = $name;
 				$this->field['email'] = $email;
-				$this->field['url'] = $url;
 				$this->field['added_on'] = 'NOW()';
 				$id = $this->save();
 				$this->setCurrentUser($id, $username, $name);
@@ -142,7 +141,6 @@ class User extends DBTable {
 			if($password) $this->field['password'] = $password;
 			$this->field['name'] = $name;
 			$this->field['email'] = $email;
-			$this->field['url'] = $url;
 	
 			return $this->save();
 		}
