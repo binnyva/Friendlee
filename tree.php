@@ -15,7 +15,7 @@ render();
 
 function getPeople($level_id) {
 	global $t_person;
-	$people = $t_person->sort('nickname')->find(array('level_id'=>$level_id));
+	$people = $t_person->sort('nickname')->find(array('level_id'=>$level_id, 'user_id'=>$_SESSION['user_id']));
 	
 	// If the 'recalculate_points' argument is not set, return the data.
 	if(empty($_REQUEST['recalculate_points'])) return $people;

@@ -4,7 +4,7 @@ require('common.php');
 $date = i($QUERY,'date', date('Y-m-d'));
 $new_people = array();
 
-$people = keyFormat($t_person->sort('level_id', 'nickname')->find());
+$people = keyFormat($t_person->sort('level_id', 'nickname')->find(array('user_id'=>$_SESSION['user_id'])));
 $all_people = array();
 foreach($people as $p) $all_people[] = $p['nickname'];
 
