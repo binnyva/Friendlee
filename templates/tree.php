@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="js/library/jquery-ui/css/jquery-ui.css" />
+
 <h1>People</h1>
 <form method="post" action="">
 <input type="submit" name="recalculate_points" value="Recalculate Points" class="btn btn-success pull-right" />

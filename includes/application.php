@@ -1,8 +1,18 @@
 <?php
 require_once(joinPath($config['site_folder'] , 'models/User.php'));
 $user = new User;
-
 if(strpos($config['PHP_SELF'], '/user/') === false) checkUser();
+
+$t_level = new DBTable('Level');
+$t_activity = new DBTable('Activity');
+$t_connection = new DBTable('Connection');
+$t_personconnection = new DBTable('PersonConnection');
+$t_note = new DBTable('Note');
+$t_person = new DBTable('Person');
+
+$people = keyFormat($t_person->sort('nickname')->find(array('user_id'=>$_SESSION['user_id'])));
+$all_people = array();
+foreach($people as $p) $all_people[] = $p['nickname'];
 
 function checkUser() {
 	global $config;

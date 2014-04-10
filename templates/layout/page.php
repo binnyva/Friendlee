@@ -9,7 +9,13 @@
 <link href="<?php echo $abs?>js/library/calendar/calendar.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $abs?>bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="<?php echo $abs?>bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="<?php echo $abs?>bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet">
+<link href="<?php echo $abs?>bower_components/jquery-ui/themes/base/minified/jquery.ui.autocomplete.min.css" rel="stylesheet">
+
 <?php echo $css_includes ?>
+<script type="text/javascript">
+var people = <?php echo json_encode($all_people); ?>;
+</script>
 </head>
 <body>
 <div id="loading">loading...</div>
@@ -28,6 +34,10 @@
 	<?php if(!empty($_SESSION['user_id'])) { ?>
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav pull-right">
+		<li><form action="search.php" method="post" id="search-area" class="input-group input-group-sm">
+<input type="text" name="search" id="search" placeholder="Search..." value="<?php if(isset($search_term)) echo $search_term ?>" class="form-control" />
+<span class="input-group-btn"><button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button></span>
+</form></li>
 		<li><a class="site with-icon" href="<?php echo $config['site_url'] ?>tree.php">People</a></li>
 		<li><a class="calendar with-icon" href="<?php echo $config['site_url'] ?>?date=<?php echo date('Y-m-d', strtotime('yesterday')); ?>">Yesterday</a></li>
 		<li><a class="add with-icon" href="<?php echo $config['site_url'] ?>">Today</a></li>
@@ -39,6 +49,7 @@
 </div>
 
 <div id="content" class="container">
+
 <div class="message-area" id="error-message" <?php echo ($QUERY['error']) ? '':'style="display:none;"';?>><?php
 	if(!empty($PARAM['error'])) print strip_tags($PARAM['error']); //It comes from the URL
 	else print $QUERY['error']; //Its set in the code(validation error or something).
@@ -71,6 +82,9 @@ include($GLOBALS['template']->template);
 <script src="<?=$abs?>js/library/ajaxify.js" type="text/javascript"></script>
 <script src="<?php echo $abs?>js/library/calendar/calendar.js" type="text/javascript"></script>
 <script src="<?=$abs?>js/application.js" type="text/javascript"></script>
+<script src="<?=$abs?>bower_components/jquery-ui/ui/minified/jquery-ui.min.js" type="text/javascript"></script>
+<script src="<?=$abs?>bower_components/jquery-ui/ui/minified/jquery.ui.autocomplete.min.js" type="text/javascript"></script>
+
 <?php echo $js_includes ?>
 </body>
 </html>

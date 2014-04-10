@@ -47,6 +47,7 @@ function split( val ) {return val.split( /[\,\+]\s*/ );}
 function extractLast( term ) {return split( term ).pop();}
 
 function autocomplete(id, list, splitter) {
+	if(!splitter) splitter = '';
 	$(id)
 		// don't navigate away from the field on tab when selecting an item
 		.bind( "keydown", function( event ) {
@@ -87,10 +88,17 @@ function autocomplete(id, list, splitter) {
 				result = value.replace(regexp , '');
 				
 				this.value = result + ui.item.value + splitter + " ";
+
+				if(window.searchPerson && typeof window.searchPerson == "function") searchPerson(ui.item.value, id);
 				return false;
 			}
 		});
 }
+
+function searchPerson(name, ele_id) { // Called when a name is selected by autocomplete...
+	if(ele_id == "#search") window.location="search.php?nickname="+name;
+}
+
 
 /// Needed for popups - specifically, the interaction edit popup.
 function openPopup(e) {
@@ -176,6 +184,8 @@ function siteInit() {
 
 	$(".popup").click(openPopup);
 	$("#popup-close").click(closePopup);
+
+	autocomplete("#search", people);
 	
 	if(document.getElementById("change-day")) calendar.set("change-day", {"onclick": makeCalender, "onDateSelect":setDate});
 	if(window.init && typeof window.init == "function") init(); //If there is a function called init(), call it on load

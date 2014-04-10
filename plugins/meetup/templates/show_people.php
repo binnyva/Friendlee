@@ -12,7 +12,7 @@
 <h4>Met</h4>
 <ul>
 <?php foreach($people as $p) { 
-	if(in_array($p['id'], $connections)) echo "<li>".$p['nickname']."</li>\n";
+	if(in_array($p['id'], $connections)) echo "<li><a href='../../person.php?person_id=$p[id]'>".$p['nickname']."</a></li>\n";
 } ?>
 </ul>
 </div>
@@ -21,7 +21,7 @@
 <h4>Yet to Meet</h4>
 <ul>
 <?php foreach($people as $p) { 
-	if(!in_array($p['id'], $connections)) echo "<li>".$p['nickname']."</li>\n";
+	if(!in_array($p['id'], $connections)) echo "<li><a href='../../person.php?person_id=$p[id]'>".$p['nickname']."</a></li>\n";
 } ?>
 </ul>
 </div>

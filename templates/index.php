@@ -1,8 +1,3 @@
-
-<script type="text/javascript">
-var people = <?php echo json_encode($all_people); ?>;
-</script>
-
 <?php if($uncontacted_people) { ?>
 <div id="uncontacted-people">
 <ul class='nav nav-tabs'>

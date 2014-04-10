@@ -20,6 +20,6 @@ render(joinPath($config['site_folder'],'plugins/meetup/templates/cities.php'), t
 
 function getPeople($city_id) {
 	global $t_person;
-	$people = $t_person->sort('nickname')->find(array('city_id'=>$city_id));
+	$people = $t_person->sort('nickname')->find(array('city_id'=>$city_id, 'user_id'=>$_SESSION['user_id']));
 	return $people;
 }

@@ -1,4 +1,6 @@
 function init() {
+	autocomplete("#search", people);
+
 	$( ".friend-level" ).sortable({
 		revert: true,
 		connectWith: [".friend-level"]

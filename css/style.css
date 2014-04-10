@@ -214,4 +214,12 @@ ul.big-list .icon {
 #content {
 	margin-top: 60px;
 }
+
+#search-area {
+	padding: 10px 5px 0 0;
+}
+
+.ui-autocomplete {
+	z-index: 1040 !important;
+}
 /* */

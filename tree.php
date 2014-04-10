@@ -10,7 +10,6 @@ foreach($all_levels as $l) {
 	);
 }
 
-$template->addResource('library/jquery-ui/jquery-ui.min.js','js');
 render();
 
 function getPeople($level_id) {
