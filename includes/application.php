@@ -1,7 +1,8 @@
 <?php
 require_once(joinPath($config['site_folder'] , 'models/User.php'));
 $user = new User;
-if(strpos($config['PHP_SELF'], '/user/') === false) checkUser();
+if(strpos($config['PHP_SELF'], '/user/') === false
+	&& strpos($config['PHP_SELF'], '/about/') === false) checkUser();
 
 $t_level = new DBTable('Level');
 $t_activity = new DBTable('Activity');

@@ -31,9 +31,9 @@ var people = <?php echo json_encode($all_people); ?>;
 	  </button>
 	  <a class="navbar-brand" href="<?php echo $abs ?>"><?php echo $title ?></a>
 	</div>
-	<?php if(!empty($_SESSION['user_id'])) { ?>
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav pull-right">
+	<?php if(!empty($_SESSION['user_id'])) { ?>
 		<li><form action="search.php" method="post" id="search-area" class="input-group input-group-sm">
 <input type="text" name="search" id="search" placeholder="Search..." value="<?php if(isset($search_term)) echo $search_term ?>" class="form-control" />
 <span class="input-group-btn"><button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button></span>
@@ -42,9 +42,12 @@ var people = <?php echo json_encode($all_people); ?>;
 		<li><a class="calendar with-icon" href="<?php echo $config['site_url'] ?>?date=<?php echo date('Y-m-d', strtotime('yesterday')); ?>">Yesterday</a></li>
 		<li><a class="add with-icon" href="<?php echo $config['site_url'] ?>">Today</a></li>
 		<li><a class="logout with-icon" href="<?php echo $config['site_url'] ?>user/logout.php">Logout</a></li>
+	<?php } else { ?>
+		<li><a class="info with-icon" href="<?php echo $config['site_url'] ?>about/">About</a></li>
+	<?php } ?>
 		</ul>
 	</div>
-	<?php } ?>
+
 </div>
 </div>
 

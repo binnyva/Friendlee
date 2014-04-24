@@ -16,6 +16,6 @@ render(joinPath($config['site_folder'],'plugins/gender_divide/templates/index.ph
 
 function getPeople($id) {
 	global $t_person;
-	$people = $t_person->sort('nickname')->find(array('sex'=>$id));
+	$people = $t_person->sort('nickname')->find(array('sex'=>$id, 'user_id'=>$_SESSION['user_id']));
 	return $people;
 }
