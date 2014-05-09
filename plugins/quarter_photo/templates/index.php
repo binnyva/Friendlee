@@ -2,6 +2,7 @@
 foreach ($people as $p) {
 	if($p['point'] > $every_x_points) {
 		$last_photo_sent_at_point = i($sent_photos, $p['id']);
+
 		if($last_photo_sent_at_point) {
 			if($p['point'] - $last_photo_sent_at_point < $every_x_points) { // Person hasn't gotten 25 points after the last photo. Don't show this person.
 				continue;
