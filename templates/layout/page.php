@@ -29,7 +29,7 @@ var people = <?php echo json_encode($all_people); ?>;
 	    <span class="icon-bar"></span>
 	    <span class="icon-bar"></span>
 	  </button>
-	  <a class="navbar-brand" href="<?php echo $abs ?>"><?php echo $title ?></a>
+	  <a class="navbar-brand" href="<?php echo $abs ?>"><?php echo $config['site_title'] ?></a>
 	</div>
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav pull-right">

@@ -4,6 +4,9 @@ require('common.php');
 $date = i($QUERY,'date', date('Y-m-d'));
 $new_people = array();
 
+$title = 'Friendlee : ' . date('dS F, Y', strtotime($date));
+$template->setTitle($title);
+
 if(!empty($QUERY['action'])) {
 	$met_connection_id = getPeople('met');
 	$chat_connection_id = getPeople('chat');
@@ -64,7 +67,7 @@ render();
 
 
 function getPeople($type) {
-	global $QUERY, $sql, $t_person, $people, $new_people;
+	global $QUERY, $sql, $t_person, $people, $new_people, $points;
 	
 	if(empty($QUERY[$type])) return;
 	
@@ -116,6 +119,11 @@ function getPeople($type) {
 					'connection_id'	=> $connection_id,
 					'person_id'		=> $person_id
 				));
+
+				// Increment person's points
+				$t_person->find($person_id);
+				$t_person->field['point'] = $t_person->field['point'] + $points[$type];
+				$t_person->save();
 			}
 		}
 	}
