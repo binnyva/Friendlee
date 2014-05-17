@@ -18,11 +18,8 @@ if(!empty($QUERY['action'])) {
 $all_levels = keyFormat($t_level->get('byid'), array('id','name'));
 
 // This will show all the people in various levels who have been uncontacted for X days or more.
-$contact_thresholds = array(
-		1 => 7,		// A Week - for close fri
-		2 => 30, 	// A Month
-		3 => 90		// 3 Months
-	);
+$contact_thresholds = $sql->getById("SELECT element_id,`interval` FROM Frequency 
+				WHERE user_id='$_SESSION[user_id]' AND data_type='level' AND type='any'");
 // Get all people in all levels execpt 4(Aquancences).
 $people_last_contact = $sql->getAll("SELECT P.id,P.nickname,P.name,P.level_id, MAX(C.start_on) AS last_contact_on FROM Person P 
 			INNER JOIN PersonConnection PC ON P.id=PC.person_id 
@@ -37,7 +34,8 @@ foreach($people_last_contact as $person) {
 	$interval = date_diff($datetime1, $datetime2);
 	$gap = $interval->format('%a');
 	$level_id = $person['level_id'];
-	if($gap > $contact_thresholds[$level_id]) {
+	if(isset($contact_thresholds[$level_id]) and $contact_thresholds[$level_id] != 0 
+			and $gap > $contact_thresholds[$level_id]) {
 		$pid = $person['id'];
 		$person['gap'] = $gap;
 		$person['type'] = $sql->getOne("SELECT type FROM Connection C INNER JOIN PersonConnection PC ON PC.connection_id = C.id 
