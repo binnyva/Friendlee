@@ -3,9 +3,9 @@ require('common.php');
 
 $person_id = $QUERY['person_id'];
 $person = $t_person->find($person_id);
-if(!$person) {
-	die("Invalid Person ID Provided");
-}
+if(!$person) die("Invalid Person ID Provided");
+
+$contact_thresholds = $sql->getById("SELECT element_id,`interval` FROM Frequency WHERE user_id='$_SESSION[user_id]' OR user_id='0' AND data_type='level' AND type='any'");
 $all_cities = $sql->getById("SELECT id,name FROM City WHERE user_id=$_SESSION[user_id] ORDER BY name");
 $all_cities[0] = 'Unknown';
 $all_levels = $sql->getById("SELECT id,name FROM Level");
@@ -23,8 +23,7 @@ if($last_met	and (!$last_contact or @strcmp($last_contact['start_on'], $last_met
 $data = getPointsDetail($person_id);
 extract($data);
 
-$frequency = keyFormat($sql->getAll("SELECT `type`, `interval` FROM Frequency WHERE data_type='level' AND element_id='$person[level_id]' AND user_id=$_SESSION[user_id]"), array('type','interval'));
-foreach($all_interation_types as $type) if(!isset($frequency[$type])) $frequency[$type] = 0;
+$frequency = $contact_thresholds[$person[level_id]];
 
 $interaction_log = $sql->getAll("SELECT C.id,C.start_on,C.type FROM Connection C INNER JOIN PersonConnection PC ON C.id=PC.connection_id WHERE PC.person_id=$person_id ORDER BY C.start_on DESC");
 

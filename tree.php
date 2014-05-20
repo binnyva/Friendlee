@@ -2,7 +2,7 @@
 require("./common.php");
 
 $level = array();
-$all_levels = $t_level->find();
+$all_levels = $t_level->find("user_id=0 OR user_id=$_SESSION[user_id]");
 foreach($all_levels as $l) {
 	$level[$l['id']] = array(
 		'name'	=> $l['name'],
