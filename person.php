@@ -23,7 +23,7 @@ if($last_met	and (!$last_contact or @strcmp($last_contact['start_on'], $last_met
 $data = getPointsDetail($person_id);
 extract($data);
 
-$frequency = $contact_thresholds[$person[level_id]];
+$frequency = $contact_thresholds[$person['level_id']];
 
 $interaction_log = $sql->getAll("SELECT C.id,C.start_on,C.type FROM Connection C INNER JOIN PersonConnection PC ON C.id=PC.connection_id WHERE PC.person_id=$person_id ORDER BY C.start_on DESC");
 

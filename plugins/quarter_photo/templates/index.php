@@ -1,3 +1,5 @@
+<a href="history.php">See History</a><br />
+<h3>Reward Candidates</h3>
 <?php
 foreach ($people as $p) {
 	if($p['point'] > $every_x_points) {
