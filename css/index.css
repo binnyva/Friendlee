@@ -31,3 +31,12 @@
 	margin: 0 5px;
 	padding: 0;
 }
+
+.tablesorter-headerDesc  {
+	background: url(../images/crud/down.png) no-repeat 0 5px;
+	padding-left:15px;
+}
+.tablesorter-headerAsc {
+	background: url(../images/crud/up.png) no-repeat 0 5px;
+	padding-left:15px;
+ }

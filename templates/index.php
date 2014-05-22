@@ -15,16 +15,20 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 <?php
 $active = 'in active';
 foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
-	print "<div class='tab-pane fade $active' id='uncontacted-level-$level_id'><ul>\n";
+	print "<div class='tab-pane fade $active' id='uncontacted-level-$level_id'>\n";
+	print "<table class='uncontacted-table'>\n";
+	if(count($uncontacted_in_level) > 3) print "<thead><tr><th>Name</th><th>Last Contact</th></tr><thead>";
+	print "<tbody>";
 	foreach ($uncontacted_in_level as $person) {
 		$gap_days = $person['gap'];
 		if($gap_days > 30)
 			$gap_days = floor($gap_days / 30) . ' months, ' . ($gap_days % 30) . ' days';
 		else $gap_days .= ' days';
 
-		print "<li><a href='person.php?person_id=$person[id]'>$person[nickname]</a> - ".ucfirst($person['type'])." $gap_days ago</li>\n";
+		print "<tr><td><a href='person.php?person_id=$person[id]'>$person[nickname]</a></td>";
+		print "<td data='$person[gap]'>".ucfirst($person['type'])." $gap_days ago</td></tr>\n";
 	}
-	print "</ul></div>";
+	print "</tbody></table></div>";
 	if($active) $active = '';
 }
 ?>

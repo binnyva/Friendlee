@@ -62,6 +62,7 @@ if($new_people) {
 	$QUERY['success'] = 'Added new people to the system: ' . implode(', ', $new_people);
 }
 
+$template->addResource("../bower_components/jquery.tablesorter/js/jquery.tablesorter.min.js", "js");
 render();
 
 
