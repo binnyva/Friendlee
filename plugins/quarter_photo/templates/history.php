@@ -1,3 +1,5 @@
+<h1>Reward History</h1>
+
 <?php
 $last_person_id = 0;
 foreach($sent_photos as $history) {

@@ -18,6 +18,7 @@ foreach ($people as $p) {
 			$photos_to_be_sent = floor(($p['point'] - $last_photo_sent_at_point) / $every_x_points);
 			if(!$photos_to_be_sent) $photos_to_be_sent = 1; // This is just BAD. Remove all after we have decent size for the database table.
 
+			echo " <a href='history.php?person_id=$p[id]' class='icon wait'>History</a>";
 			for($i=0; $i<$photos_to_be_sent; $i++) echo " <a href='photo_sent.php?person_id=$p[id]' class='icon done ajaxify photo-sent'>Sent</a>";
 		}
 
