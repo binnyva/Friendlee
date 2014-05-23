@@ -217,6 +217,7 @@ ul.big-list .icon {
 
 #search-area {
 	padding: 10px 5px 0 0;
+	width:200px;
 }
 
 .ui-autocomplete {
