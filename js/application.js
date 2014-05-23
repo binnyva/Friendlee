@@ -1,7 +1,6 @@
 $=jQuery.noConflict();
 //Framework Specific
 function showMessage(data) {
-	console.log(data);
 	var type = 'error';
 	if(data.success) var type = 'success';
 	
@@ -30,7 +29,6 @@ function loaded() {
 	$("#loading").hide();
 }
 function makeCalender() {
-	console.log("Make");
 	calendar.opt['display_element'] = this.id;
 	calendar.opt['input'] = "date";
 	calendar.showCalendar();
@@ -96,7 +94,7 @@ function autocomplete(id, list, splitter) {
 }
 
 function searchPerson(name, ele_id) { // Called when a name is selected by autocomplete...
-	if(ele_id == "#search") window.location="search.php?nickname="+name;
+	if(ele_id == "#search") window.location.href = $("#search-area").attr("action") + "?nickname="+name;
 }
 
 

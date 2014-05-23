@@ -34,7 +34,7 @@ var people = <?php echo json_encode($all_people); ?>;
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav pull-right">
 	<?php if(!empty($_SESSION['user_id'])) { ?>
-		<li><form action="search.php" method="post" id="search-area" class="input-group input-group-sm">
+		<li><form action="<?php echo $config['site_url']; ?>search.php" method="post" id="search-area" class="input-group input-group-sm">
 <input type="text" name="search" id="search" placeholder="Search..." value="<?php if(isset($search_term)) echo $search_term ?>" class="form-control" />
 <span class="input-group-btn"><button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button></span>
 </form></li>

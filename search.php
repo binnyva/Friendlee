@@ -4,12 +4,12 @@ $search_term = '';
 
 
 if(isset($QUERY['nickname'])) {
-	$search_term = $QUERY['nickname'];
+	$search_term = trim($QUERY['nickname']);
 	$person = $t_person->find(array('nickname'=>$QUERY['nickname'], 'user_id'=>$_SESSION['user_id']));
 	goToPerson($person);
 	
 } elseif(isset($QUERY['search'])) {
-	$search_term = $QUERY['search'];
+	$search_term = trim($QUERY['search']);
 	$person = $t_person->find("nickname LIKE '%$QUERY[search]%' OR name LIKE '%$QUERY[search]%'", "user_id=$_SESSION[user_id]");
 	goToPerson($person);
 }

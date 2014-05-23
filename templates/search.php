@@ -3,7 +3,7 @@
 
 <p>There is no one by the name of '<?php echo $search_term ?>' in our database.</p>
 
-<form action="search_person.php" method="post">
+<form action="search.php" method="post">
 <input type="text" name="search" id="search" placeholder="Search again..." value="<?php echo $search_term ?>" />
 <input type="submit" class="btn-primary btn" value="Search" />
 </form>
