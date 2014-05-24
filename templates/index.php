@@ -1,5 +1,6 @@
+<div id="top-area" class="row">
 <?php if($uncontacted_people) { ?>
-<div id="uncontacted-people">
+<div id="uncontacted-people" class="col-md-6">
 <ul class='nav nav-tabs'>
 <?php
 $active = 'active';
@@ -35,6 +36,13 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 </div>
 </div>
 <?php } ?>
+<div id="links" class="col-md-6">
+<ul>
+<li><a href="tree.php" class="with-icon site">All Friends</a></li>
+<li><a href="uncontacted.php" class="with-icon phone">Uncontacted Friends</a></li>
+<li><a href="leaderboard.php" class="with-icon info">Friends Leaderboard</a></li>
+</div>
+</div>
 
 <form action="" method="get" id="change-day-form"><input type="hidden" name="date" id="date" value="" /></form>
 
@@ -51,7 +59,7 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 <form action="" method="post">
 <input type="hidden" name="date" value="<?php echo $date ?>" />
 
-<div class="container">
+<div class="container" id="contact-area">
 <div class="row">
 <div class="col-md-6"><?php showBox('message', 'Whatsapp/Text'); ?></div>
 <div class="col-md-6"><?php showBox('met'); ?></div>

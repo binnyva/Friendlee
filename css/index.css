@@ -1,4 +1,4 @@
-.row {
+#contact-area .row {
 	min-height: 230px;
 }
 .data {
@@ -15,7 +15,6 @@
 
 
 #uncontacted-people {
-	width:450px;
 	margin-bottom: 10px;
 }
 #uncontacted-people .tab-content {
@@ -30,6 +29,11 @@
 	list-style: none;
 	margin: 0 5px;
 	padding: 0;
+}
+
+#links ul {
+	list-style: none;
+	margin-top: 40px;
 }
 
 .tablesorter-headerDesc  {
