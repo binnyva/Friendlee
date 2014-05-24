@@ -37,10 +37,24 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 </div>
 <?php } ?>
 <div id="links" class="col-md-6">
+<div class="col-md-6">
 <ul>
 <li><a href="tree.php" class="with-icon site">All Friends</a></li>
 <li><a href="uncontacted.php" class="with-icon phone">Uncontacted Friends</a></li>
 <li><a href="leaderboard.php" class="with-icon info">Friends Leaderboard</a></li>
+</ul>
+</div>
+<div class="col-md-6">
+<?php if($activate_plugins) { ?>
+<ul>
+<?php 
+$plugins = ls("*", joinPath($config['site_folder'], 'plugins'));
+foreach($plugins as $p) print "<li><a href='plugins/$p' class='with-icon plugin'>".format(trim($p,'/'))."</a></li>\n";
+?>
+</ul>
+<?php } ?>
+
+</div>
 </div>
 </div>
 

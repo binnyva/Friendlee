@@ -11,6 +11,9 @@ $t_personconnection = new DBTable('PersonConnection');
 $t_note = new DBTable('Note');
 $t_person = new DBTable('Person');
 
+$activate_plugins = false;
+if($sql->getOne("SELECT value FROM Setting WHERE name='activate_plugins'")) $activate_plugins = 1;
+
 $people = keyFormat($t_person->sort('nickname')->find(array('user_id'=>$_SESSION['user_id'])));
 $all_people = array();
 foreach($people as $p) $all_people[] = $p['nickname'];
