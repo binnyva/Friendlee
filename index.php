@@ -12,6 +12,8 @@ if(!empty($QUERY['action'])) {
 	$chat_connection_id = getPeople('chat');
 	$phone_connection_id = getPeople('phone');
 	$sms_connection_id = getPeople('message');
+	$email_connection_id = getPeople('email');
+	$other_connection_id = getPeople('other');
 }
 
 require('includes/uncontacted.php');

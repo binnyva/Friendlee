@@ -11,4 +11,6 @@ function init() {
 	autocomplete("#met", people, '+');
 	autocomplete("#phone", people, ',');
 	autocomplete("#chat", people, ',');	
+	autocomplete("#email", people, ',');
+	autocomplete("#other", people, ',');
 }

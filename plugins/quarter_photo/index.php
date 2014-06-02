@@ -10,5 +10,3 @@ $sent_photos = $sql->getById("SELECT DISTINCT person_id, MAX(point_status) FROM 
 
 $template->addResource('js/index.js','js',true);
 render(joinPath($config['site_folder'],'plugins/quarter_photo/templates/index.php'), true, true);
-
-

@@ -79,8 +79,12 @@ foreach($plugins as $p) print "<li><a href='plugins/$p' class='with-icon plugin'
 <div class="col-md-6"><?php showBox('met'); ?></div>
 </div>
 <div class="row">
-<div class="col-md-6"><?php showBox('chat', 'Chat'); ?></div>
+<div class="col-md-6"><?php showBox('chat'); ?></div>
 <div class="col-md-6"><?php showBox('phone'); ?></div>
+</div>
+<div class="row">
+<div class="col-md-6"><?php showBox('email'); ?></div>
+<div class="col-md-6"><?php showBox('other'); ?></div>
 </div>
 </div>
 

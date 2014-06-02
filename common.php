@@ -5,7 +5,9 @@ $points = array(
 	'met'		=> 10,
 	'phone'		=> 5,
 	'message'	=> 3,
-	'chat'		=> 2
+	'chat'		=> 2,
+	'email'		=> 1,
+	'other'		=> 1
 );
 
-$all_interation_types = array('met','phone','message','chat');
+$all_interation_types = array_keys($points);
