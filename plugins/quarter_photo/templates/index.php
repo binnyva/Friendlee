@@ -1,5 +1,12 @@
 <a href="history.php">See History</a><br />
 <h3>Reward Candidates</h3>
+
+<form action="" method="get">
+<label for="city_id">Filter by City: </label>
+<?php $html->buildDropDownArray($all_cities,"city_id",$city_id); ?>
+<input type="submit" name="action" value="Go" />
+</form>
+
 <?php
 foreach ($people as $p) {
 	if($p['point'] > $every_x_points) {
