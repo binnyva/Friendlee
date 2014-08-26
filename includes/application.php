@@ -14,12 +14,18 @@ $t_person = new DBTable('Person');
 $activate_plugins = false;
 if($sql->getOne("SELECT value FROM Setting WHERE name='activate_plugins'")) $activate_plugins = 1;
 
-$people = keyFormat($t_person->sort('nickname')->find(array('user_id'=>$_SESSION['user_id'])));
 $all_people = array();
-foreach($people as $p) $all_people[] = $p['nickname'];
+if(isset($_SESSION['user_id'])) {
+	$people = keyFormat($t_person->sort('nickname')->find(array('user_id'=>$_SESSION['user_id'])));
+	foreach($people as $p) $all_people[] = $p['nickname'];
+}
 
 function checkUser() {
 	global $config;
+
+	if(!isset($_SESSION['user_id'])) {
+		$_SESSION['user_id'] = $config['single_user'];
+	}
 	
 	if((!isset($_SESSION['user_id']) or !$_SESSION['user_id']))
 		showMessage("Please login to use this feature", $config['site_url'] . 'user/login.php', "error");
@@ -60,3 +66,4 @@ function getConnectionCount($person_id, $type) {
 	
 	return $count;
 }
+

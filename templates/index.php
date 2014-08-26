@@ -41,7 +41,7 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 <ul>
 <li><a href="tree.php" class="with-icon site">All Friends</a></li>
 <li><a href="uncontacted.php" class="with-icon phone">Uncontacted Friends</a></li>
-<li><a href="leaderboard.php" class="with-icon info">Friends Leaderboard</a></li>
+<?php if($_SESSION['user_id'] == 1) { ?><li><a href="leaderboard.php" class="with-icon info">Friends Leaderboard</a></li><?php } ?>
 </ul>
 </div>
 <div class="col-md-6">

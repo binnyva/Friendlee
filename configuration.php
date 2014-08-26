@@ -5,5 +5,6 @@ $config = array(
 	'db_host'		=>	'localhost',
 	'db_user'		=>	'root',
 	'db_password'	=>	'',
-	'db_database'	=>	'Project_Friendlee'
+	'db_database'	=>	'Project_Friendlee',
+	'single_user'	=>	1,
 );

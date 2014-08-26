@@ -64,7 +64,7 @@ function getPeople($type) {
 				$person_id = $t_person->set(array(
 						'nickname'	=> stripslashes($nickname_org),
 						'status'	=> 1,
-						'level_id'	=> 3, // Friend
+						'level_id'	=> 4,
 						'sex'		=> $sex,
 						'user_id'	=> $_SESSION['user_id'],
 					))->save();

@@ -9,7 +9,7 @@ $last_level_id = $sql->getOne("SELECT MAX(id) FROM Level");
 $people_last_contact = $sql->getAll("SELECT P.id,P.nickname,P.name,P.level_id, MAX(C.start_on) AS last_contact_on FROM Person P 
 			INNER JOIN PersonConnection PC ON P.id=PC.person_id 
 			INNER JOIN Connection C ON PC.connection_id=C.id 
-			WHERE P.level_id!=$last_level_id AND (P.user_id=$_SESSION[user_id] OR P.user_id=0)
+			WHERE P.level_id!=$last_level_id AND (P.user_id=$_SESSION[user_id] OR P.user_id=0) AND P.automanaged=0
 				GROUP BY PC.person_id ORDER BY P.level_id");
 
 $uncontacted_people = array();
