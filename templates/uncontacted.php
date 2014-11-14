@@ -1,7 +1,8 @@
-<h2>Uncontacted Friends</h2>
+<?php if(!isset($included)) $included = true;
+if(!$included) { ?><h2>Uncontacted Friends</h2><?php } ?>
 
 <?php if($uncontacted_people) { ?>
-<div id="uncontacted-people">
+<div id="uncontacted-people" <?php if($included) echo 'class="col-md-6"'; ?>>
 <ul class='nav nav-tabs'>
 <?php
 $active = 'active';
@@ -19,7 +20,11 @@ $active = 'in active';
 foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 	print "<div class='tab-pane fade $active' id='uncontacted-level-$level_id'>\n";
 	print "<table class='uncontacted-table'>\n";
-	if(count($uncontacted_in_level) > 3) print "<thead><tr><th>Name</th><th>Last Contact</th></tr><thead>";
+	if(count($uncontacted_in_level) > 3) {
+		print "<thead><tr><th>Name</th><th>Last Contact</th>";
+		$i_plugin->callHook("display_uncontacted_people_header");
+		print "</tr><thead>";
+	}
 	print "<tbody>";
 	foreach ($uncontacted_in_level as $person) {
 		$gap_days = $person['gap'];
@@ -28,7 +33,10 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 		else $gap_days .= ' days';
 
 		print "<tr><td><a href='person.php?person_id=$person[id]'>$person[nickname]</a></td>";
-		print "<td data='$person[gap]'>".ucfirst($person['type'])." $gap_days ago</td></tr>\n";
+		print "<td data='$person[gap]'>".ucfirst($person['type'])." $gap_days ago</td>";
+		$i_plugin->callHook("display_uncontacted_people_row", $person);
+
+		print "</tr>\n";
 	}
 	print "</tbody></table></div>";
 	if($active) $active = '';

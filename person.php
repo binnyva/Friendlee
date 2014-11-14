@@ -14,11 +14,15 @@ $last_message	= getLastContact($person_id, 'message');
 $last_chat		= getLastContact($person_id, 'chat');
 $last_phone		= getLastContact($person_id, 'phone');
 $last_met		= getLastContact($person_id, 'met');
+$last_email		= getLastContact($person_id, 'email');
+$last_other		= getLastContact($person_id, 'other');
 
 $last_contact = $last_message;
 if($last_chat	and (!$last_contact or @strcmp($last_contact['start_on'], $last_chat['start_on'])	< 0))	$last_contact = $last_chat;
 if($last_phone	and (!$last_contact or @strcmp($last_contact['start_on'], $last_phone['start_on'])	< 0))	$last_contact = $last_phone;
 if($last_met	and (!$last_contact or @strcmp($last_contact['start_on'], $last_met['start_on'])	< 0))	$last_contact = $last_met;
+if($last_email	and (!$last_contact or @strcmp($last_contact['start_on'], $last_email['start_on'])	< 0))	$last_contact = $last_email;
+if($last_other	and (!$last_contact or @strcmp($last_contact['start_on'], $last_other['start_on'])	< 0))	$last_contact = $last_other;
 
 $data = getPointsDetail($person_id);
 extract($data);

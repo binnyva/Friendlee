@@ -12,7 +12,10 @@
 <link href="<?php echo $abs?>bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet">
 <link href="<?php echo $abs?>bower_components/jquery-ui/themes/base/minified/jquery.ui.autocomplete.min.css" rel="stylesheet">
 
-<?php echo $css_includes ?>
+<?php 
+echo $css_includes;
+$i_plugin->callHook("display_page_head");
+?>
 <script type="text/javascript">
 var people = <?php echo json_encode($all_people); ?>;
 </script>
@@ -82,14 +85,17 @@ include($GLOBALS['template']->template);
 
 <div id="footer"></div>
 
-<script src="<?=$abs?>bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
-<script src="<?=$abs?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="<?=$abs?>js/library/ajaxify.js" type="text/javascript"></script>
-<script src="<?php echo $abs?>js/library/calendar/calendar.js" type="text/javascript"></script>
-<script src="<?=$abs?>js/application.js" type="text/javascript"></script>
-<script src="<?=$abs?>bower_components/jquery-ui/ui/minified/jquery-ui.min.js" type="text/javascript"></script>
-<script src="<?=$abs?>bower_components/jquery-ui/ui/minified/jquery.ui.autocomplete.min.js" type="text/javascript"></script>
+<script src="<?php echo $config['site_url']; ?>bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="<?php echo $config['site_url']; ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="<?php echo $config['site_url']; ?>js/library/ajaxify.js" type="text/javascript"></script>
+<script src="<?php echo $config['site_url']; ?>js/library/calendar/calendar.js" type="text/javascript"></script>
+<script src="<?php echo $config['site_url']; ?>js/application.js" type="text/javascript"></script>
+<script src="<?php echo $config['site_url']; ?>bower_components/jquery-ui/ui/minified/jquery-ui.min.js" type="text/javascript"></script>
+<script src="<?php echo $config['site_url']; ?>bower_components/jquery-ui/ui/minified/jquery.ui.autocomplete.min.js" type="text/javascript"></script>
 
-<?php echo $js_includes ?>
+<?php 
+echo $js_includes;
+$i_plugin->callHook("display_page_end");
+?>
 </body>
 </html>

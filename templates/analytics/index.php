@@ -35,7 +35,17 @@ function drawChart() {
 }
 </script>
 
+<h3><?php echo $text . ': ' . date('dS M', strtotime($from)) . ' to ' . date('dS M', strtotime($to)); ?></h3>
+
 <div id="chart_div"></div>
 
-<a href="?date=<?php echo date('Y-m-d', strtotime('-'.$interval,strtotime($date))); ?>&amp;type=<?php echo $type ?>">Last <?php echo ucfirst($type) ?></a><br />
-<a href="?date=<?php echo date('Y-m-d', strtotime('+'.$interval,strtotime($date))); ?>&amp;type=<?php echo $type ?>">Next <?php echo ucfirst($type) ?></a>
+
+<ul class="btn-group btn-group-justified center-block" role="group" aria-label="...">
+<li class="btn btn-default"><a class="with-icon previous" href="?from=<?php echo date('Y-m-d', strtotime('-'.$interval,strtotime($from))); ?>&amp;type=<?php echo $type ?>">Last <?php echo ucfirst($type) ?></a></li>
+<?php if($type == 'week') { ?>
+<li class="btn btn-default"><a class="with-icon calendar" href="?from=<?php echo $from; ?>&amp;type=month">Show Month</a></li>
+<?php } elseif($type == 'month') { ?>
+<li class="btn btn-default"><a class="with-icon calendar" href="?from=<?php echo $from; ?>&amp;type=week">Show Week</a></li>
+<?php } ?>
+<li class="btn btn-default"><a class="with-icon next" href="?from=<?php echo date('Y-m-d', strtotime('+'.$interval,strtotime($to))); ?>&amp;type=<?php echo $type ?>">Next <?php echo ucfirst($type) ?></a></li>
+</ul>

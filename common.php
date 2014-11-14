@@ -1,5 +1,5 @@
 <?php
-require('/var/www/html/iframe/common.php');
+require('/mnt/x/Data/www/iframe/common.php');
 
 $points = array(
 	'met'		=> 10,

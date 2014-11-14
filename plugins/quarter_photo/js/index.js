@@ -3,5 +3,5 @@ function init() {
 }
 
 function removePerson (e) {
-	$(this.parentNode).remove();
+	$(this.parentNode.parentNode).remove();
 }

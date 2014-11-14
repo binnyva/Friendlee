@@ -49,11 +49,14 @@ function getPointsDetail($person_id)  {
 	$phone_count	= getConnectionCount($person_id, 'phone');
 	$message_count	= getConnectionCount($person_id, 'message');
 	$chat_count		= getConnectionCount($person_id, 'chat');
+	$email_count	= getConnectionCount($person_id, 'email');
+	$other_count	= getConnectionCount($person_id, 'other');
 
 	// The Algoritham. Will change over time.
-	$total_score = ($met_count * $points['met']) + ($phone_count * $points['phone']) + ($message_count * $points['message']) + ($chat_count * $points['chat']);
+	$total_score = ($met_count * $points['met']) + ($phone_count * $points['phone']) + ($message_count * $points['message']) + ($chat_count * $points['chat'])  
+		+ ($email_count * $points['email'])  + ($other_count * $points['other']) ;
 	
-	return array('total_score'=>$total_score, 'met_count'=>$met_count, 'phone_count'=>$phone_count, 'message_count'=> $message_count, 'chat_count'=>$chat_count);
+	return array('total_score'=>$total_score, 'met_count'=>$met_count, 'phone_count'=>$phone_count, 'message_count'=> $message_count, 'chat_count'=>$chat_count, 'email_count'=>$email_count, 'other_count'=>$other_count);
 }
 
 function getConnectionCount($person_id, $type) {

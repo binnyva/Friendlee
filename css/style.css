@@ -223,4 +223,8 @@ ul.big-list .icon {
 .ui-autocomplete {
 	z-index: 1040 !important;
 }
+
+#uncontacted-people .active {
+	background-image: none !important;
+}
 /* */

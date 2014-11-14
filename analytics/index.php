@@ -1,21 +1,38 @@
 <?php
 require '../common.php';
 
-$type = i($QUERY, 'type', 'week');
-$date = i($QUERY, 'date',date('Y-m-d'));
+$type = i($QUERY, 'type', 'this_week');
+$from = i($QUERY, 'from', date('Y-m-d'));
+$to = i($QUERY, 'to', date('Y-m-d'));
 $person_comparison = i($QUERY, 'person_comparison', false);
 
 if($type == 'month') {
-	$month = date('Y-m', strtotime($date));
+	$month = date('Y-m', strtotime($from));
+	$to = date("Y-m-d", strtotime('next month', strtotime($from)));
 	$date_logic = " AND DATE_FORMAT(C.start_on,'%Y-%m') = '$month'";
 	$interval = '1 month';
+	$text = 'A Month';
+
+} elseif($type == 'this_week') { // This  happens when the user just chanes on the analytics page. Show the user the scores from last sunday.
+	$from = date('Y-m-d', strtotime('last sunday', strtotime($from)));
+	$to = date('Y-m-d', strtotime('next sunday', strtotime($from)));
+
+	$date_logic = " AND DATE(C.start_on) BETWEEN '$from' AND '$to'";
+	$interval = '1 week';
+	$text = 'This Week';
+	$type = 'week';
 
 } elseif($type == 'week') {
-	$last_sunday = date('Y-m-d', strtotime('last sunday', strtotime($date)));
-	$next_sunday = date('Y-m-d', strtotime('next sunday', strtotime($date)));
+	$to = date('Y-m-d', strtotime('+7 days', strtotime($from)));
 
-	$date_logic = " AND DATE(C.start_on) BETWEEN '$last_sunday' AND '$next_sunday'";
+	$date_logic = " AND DATE(C.start_on) BETWEEN '$from' AND '$to'";
 	$interval = '1 week';
+	$text = 'A Week';
+
+} else {
+	$date_logic = " AND DATE(C.start_on) BETWEEN '$from' AND '$to'";
+	$interval = 'Range';
+	$text = 'Range';
 }
 
 $person_logic = '';
