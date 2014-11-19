@@ -1,6 +1,9 @@
 <?php
 require_once(joinPath($config['site_folder'] , 'models/User.php'));
+require_once(joinPath($config['site_folder'] , 'models/Person.php'));
+
 $user = new User;
+
 if(strpos($config['PHP_SELF'], '/user/') === false
 	&& strpos($config['PHP_SELF'], '/about/') === false) checkUser();
 
@@ -9,7 +12,7 @@ $t_activity = new DBTable('Activity');
 $t_connection = new DBTable('Connection');
 $t_personconnection = new DBTable('PersonConnection');
 $t_note = new DBTable('Note');
-$t_person = new DBTable('Person');
+$t_person = new Person;
 
 $activate_plugins = false;
 if($sql->getOne("SELECT value FROM Setting WHERE name='activate_plugins'")) $activate_plugins = 1;

@@ -34,7 +34,7 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 
 		print "<tr><td><a href='person.php?person_id=$person[id]'>$person[nickname]</a></td>";
 		print "<td data='$person[gap]'>".ucfirst($person['type'])." $gap_days ago</td>";
-		$i_plugin->callHook("display_uncontacted_people_row", $person);
+		$i_plugin->callHook("display_uncontacted_people_row", array($person));
 
 		print "</tr>\n";
 	}

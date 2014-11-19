@@ -13,7 +13,7 @@ $people_last_contact = $sql->getById("SELECT P.id,P.nickname,P.name,P.level_id, 
 				GROUP BY PC.person_id ORDER BY P.level_id");
 
 if($i_plugin->isHook("data_uncontacted_people")) {
-	$people_last_contact = $i_plugin->callHook("data_uncontacted_people", $people_last_contact, true);
+	$people_last_contact = $i_plugin->callHook("data_uncontacted_people", array($people_last_contact), true);
 }
 
 $uncontacted_people = array();

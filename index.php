@@ -27,7 +27,7 @@ render();
 
 
 function getPeople($type) {
-	global $QUERY, $sql, $t_person, $people, $new_people, $points;
+	global $QUERY, $sql, $t_person, $people, $new_people, $points, $i_plugin;
 	
 	if(empty($QUERY[$type])) return;
 	
@@ -51,6 +51,7 @@ function getPeople($type) {
 			$nickname = strtolower($nickname_org);
 			if(!$nickname) continue;
 			
+			// Find person's ID using their nickname.
 			$person_id = $t_person->findOne("LOWER(nickname)='$nickname'", 'id');
 			if(!$person_id) {
 				// A very rough gender detection.	
@@ -64,7 +65,7 @@ function getPeople($type) {
 				$person_id = $t_person->set(array(
 						'nickname'	=> stripslashes($nickname_org),
 						'status'	=> 1,
-						'level_id'	=> 4,
+						'level_id'	=> 5, // Set them as level 5 by default - no contact.
 						'sex'		=> $sex,
 						'user_id'	=> $_SESSION['user_id'],
 					))->save();
@@ -84,6 +85,8 @@ function getPeople($type) {
 				$t_person->find($person_id);
 				$t_person->field['point'] = $t_person->field['point'] + $points[$type];
 				$t_person->save();
+
+				$i_plugin->callHook('action_person_connection_made', array($person_id, $type));
 			}
 		}
 	}
