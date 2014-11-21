@@ -23,6 +23,7 @@ if($new_people) {
 }
 
 $template->addResource("../bower_components/jquery.tablesorter/js/jquery.tablesorter.min.js", "js");
+$template->addResource("uncontacted.css", "css");
 render();
 
 

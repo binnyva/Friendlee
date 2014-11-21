@@ -93,7 +93,7 @@ $html->buildInput("person_id", "", 'hidden', $person['id']);
 </ul>
 
 <?php 
-$i_plugin->callHook("profile_end_display", $person);
+$i_plugin->callHook("profile_end_display", array($person));
 
 function getDistanceColor($contact, $person) {
 	global $sql, $frequency;

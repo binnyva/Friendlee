@@ -5,4 +5,8 @@
 .tablesorter-headerAsc {
 	background: url(../images/crud/up.png) no-repeat 0 5px;
 	padding-left:15px;
- }
+}
+
+.uncontacted-table tr:hover {
+	 background-color:#f6f6f6;
+}

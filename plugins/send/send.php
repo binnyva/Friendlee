@@ -3,7 +3,7 @@ require('../../common.php');
 include("Mail.php");
 include("Mail/mime.php");
 
-$to_send = $sql->getAll("SELECT *,S.name AS subject FROM Plugin_Send S INNER JOIN Person P ON S.person_id=P.id WHERE S.status='0' AND P.email!=''");
+$to_send = $sql->getAll("SELECT S.*,P.email,P.nickname,S.name AS subject FROM Plugin_Send S INNER JOIN Person P ON S.person_id=P.id WHERE S.status='0' AND P.email!=''");
 
 $already_send_to = array();
 
@@ -11,7 +11,7 @@ foreach ($to_send as $send) {
 	// Make sure we don't send the same person multiple things on the same run.
 	if(in_array($send['person_id'], $already_send_to)) continue;
 	$already_send_to[] = $send['person_id'];
-	$send['email'] = 'binnyva@makeadiff.in';
+	//$send['email'] = 'binnyva@makeadiff.in';
 	$file = '';
 
 	$subject = $send['subject'];
@@ -35,7 +35,7 @@ foreach ($to_send as $send) {
 	print "Done.\n";
 
 	print $message;
-	//$sql->update("Plugin_Send", "id=$send[id]", array('status'=>'1'));
+	$sql->update("Plugin_Send", array('status'=>'1'), "id=$send[id]");
 }
 
 function sendEmailWithAttachment($to_email, $subject, $body, $from=false, $login_details=false, $file=array()) {
