@@ -3,7 +3,9 @@ require('../../common.php');
 include("Mail.php");
 include("Mail/mime.php");
 
-$to_send = $sql->getAll("SELECT S.*,P.email,P.nickname,S.name AS subject FROM Plugin_Send S INNER JOIN Person P ON S.person_id=P.id WHERE S.status='0' AND P.email!=''");
+$to_send = $sql->getAll("SELECT S.*,P.email,P.nickname,S.name AS subject FROM Plugin_Send S 
+							INNER JOIN Person P ON S.person_id=P.id 
+							WHERE P.email!='' AND S.status='0'");
 
 $already_send_to = array();
 

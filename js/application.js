@@ -183,7 +183,7 @@ function siteInit() {
 	$(".popup").click(openPopup);
 	$("#popup-close").click(closePopup);
 
-	autocomplete("#search", people);
+	if(typeof people != "undefined") autocomplete("#search", people);
 	
 	if(document.getElementById("change-day")) calendar.set("change-day", {"onclick": makeCalender, "onDateSelect":setDate});
 	if(window.init && typeof window.init == "function") init(); //If there is a function called init(), call it on load
