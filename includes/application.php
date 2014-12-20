@@ -14,8 +14,9 @@ $t_personconnection = new DBTable('PersonConnection');
 $t_note = new DBTable('Note');
 $t_person = new Person;
 
+// Activate plugins depending on the current users setting - or global setting.
 $activate_plugins = false;
-if($sql->getOne("SELECT value FROM Setting WHERE name='activate_plugins'")) $activate_plugins = 1;
+if($sql->getOne("SELECT value FROM Setting WHERE name='activate_plugins' AND (user_id='$_SESSION[user_id]' OR user_id='0')")) $activate_plugins = true;
 
 $all_people = array();
 if(isset($_SESSION['user_id'])) {
