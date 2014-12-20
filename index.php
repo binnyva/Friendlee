@@ -53,7 +53,7 @@ function getPeople($type) {
 			if(!$nickname) continue;
 			
 			// Find person's ID using their nickname.
-			$person_id = $t_person->findOne("LOWER(nickname)='$nickname'", 'id');
+			$person_id = $t_person->findOne("LOWER(nickname)='$nickname' AND user_id='$_SESSION[user_id]'", 'id');
 			if(!$person_id) {
 				// A very rough gender detection.	
 				$first_name = @reset(explode(" ", $nickname_org));
