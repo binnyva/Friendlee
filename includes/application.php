@@ -74,3 +74,27 @@ function getConnectionCount($person_id, $type) {
 	return $count;
 }
 
+function newPeopleCheckAndInsert($all_people) {
+	global $t_person, $people, $new_people;
+
+	$ids = array();
+
+	foreach($all_people as $nickname_org) {
+		$nickname_org = trim($nickname_org);
+		$nickname = str_replace(array("'", "\\"), '', strtolower($nickname_org));
+		if(!$nickname) continue;
+		
+		// Find person's ID using their nickname.
+		$person_id = $t_person->findOne("LOWER(REPLACE(REPLACE(nickname, '\'',''), '\\\\',''))='$nickname' AND user_id='$_SESSION[user_id]'", 'id');
+
+		if(!$person_id) {
+			$person_data = $t_person->add($nickname_org);
+
+			$people[$person_id]['nickname'] = $nickname_org;
+			$new_people[] = $nickname_org . " (".strtoupper($person_data['sex']).")";
+			$person_id = $person_data['id'];
+		}
+		$ids[] = $person_id;
+	}
+	return $ids;
+ }

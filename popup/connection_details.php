@@ -4,29 +4,15 @@ require('../common.php');
 if(empty($QUERY['connection_id'])) die('{"success":false,"error":"No connection ID specidied"}');
 
 $connection_id = $QUERY['connection_id'];
+$new_people = array();
 
 if(i($QUERY, 'action') == 'Save') {
 	// If there is change in the people list, delete and re-insert.
 	if(i($QUERY, 'people') != i($QUERY, 'people_existing')) {
 		$all_people = explode(",", i($QUERY, 'people'));
-		foreach($all_people as $nickname_org) {
-			$nickname_org = trim($nickname_org);
-			$nickname = strtolower($nickname_org);
-			if(!$nickname) continue;
-			
-			$person_id = $t_person->findOne("LOWER(nickname)='$nickname'", 'id');
-			if(!$person_id) {
-				// If the person is not there in the DB, add him.
-				$person_id = $t_person->set(array(
-						'nickname'	=> $nickname_org,
-						'status'	=> 1,
-						'level_id'	=> 3, // Friend
-						'user_id'	=> $_SESSION['user_id'],
-					))->save();
-				$people[$person_id] = $nickname_org;
-			}
-			$ids[] = $person_id;
-		}
+
+		$ids = newPeopleCheckAndInsert($all_people);
+
 		if($ids) {
 			$sql->remove("PersonConnection", "connection_id='$connection_id'");
 			foreach($ids as $person_id) {
@@ -40,8 +26,13 @@ if(i($QUERY, 'action') == 'Save') {
 	
 	$affected_count = $sql->update("Connection", array('intensity'=>$QUERY['intensity'], 'start_on'=>$QUERY['start_on'], 'end_on'=>$QUERY['end_on'], 
 										'location'=>$QUERY['location'], 'note'=>$QUERY['note']), "id=$connection_id");
-										
-	showAjaxMessage('Connection updated','success');
+	
+
+	if($new_people) {
+		showAjaxMessage('Added new people to the system: ' . implode(', ', $new_people),'success');
+	} else {
+		showAjaxMessage('Connection updated','success');
+	}
 	exit;
 	
 } else {
