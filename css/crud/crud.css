@@ -18,10 +18,10 @@
 	border:1px solid #666;
 }
 .data-table tr:hover {
-	background-color:#FFA9A9;
+	background-color:#aaa;
 }
 .item-row-even {
-	background-color:#fee;
+	background-color:#fff;
 }
 .data-table tr.item-row-odd {
 	background-color:#fff;

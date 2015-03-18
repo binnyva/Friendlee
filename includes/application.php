@@ -89,10 +89,10 @@ function newPeopleCheckAndInsert($all_people) {
 
 		if(!$person_id) {
 			$person_data = $t_person->add($nickname_org);
-
-			$people[$person_id]['nickname'] = $nickname_org;
-			$new_people[] = $nickname_org . " (".strtoupper($person_data['sex']).")";
 			$person_id = $person_data['id'];
+
+			$people[$person_id]['nickname'] = $nickname_org; // Add the newly added person to the chached people list
+			$new_people[] = $nickname_org . " (".strtoupper($person_data['sex']).")";
 		}
 		$ids[] = $person_id;
 	}

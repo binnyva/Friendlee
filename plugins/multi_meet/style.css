@@ -1,0 +1,13 @@
+#multi-meet-area-holder {
+	display: none;
+}
+#multi-meet-area ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	height: 400px;
+	overflow-y: scroll;
+}
+#multi-meet-filter {
+	width: 98%;
+}

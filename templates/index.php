@@ -14,7 +14,9 @@
 <ul>
 <?php 
 $plugins = ls("*", joinPath($config['site_folder'], 'plugins'));
-foreach($plugins as $p) print "<li><a href='plugins/$p' class='with-icon plugin'>".format(trim($p,'/'))."</a></li>\n";
+foreach($plugins as $p) {
+	print "<li><a href='plugins/$p' class='with-icon plugin'>".format(trim($p,'/'))."</a></li>\n";
+}
 ?>
 </ul>
 <?php } ?>
@@ -41,7 +43,7 @@ foreach($plugins as $p) print "<li><a href='plugins/$p' class='with-icon plugin'
 <div class="container" id="contact-area">
 <div class="row">
 <div class="col-md-6"><?php showBox('message', 'Whatsapp/Text'); ?></div>
-<div class="col-md-6"><?php showBox('met'); ?></div>
+<div class="col-md-6"><?php showBox('met'); ?> <a href="#" id="multi-meet">Multi Meet</a></div>
 </div>
 <div class="row">
 <div class="col-md-6"><?php showBox('chat'); ?></div>

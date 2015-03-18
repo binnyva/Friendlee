@@ -72,6 +72,10 @@ var people = <?php echo json_encode($all_people); ?>;
 <div id="popup-area" class="panel-body"></div>
 </div>
 
+<?php 
+$i_plugin->callHook("display_content_top");
+?>
+
 <!-- Begin Content -->
 <?php 
 /////////////////////////////////// The Template file will appear here ////////////////////////////
@@ -80,6 +84,11 @@ include($GLOBALS['template']->template);
 
 /////////////////////////////////// The Template file will appear here ////////////////////////////
 ?>
+
+<?php 
+$i_plugin->callHook("display_content_end");
+?>
+
 <!-- End Content -->
 </div>
 
