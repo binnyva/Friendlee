@@ -12,10 +12,11 @@
 <div class="col-md-6">
 <?php if($activate_plugins) { ?>
 <ul>
-<?php 
+<?php
 $plugins = ls("*", joinPath($config['site_folder'], 'plugins'));
 foreach($plugins as $p) {
-	print "<li><a href='plugins/$p' class='with-icon plugin'>".format(trim($p,'/'))."</a></li>\n";
+	if(file_exists(joinPath($config['site_folder'], 'plugins', $p, 'index.php')))
+		print "<li><a href='plugins/$p' class='with-icon plugin'>".format(trim($p,'/'))."</a></li>\n";
 }
 ?>
 </ul>
