@@ -62,7 +62,8 @@ function sendEmailWithAttachment($to_email, $subject, $body, $from=false, $login
 	$body = $mime->get();
 	$headers = $mime->headers(array(
 		'From'    => $from,
-		'Subject' => $subject
+		'Subject' => $subject,
+		'Reply-to' => $from
 	));
 
 	$login_details['auth'] = true;

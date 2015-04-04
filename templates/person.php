@@ -25,6 +25,7 @@ $html->buildInput("twitter", 'Twitter Handle', 'text', $person['twitter']);
 $html->buildInput("birthday", 'Birthday', 'text', $person['birthday']);
 
 $html->buildInput("city_id", 'City', 'select', $person['city_id'], array('options' => $all_cities));
+?><label>&nbsp;</label><a href="cities.php?action=add">Another City?</a><br /><?php
 $html->buildInput("locality", 'Locality', 'text', $person['locality']);
 $html->buildInput("level_id", "Level", 'select', $person['level_id'], array('options' => $all_levels));
 

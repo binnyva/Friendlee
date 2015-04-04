@@ -3,5 +3,10 @@ function init() {
 }
 
 function removePerson (e) {
-	$(this.parentNode.parentNode).remove();
+	var links = $(this.parentNode).children("a");
+	if(links.length <= 1) {
+		$(this.parentNode.parentNode).remove(); // Remove the row - there is no more rewards
+	} else {
+		$(this).remove();
+	}
 }
