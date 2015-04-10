@@ -98,3 +98,43 @@ function newPeopleCheckAndInsert($all_people) {
 	}
 	return $ids;
  }
+
+function email($to, $subject, $body, $from = '') {
+	//return true; //:DEBUG:
+	global $config;
+	require("Mail.php");
+	require("Mail/mime.php");
+
+	if(!$from) $from = "BinnBot <binnbot@gmail.com>";
+	
+	// SMTP info here!
+	$host = $config['email_host'];
+
+	$username = $config['email_username'];
+	$password = $config['email_password'];
+	
+	$headers = array ('From' => $from,
+		'To' => $to,
+		'Subject' => $subject);
+	$smtp = Mail::factory('smtp',
+		array ('host' => $host,
+			'auth' => true,
+			'username' => $username,
+			'password' => $password));
+
+	$mime = new Mail_mime("\n");
+	$mime->setTXTBody(strip_tags($body));
+	$mime->setHTMLBody($body);
+
+	$body = $mime->get();
+	$headers = $mime->headers($headers);
+	
+	$mail = $smtp->send($to, $headers, $body);
+	
+	if (PEAR::isError($mail)) {
+		echo("<p>" . $mail->getMessage() . "</p>");
+		return false;
+	}
+	
+	return true;
+}
