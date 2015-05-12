@@ -70,6 +70,7 @@ uasort($people,function($a, $b) {
 });
 $top_ten = array_slice($people, 0, 10);
 
-//dump($top_ten);
+dump($top_ten);
+exit;
 render();
 

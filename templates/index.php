@@ -44,7 +44,7 @@ foreach($plugins as $p) {
 <div class="container" id="contact-area">
 <div class="row">
 <div class="col-md-6"><?php showBox('message', 'Whatsapp/Text'); ?></div>
-<div class="col-md-6"><?php showBox('met'); ?> <a href="#" id="multi-meet">Multi Meet</a></div>
+<div class="col-md-6"><?php showBox('met'); ?> <?php $i_plugin->callHook('main_box_met_show_under'); ?></div>
 </div>
 <div class="row">
 <div class="col-md-6"><?php showBox('chat'); ?></div>

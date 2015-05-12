@@ -84,6 +84,8 @@ $html->buildInput("person_id", "", 'hidden', $person['id']);
 <tr><td colspan="6"><span class="total-score"><?php echo $total_score ?></span></td></tr>
 </table>
 
+<p><a href="analytics/person.php?person_id=<?php echo $person_id ?>" class="with-icon analytics">Analytics for <?php echo first_name($person['nickname']) ?></a></p>
+
 <h3>Interaction Log</h3>
 <ul>
 <?php foreach($interaction_log as $interaction) { ?>

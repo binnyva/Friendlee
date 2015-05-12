@@ -26,14 +26,14 @@ function drawChart() {
 			if($connection_type == 'any') {
 				$count = $points[$f['type']];
 
-			} elseif($connection_type == 'met' AND $more_data_type = 'ratio') { {
+			} elseif($connection_type == 'met' AND $more_data_type = 'ratio') {
 				$count = 0;
 				if(preg_match('/(\d+)\:(\d+)/', $info, $matches)) {
 					$count = intval($matches[1]);
 				}
 			}
 
-			$dates[] = "[ new Date(".date('Y,m,d', strtotime($f['start_on']))."), $count ]";
+			$dates[] = "[ new Date('".date('Y-m-d', strtotime($f['start_on']))."'), $count ]"; 
 		}
 		print implode(",\n", $dates);
 		?>
@@ -82,4 +82,12 @@ function drawChart() {
 </script>
 
 <div id="chart_div"></div>
+
+<h3>Legend</h3>
+
+<span style="background:#4273e0;padding:3px;border:1px solid #000;">Meet</span>
+<span style="background:#b8caf3;padding:3px;border:1px solid #000;">Call</span>
+<span style="background:#e7edfb;padding:3px;border:1px solid #000;">Message</span>
+<span style="background:#ffffff;padding:3px;border:1px solid #000;">Chat</span>
+
 

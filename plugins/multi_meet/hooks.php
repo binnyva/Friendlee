@@ -21,22 +21,21 @@ function multi_meet_people_box() {
 </div>
 <?php
 }
-$this->addHook("display_content_top", "multi_meet_people_box");
+//$this->addHook("display_content_top", "multi_meet_people_box");
 
 function multi_meet_insertLink() {
 	print '<a href="#" id="multi-meet">Multi Meet</a>';
 }
-$this->addHook("main_box_met_show_under", "multi_meet_insertLink");
+//$this->addHook("main_box_met_show_under", "multi_meet_insertLink");
 
 function multi_meet_showJsCode() {
 	global $config;
 	print '<script src="' . $config['site_url'] . 'plugins/multi_meet/script.js" type="text/javascript"></script>';
 }
-$this->addHook("display_page_end", "multi_meet_showJsCode");
+//$this->addHook("display_page_end", "multi_meet_showJsCode");
 
 function multi_meet_showCssCode() {
 	global $config;
 	print '<link href="' . $config['site_url'] . 'plugins/multi_meet/style.css" rel="stylesheet" type="text/css" />';
 }
-$this->addHook("display_page_head", "multi_meet_showCssCode");
-
+//$this->addHook("display_page_head", "multi_meet_showCssCode");
