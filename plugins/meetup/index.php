@@ -26,6 +26,7 @@ if(!$current_trip) {
 		$sql->insert("Plugin_Meetup_Trip",array(
 				'start_on'	=> $QUERY['start_on'],
 				'city_id'	=> $QUERY['city_id'],
+				'user_id'	=> $_SESSION['user_id'],
 				'status'	=> 'ongoing'
 			));
 	} else {

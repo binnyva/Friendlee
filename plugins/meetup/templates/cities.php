@@ -11,7 +11,7 @@ else echo 'normal'; ?>" id="city-area-<?php echo $city_id ?>">
 
 <ul id="city-<?php echo $city_id ?>" class="friend-city">
 <?php foreach($info['people'] as $person) { ?>
-<li id="person_<?php echo $person['id'] ?>" class="ui-state-default"><a href="person.php?person_id=<?php echo $person['id'] ?>"><?php echo (empty($person['name']) ? $person['nickname'] : $person['name']) . " ($person[point])" ?></a></li>
+<li id="person_<?php echo $person['id'] ?>" class="ui-state-default"><a href="../../person.php?person_id=<?php echo $person['id'] ?>"><?php echo (empty($person['name']) ? $person['nickname'] : $person['name']) . " ($person[point])" ?></a></li>
 <?php } ?>
 </ul>
 </div>
