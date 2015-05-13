@@ -11,13 +11,13 @@ $all_cities[0] = 'All';
 
 $html = new HTML;
 $crud = new Crud('Plugin_Meetup_Trip', "Trips");
-$crud->code['top'] = '<form action="" method="get">
+$crud->code['before_content'] = '<form action="" method="get">
 <label for="city_id">Filter by City: </label>' . $html->buildDropDownArray($all_cities,"city_id",$city_id, array(), false) .
 '<input type="submit" name="action" value="Go" />
-</form>';
+</form>' . file_get_contents('templates/_nav.php'); // :UGLY: 
 
 $crud->setListingQuery("SELECT * FROM Plugin_Meetup_Trip WHERE user_id=$_SESSION[user_id] $where ORDER BY start_on DESC");
 $crud->setListingFields(array('city_id', 'start_on', 'end_on', 'status'));
 $crud->addField('status', 'Trip Status', 'enum', array(), array('projected' => "Future", 'ongoing' => "Ongoing", 'done'=>"Done"), 'select');
 
-$crud->render();
+render('crud');

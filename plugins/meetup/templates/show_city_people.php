@@ -1,4 +1,5 @@
 <h3>Show City</h3>
+<?php include('_nav.php'); ?>
 
 <form action="" method="get">
 <label for="city_id">Filter by City: </label>

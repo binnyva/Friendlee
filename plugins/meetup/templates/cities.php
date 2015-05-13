@@ -1,4 +1,6 @@
 <h1>Cities</h1>
+<?php include('_nav.php'); ?>
+
 <input type="button" onclick="saveOrder()" value="Save Configuration" class="btn btn-primary" /><br />
 
 <?php foreach($city as $city_id => $info) { ?>

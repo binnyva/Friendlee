@@ -80,7 +80,11 @@ $i_plugin->callHook("display_content_top");
 <?php 
 /////////////////////////////////// The Template file will appear here ////////////////////////////
 
-include($GLOBALS['template']->template); 
+if(isset($crud) and $GLOBALS['template']->template == '') {
+	$crud->printAction();
+} else {
+	include($GLOBALS['template']->template); 
+}
 
 /////////////////////////////////// The Template file will appear here ////////////////////////////
 ?>

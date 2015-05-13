@@ -1,5 +1,7 @@
 <h3>Trip to <?php echo $current_trip['city_name'] ?> from <?php echo date($config['date_format_php'], strtotime($current_trip['start_on'])); ?></h3>
 
+<?php include('_nav.php'); ?>
+
 <form action="" method="POST">
 <input class="btn btn-success" type="submit" name="action" value="Trip Done" />
 <input type="hidden" name="trip_id" value="<?php echo $current_trip['id'] ?>" />
