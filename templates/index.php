@@ -6,7 +6,6 @@
 <ul>
 <li><a href="tree.php" class="with-icon site">All Friends</a></li>
 <li><a href="uncontacted.php" class="with-icon phone">Uncontacted Friends</a></li>
-<?php if($_SESSION['user_id'] == 1) { ?><li><a href="leaderboard.php" class="with-icon info">Friends Leaderboard</a></li><?php } ?>
 </ul>
 </div>
 <div class="col-md-6">
@@ -84,6 +83,11 @@ function showConnections($name) {
 			$all_people = array();
 
 			$all_people_connections = $sql->getAll("SELECT person_id FROM PersonConnection WHERE connection_id=$con[id]");
+
+			// Show the count of the number of people in this meet - if its more than 4
+			$count = '';
+			if(count($all_people_connections) > 4) $count = '('.count($all_people_connections).')';
+			
 			foreach($all_people_connections as $pep_con) {
 				$person = $people[$pep_con['person_id']];
 				$all_people[] = '<a href="person.php?person_id='.$pep_con['person_id'].'">'
@@ -93,7 +97,7 @@ function showConnections($name) {
 			
 			if($all_people)  print "<li class='btn btn-default'>".implode(', ', $all_people)." <a href='ajax/delete_connection.php?connection_id=$con[id]' "
 									. "class='ajaxify ajaxify-remove-parent ajaxify-confirm delete icon' title=\"Delete '". stripslashes(empty($person['name']) ? $person['nickname'] : $person['name']) ."' connection\">Delete</a>"
-									. " <a href='popup/connection_details.php?connection_id=$con[id]' class='popup edit icon'>Details</a></li>";
+									. " <a href='popup/connection_details.php?connection_id=$con[id]' class='popup edit icon'>Details</a> $count</li>";
 		}
 		print "</ul>";
 	}
