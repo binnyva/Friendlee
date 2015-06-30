@@ -66,7 +66,7 @@ var people = <?php echo json_encode($all_people); ?>;
 
 
 <div id="popup-area-holder" class="panel panel-primary popup-holder">
-<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+<button type="button" class="close" onClick="closePopup()" aria-hidden="true">&times;</button>
 <div class="panel-heading" id="popup-title"></div>
 
 <div id="popup-area" class="panel-body"></div>

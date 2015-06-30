@@ -36,6 +36,7 @@ foreach ($people as $p) {
 			echo "<td><a href='history.php?person_id=$p[id]' class='icon wait'>History</a></td>";
 			echo "<td>";
 			for($i=0; $i<$photos_to_be_sent; $i++) echo " <a href='photo_sent.php?person_id=$p[id]' class='icon done ajaxify photo-sent'>Sent</a>";
+			if($photos_to_be_sent > 3) print " ($photos_to_be_sent)";
 			echo "</td>";
 		}
 

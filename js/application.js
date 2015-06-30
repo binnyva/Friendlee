@@ -131,7 +131,7 @@ function escapeKey(e) {
 }
 
 function closePopup(e) {
-	e.stopPropagation();
+	if(e) e.stopPropagation();
 	$(document).unbind("keydown", escapeKey);
 	$("#popup-area-holder").hide();
 }
