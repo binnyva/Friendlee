@@ -7,7 +7,7 @@ function init() {
 		}}
 	});
 
-	autocomplete("#message", people, ',')
+	autocomplete("#message", people, ',');
 	autocomplete("#met", people, '+');
 	autocomplete("#phone", people, ',');
 	autocomplete("#chat", people, ',');	
