@@ -11,7 +11,7 @@ if($type == 'month') {
 	$to = date("Y-m-d", strtotime('next month', strtotime($from)));
 	$date_logic = " AND DATE_FORMAT(C.start_on,'%Y-%m') = '$month'";
 	$interval = '1 month';
-	$text = 'A Month';
+	$text = 'Month';
 
 } elseif($type == 'this_week') { // This  happens when the user just chanes on the analytics page. Show the user the scores from last sunday.
 	$from = date('Y-m-d', strtotime('last sunday', strtotime($from)));
@@ -27,7 +27,7 @@ if($type == 'month') {
 
 	$date_logic = " AND DATE(C.start_on) BETWEEN '$from' AND '$to'";
 	$interval = '1 week';
-	$text = 'A Week';
+	$text = 'Week';
 
 } else {
 	$date_logic = " AND DATE(C.start_on) BETWEEN '$from' AND '$to'";
@@ -70,7 +70,6 @@ uasort($people,function($a, $b) {
 });
 $top_ten = array_slice($people, 0, 10);
 
-dump($top_ten);
-exit;
+// dump($top_ten);exit;
 render();
 

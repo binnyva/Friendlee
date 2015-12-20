@@ -34,7 +34,7 @@ $html->buildInput("note", "Note", 'textarea', $person['note']);
 $html->buildInput("person_id", "", 'hidden', $person['id']);
 ?>
 <label for="action">&nbsp;</label><input type="submit" name="action" value="Save" class="big" /><br />
-<a href="ajax/delete_person.php?person_id=<?php echo $person['id'] ?>" class="with-icon delete">Delete <?php echo $person['nickname'] ?></a><br />
+<a href="ajax/delete_person.php?person_id=<?php echo $person['id'] ?>" class="with-icon delete confirm">Delete <?php echo $person['nickname'] ?></a><br />
 <input type="button" name="more" id="hide-more-options" class="auto-hide" value="Hide Options" /><br />
 </div>
 </div>
