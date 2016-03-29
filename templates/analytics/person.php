@@ -55,14 +55,16 @@ function drawChart() {
 	var calendar_options = {
 		title: "Distribution for <?php echo $person_name ?>",
 		height: 600,
+		colorAxis: {
+			colors:['#43609c','#0dc143','#2da5e0','#f44336'],
+			values:[2,3,5,10]
+		}
 	};
 	calendar.draw(dataTable, calendar_options);
 }
 </script>
 
 <h1>Analytics for <?php echo $person_name ?></h1>
-
-<div id="bar_chart"></div>
 
 <h4>Longest Streak: <?php echo $longest_streak ?> days</h4>
 <?php showFromTo($longest_streak, $longest_streak_to); ?>
@@ -73,10 +75,16 @@ function drawChart() {
 
 <h3>Legend</h3>
 
-<span style="background:#4273e0;padding:3px;border:1px solid #000;">Meet</span>
-<span style="background:#b8caf3;padding:3px;border:1px solid #000;">Call</span>
-<span style="background:#e7edfb;padding:3px;border:1px solid #000;">Message</span>
-<span style="background:#ffffff;padding:3px;border:1px solid #000;">Chat</span>
+<span style="background:#f44336;padding:3px;border:1px solid #000;color:#fff;">Meet</span>
+<span style="background:#2da5e0;padding:3px;border:1px solid #000;color:#fff;">Call</span>
+<span style="background:#0dc143;padding:3px;border:1px solid #000;color:#fff;">Message</span>
+<span style="background:#43609c;padding:3px;border:1px solid #000;color:#fff;">Chat</span>
 <br /><br />
 
 <div id="calendar"></div>
+
+<h2>Growth Rate</h2>
+
+<div id="bar_chart"></div>
+
+<br /><br />

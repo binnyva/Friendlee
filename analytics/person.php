@@ -20,7 +20,7 @@ $person_name = $person['nickname'];
 
 // Group by week or month
 $group_by = '';
-if($type == 'week') $group_by = "DATE_FORMAT(C.start_on, '%U')";
+if($type == 'week') $group_by = "DATE_FORMAT(C.start_on, '%Y-%U')"; 
 elseif($type == 'month') $group_by = "DATE_FORMAT(C.start_on, '%Y-%m')";
 
 ///////////////////// Frequency //////////////////////////////
@@ -49,14 +49,17 @@ foreach ($freq as $key => $value) {
 	$freq[$key]['points'] = $current_points;
 
 	// Y axis labels
-	if($type == 'week')
-		$date = date("d M", strtotime(date("Y") . "W" . $value['group_index'])) . '-' . date("d M", strtotime(date("Y") . "W" . ($value['group_index']+1))); 
-	else 
+	if($type == 'week') {
+		$week_index = @end(explode("-", $value['group_index']));
+		$next_week = str_pad(intval($week_index) + 1, 2, '0', STR_PAD_LEFT);
+		$date = date("d M", strtotime(date("Y") . "W" . $week_index)) . '-' . date("d M", strtotime(date("Y") . "W" . $next_week)); 
+	} else {
 		$date = date("M Y", strtotime($value['group_index'] . "-01")); 
+	}
 
 	$data[] = array($date, intval($value['count']), $current_points);
 }
-$data = array_reverse($data);
+// $data = array_reverse($data);
 
 ///////////////////// Streaks and Distribution //////////////////////////////
 // Streaks part. Code taken from MyLife::tags/tag.php
