@@ -75,10 +75,10 @@ function drawChart() {
 
 <h3>Legend</h3>
 
-<span style="background:#f44336;padding:3px;border:1px solid #000;color:#fff;">Meet</span>
-<span style="background:#2da5e0;padding:3px;border:1px solid #000;color:#fff;">Call</span>
-<span style="background:#0dc143;padding:3px;border:1px solid #000;color:#fff;">Message</span>
-<span style="background:#43609c;padding:3px;border:1px solid #000;color:#fff;">Chat</span>
+<span style="background:#f44336;" class="legend-cell">Meet</span>
+<span style="background:#2da5e0;" class="legend-cell">Call</span>
+<span style="background:#0dc143;" class="legend-cell">Message</span>
+<span style="background:#43609c;" class="legend-cell">Chat</span>
 <br /><br />
 
 <div id="calendar"></div>
