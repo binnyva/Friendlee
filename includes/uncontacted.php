@@ -23,7 +23,7 @@ foreach($people_last_contact as $person) {
 	$interval = date_diff($datetime1, $datetime2);
 	$gap = $interval->format('%a');
 	$level_id = $person['level_id'];
-	if(isset($contact_thresholds[$level_id]) and $contact_thresholds[$level_id] != 0 
+	if(isset($contact_thresholds) and isset($contact_thresholds[$level_id]) and $contact_thresholds[$level_id] != 0 
 			and $gap > $contact_thresholds[$level_id]) {
 		$pid = $person['id'];
 		$person['gap'] = $gap;

@@ -28,8 +28,10 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 	print "<tbody>";
 	foreach ($uncontacted_in_level as $person) {
 		$gap_days = $person['gap'];
-		if($gap_days > 30)
-			$gap_days = floor($gap_days / 30) . ' months, ' . ($gap_days % 30) . ' days';
+		if($gap_days > 30) {
+			$gap_days = floor($gap_days / 30) . ' months';
+			if($gap_days % 30) $gap_days .= ', ' . ($gap_days % 30) . ' days';
+		}
 		else $gap_days .= ' days';
 
 		print "<tr><td><a href='person.php?person_id=$person[id]'>$person[nickname]</a></td>";
@@ -44,4 +46,4 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 ?>
 </div>
 </div>
-<?php } ?>
+<?php }

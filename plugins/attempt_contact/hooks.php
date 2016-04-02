@@ -12,16 +12,16 @@ function ca_injectAttepmtData($data) {
 		GROUP BY CA.person_id");
 
 	foreach($data as $pid => $info) {
-		$data[$pid]['contact_attempt'] = i($attempt_data, $pid, 0);
+		$attempt_count = i($attempt_data, $pid, 0);
+		$data[$pid]['contact_attempt'] = $attempt_count;
 	}
-	
 	return $data;
 }
 $this->addHook("data_uncontacted_people", "ca_injectAttepmtData");
 
 
 function ca_showAttepmtCount($person) {
-	$ca_number_of_attempts_before_demote_option = 5;
+	$ca_number_of_attempts_before_demote_option = 3;
 
 	?>
 	<td><span id="attempts-<?php echo $person['id'] ?>"><?php echo $person['contact_attempt'] ?></span>
