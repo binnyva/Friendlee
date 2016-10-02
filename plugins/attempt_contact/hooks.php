@@ -4,7 +4,7 @@ function ca_injectAttepmtData($data) {
 	global $sql;
 
 	// Find how many times the attempt was made after the last succesfull attempt.
-	$attempt_data = $sql->getById("SELECT CA.person_id, COUNT(CA.id) AS count 
+	$attempt_data = $sql->getById("SELECT CA.person_id, COUNT(CA.id) AS count, MAX(CA.attempt_on) AS last_attempt 
 		FROM Plugin_Contact_Attempt CA 
 		INNER JOIN Person P ON P.id=CA.person_id 
 		WHERE P.user_id=$_SESSION[user_id] AND CA.status!='replied' AND CA.action_taken!='demote'
@@ -12,8 +12,14 @@ function ca_injectAttepmtData($data) {
 		GROUP BY CA.person_id");
 
 	foreach($data as $pid => $info) {
-		$attempt_count = i($attempt_data, $pid, 0);
-		$data[$pid]['contact_attempt'] = $attempt_count;
+		$attempt_count = i($attempt_data, $pid, false);
+		$data[$pid]['contact_attempt'] = 0;
+		$data[$pid]['last_attempt'] = false;
+
+		if($attempt_count) {
+			$data[$pid]['contact_attempt'] = $attempt_count['count'];
+			$data[$pid]['last_attempt'] = $attempt_count['last_attempt'];
+		}
 	}
 	return $data;
 }

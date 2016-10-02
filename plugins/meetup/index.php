@@ -23,7 +23,7 @@ if(!$current_trip) {
 		$current_trip['status'] = 'ongoing';
 		$current_trip['city_name'] = $t_city->findOne(array('id'=> $QUERY['city_id']), "name");
 
-		$sql->insert("Plugin_Meetup_Trip",array(
+		$current_trip['id'] = $sql->insert("Plugin_Meetup_Trip",array(
 				'start_on'	=> $QUERY['start_on'],
 				'city_id'	=> $QUERY['city_id'],
 				'user_id'	=> $_SESSION['user_id'],

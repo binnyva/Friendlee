@@ -1,3 +1,4 @@
+<?php $i_plugin->callHook("profile_top_display", array($person)); ?>
 
 <form action="ajax/change_person_details.php" method="post">
 <div class="camouflage-area">
@@ -85,6 +86,8 @@ $html->buildInput("person_id", "", 'hidden', $person['id']);
 </table>
 
 <p><a href="analytics/person.php?person_id=<?php echo $person_id ?>" class="with-icon analytics">Analytics for <?php echo first_name($person['nickname']) ?></a></p>
+
+<?php $i_plugin->callHook("profile_middle_display", array($person)); ?>
 
 <h3>Interaction Log</h3>
 <ul>

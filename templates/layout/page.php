@@ -43,7 +43,7 @@ var people = <?php echo json_encode($all_people); ?>;
 </form></li>
 		<li><a class="site with-icon" href="<?php echo $config['site_url'] ?>tree.php">People</a></li>
 		<li><a class="calendar with-icon" href="<?php echo $config['site_url'] ?>?date=<?php echo date('Y-m-d', strtotime('yesterday')); ?>">Yesterday</a></li>
-		<li><a class="add with-icon" href="<?php echo $config['site_url'] ?>">Today</a></li>
+		<li><a class="add with-icon" href="<?php echo $config['site_url'] ?>?date=today">Today</a></li>
 		<?php if(!isset($config['single_user']) or !$config['single_user']) { ?>
 		<li><a class="logout with-icon" href="<?php echo $config['site_url'] ?>user/logout.php">Logout</a></li>
 	<?php }

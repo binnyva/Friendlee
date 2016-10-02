@@ -99,6 +99,15 @@ function newPeopleCheckAndInsert($all_people) {
 	return $ids;
  }
 
+ function date_difference($a, $b) {
+ 	$datetime1 = date_create($a);
+	$datetime2 = date_create($b);
+	$interval = date_diff($datetime1, $datetime2);
+	$gap = $interval->format('%a');
+
+	return $gap;
+ }
+
 function email($to, $subject, $body, $from = '') {
 	//return true; //:DEBUG:
 	global $config;

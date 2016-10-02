@@ -1,7 +1,13 @@
 <?php
 require('common.php');
 
-$date = i($QUERY,'date', date('Y-m-d'));
+$date = i($QUERY,'date', 'guess');
+if($date == 'guess') {
+	if(date('H:i:s') < '15:00:00') $date = date('Y-m-d', strtotime('yesterday'));
+	else $date = date('Y-m-d');
+} else {
+	$date = date('Y-m-d', strtotime($date));
+}
 $new_people = array();
 
 $title = 'Friendlee : ' . date('dS F, Y', strtotime($date));
