@@ -67,13 +67,26 @@ function autocomplete(id, list, splitter) {
 					hash_terms[val] = true;
 				});
 				
-				var final_list = list.filter(function(val) {
+				var final_list = list.filter(function(ele) {
+					var val = ele.name;
 					if(!hash_terms[val]) {
 						var regexp = new RegExp("^" + current_input,"i"); // The typed text should match the beginning of the name - not anywhere. And Case insensitive.
 						if(val.match(regexp)) return val;
 					}
 				});
-				response(final_list);
+
+				// Sort the names by how much points they have. 
+				final_list.sort(function(a, b) {
+					if(a.point > b.point) return -1;
+					if(a.point < b.point) return 1;
+					else return 0;
+				});
+
+				var autocomplete_list = final_list.map(function(val, index) {
+					return val.name;
+				});
+
+				response(autocomplete_list);
 			},
 			focus: function() {	// prevent value inserted on focus
 				return false;
@@ -114,7 +127,7 @@ function openPopup(e) {
 			
 			// Put in a small delay before calling the library function - or the element will not be there.
 			window.setTimeout(function() {
-				if($("#people")) autocomplete("#people", people, ',');
+				if($("#people")) autocomplete("#people", people_with_points, ',');
 				
 				$(document).bind( "keydown", escapeKey);
 			}, 500);
@@ -168,6 +181,10 @@ function siteInit() {
 			e.stopPropagation();
 		}
 	});
+
+	$(".message-area").click(function() {
+		$(this).toggle();
+	})
 	
 	$(".auto-show").click(function() {
 		var id = $(this).attr("id");
@@ -183,7 +200,7 @@ function siteInit() {
 	$(".popup").click(openPopup);
 	$("#popup-close").click(closePopup);
 
-	if(typeof people != "undefined") autocomplete("#search", people);
+	if(typeof people != "undefined") autocomplete("#search", people_with_points);
 	
 	if(document.getElementById("change-day")) calendar.set("change-day", {"onclick": makeCalender, "onDateSelect":setDate});
 	if(window.init && typeof window.init == "function") init(); //If there is a function called init(), call it on load

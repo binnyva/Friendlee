@@ -30,13 +30,28 @@ $html->buildInput("city_id", 'City', 'select', $person['city_id'], array('option
 $html->buildInput("locality", 'Locality', 'text', $person['locality']);
 $html->buildInput("level_id", "Level", 'select', $person['level_id'], array('options' => $all_levels));
 
-$html->buildInput("note", "Note", 'textarea', $person['note']);
+$html->buildInput("note", "Note...", 'textarea', $person['note']);
+?>
+<a href="#" id="toggle-advanced-options" class="with-icon settings">Advanced Options...</a>
+
+<div id="advanced-options">
+<fieldset>
+<legend>Advanced Options</legend>
+<?php
+$html->buildInput("autocomplete", 'Show in Auto Complete List', 'checkbox', $person['autocomplete']);
+$html->buildInput("automanaged", 'Hide in Uncontacted List', 'checkbox', $person['automanaged']);
+?>
+</fieldset>
+</div>
+<?php
 
 $html->buildInput("person_id", "", 'hidden', $person['id']);
-?>
-<label for="action">&nbsp;</label><input type="submit" name="action" value="Save" class="big" /><br />
-<a href="ajax/delete_person.php?person_id=<?php echo $person['id'] ?>" class="with-icon delete confirm">Delete <?php echo $person['nickname'] ?></a><br />
-<input type="button" name="more" id="hide-more-options" class="auto-hide" value="Hide Options" /><br />
+?><br />
+
+<a href="ajax/delete_person.php?person_id=<?php echo $person['id'] ?>" class="with-icon delete confirm pull-right">Delete <?php echo $person['nickname'] ?></a>
+<input type="submit" name="action" value="Save" class="big btn btn-primary" />
+
+<!-- <input type="button" name="more" id="hide-more-options" class="auto-hide" value="Hide Options" /><br /> -->
 </div>
 </div>
 </form>

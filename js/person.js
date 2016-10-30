@@ -7,4 +7,9 @@ function init() {
 	$("#show-more-options").click(function() {
 		$("#more-options-area").show();
 	});
+
+	$("#toggle-advanced-options").click(function() {
+		$("#advanced-options").show();
+		$("#toggle-advanced-options").hide();
+	});
 }

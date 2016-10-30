@@ -18,6 +18,7 @@ $i_plugin->callHook("display_page_head");
 ?>
 <script type="text/javascript">
 var people = <?php echo json_encode($all_people); ?>;
+var people_with_points = <?php echo json_encode($all_people_with_points); ?>;
 </script>
 </head>
 <body>

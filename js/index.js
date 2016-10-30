@@ -7,10 +7,10 @@ function init() {
 		}}
 	});
 
-	autocomplete("#message", people, ',');
-	autocomplete("#met", people, '+');
-	autocomplete("#phone", people, ',');
-	autocomplete("#chat", people, ',');	
-	autocomplete("#email", people, ',');
-	autocomplete("#other", people, ',');
+	autocomplete("#message", people_with_points, ',');
+	autocomplete("#met", people_with_points, '+');
+	autocomplete("#phone", people_with_points, ',');
+	autocomplete("#chat", people_with_points, ',');	
+	autocomplete("#email", people_with_points, ',');
+	autocomplete("#other", people_with_points, ',');
 }

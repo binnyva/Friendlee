@@ -10,6 +10,6 @@ function data_point_showData($person) {
 		print "<p><a href='". joinPath($config['site_url'], 'plugins/data_point/person.php') . "?action=edit&id=".$row['id']."' class='with-icon edit'>Edit</a></p>";
 	}
 
-	print "<a href='". joinPath($config['site_url'], 'plugins/data_point/person.php') . "?person_id=".$person['id']."' class='with-icon add'>Add Points</a>";
+	print "<a href='". joinPath($config['site_url'], 'plugins/data_point/person.php') . "?person_id=".$person['id']."' class='with-icon add'>Add Data Point</a>";
 }
 $this->addHook("profile_middle_display", "data_point_showData");

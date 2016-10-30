@@ -1,7 +1,7 @@
-<h2>3 Things</h2>
+<h2>Data Points</h2>
 
 <ul>
-<?php foreach($people as $person_id => $name) { ?>
-<li><a href="person.php?person_id=<?php echo $person_id; ?>"><?php echo $name ?></a></li>
+<?php foreach($people as $data) { ?>
+<li><a href="person.php?person_id=<?php echo $data['person_id']; ?>"><?php echo "$data[name] ($data[data_point])" ?></a></li>
 <?php } ?>
 </ul>

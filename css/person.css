@@ -4,6 +4,7 @@
 }
 #more-options-area {
 	display: none;
+	width:460px;
 }
 
 #score-table {
@@ -42,3 +43,14 @@
 	padding:5px;
 	display:block;
 }
+.form-area label {
+	width: 150px;
+}
+.form-area select {
+	width: 190px;
+}
+#advanced-options {
+	display: none;
+}
+
+

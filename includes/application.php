@@ -20,8 +20,12 @@ if(isset($_SESSION['user_id']) and $sql->getOne("SELECT value FROM Setting WHERE
 
 $all_people = array();
 if(isset($_SESSION['user_id'])) {
-	$people = keyFormat($t_person->sort('nickname')->find(array('user_id'=>$_SESSION['user_id'])));
-	foreach($people as $p) $all_people[] = $p['nickname'];
+	$people = keyFormat($t_person->sort('nickname')->find(array('user_id'=>$_SESSION['user_id'], 'autocomplete'=>'1')));
+	
+	foreach($people as $p) {
+		$all_people[] = $p['nickname'];
+		$all_people_with_points[] = array('name' => $p['nickname'], 'point' => intval($p['point']));
+	}
 }
 
 function checkUser() {
