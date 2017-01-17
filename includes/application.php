@@ -1,8 +1,10 @@
 <?php
 require_once(joinPath($config['site_folder'] , 'models/User.php'));
 require_once(joinPath($config['site_folder'] , 'models/Person.php'));
+require_once(joinPath($config['site_folder'] , 'models/Connection.php'));
 
 $user = new User;
+$connection = new Connection;
 
 if(strpos($config['PHP_SELF'], '/user/') === false
 	&& strpos($config['PHP_SELF'], '/about/') === false) checkUser();
@@ -78,32 +80,7 @@ function getConnectionCount($person_id, $type) {
 	return $count;
 }
 
-function newPeopleCheckAndInsert($all_people) {
-	global $t_person, $people, $new_people;
-
-	$ids = array();
-
-	foreach($all_people as $nickname_org) {
-		$nickname_org = trim($nickname_org);
-		$nickname = str_replace(array("'", "\\"), '', strtolower($nickname_org));
-		if(!$nickname) continue;
-		
-		// Find person's ID using their nickname.
-		$person_id = $t_person->findOne("LOWER(REPLACE(REPLACE(nickname, '\'',''), '\\\\',''))='$nickname' AND user_id='$_SESSION[user_id]'", 'id');
-
-		if(!$person_id) {
-			$person_data = $t_person->add($nickname_org);
-			$person_id = $person_data['id'];
-
-			$people[$person_id]['nickname'] = $nickname_org; // Add the newly added person to the chached people list
-			$new_people[] = $nickname_org . " (".strtoupper($person_data['sex']).")";
-		}
-		$ids[] = $person_id;
-	}
-	return $ids;
- }
-
- function date_difference($a, $b) {
+function date_difference($a, $b) {
  	$datetime1 = date_create($a);
 	$datetime2 = date_create($b);
 	$interval = date_diff($datetime1, $datetime2);
