@@ -29,7 +29,8 @@ foreach($plugins as $p) {
 
 <div class="container">
 <ul id="date-changer" class="btn-group btn-group-justified center-block">
-<li class="btn btn-default"><a class="previous previous-day with-icon" href="?date=<?php echo date('Y-m-d', strtotime($date) - (60*60*24)); ?>">Previous Day(<?php echo date('dS M', strtotime($date) - (60*60*24)); ?>)</a></li>
+<li class="btn btn-default"><a class="previous previous-day with-icon" href="?date=<?php echo date('Y-m-d', strtotime($date) - (60*60*24)); 
+		?>">Previous Day(<?php echo date('dS M', strtotime($date) - (60*60*24)); ?>)</a></li>
 <li class="btn btn-default"><span class="curdate"><?php echo date('dS M(l)', strtotime($date)); ?> <a href="#" id="change-day" class="icon calendar">Change</a></span></li>
 <?php if(date('Y-m-d', strtotime($date) + (60*60*24)) <= date('Y-m-d')) { ?>
 <li class="btn btn-default"><a class="next next-day with-icon" href="?date=<?php 
@@ -74,23 +75,23 @@ function showBox($name, $title='') {
 }
 
 function showConnections($name) {
-	global $sql, $people, $date;
-	$all_connections = $sql->getAll("SELECT id FROM Connection WHERE user_id=$_SESSION[user_id] AND DATE(start_on)='$date' AND type='$name'");
+	global $sql, $people, $date, $t_connection;
+	$all_connections = $t_connection->getConnectionsOnDate($date, $name);
 	
 	if($all_connections) {
 		print "<ul class='big-list'>";
 		foreach($all_connections as $con) {
 			$all_people = array();
 
-			$all_people_connections = $sql->getAll("SELECT person_id FROM PersonConnection WHERE connection_id=$con[id]");
+			$all_people_connections = $t_connection->getPeopleIdsInConnection($con['id']);
 
 			// Show the count of the number of people in this meet - if its more than 4
 			$count = '';
 			if(count($all_people_connections) > 4) $count = '('.count($all_people_connections).')';
 			
-			foreach($all_people_connections as $pep_con) {
-				$person = $people[$pep_con['person_id']];
-				$all_people[] = '<a href="person.php?person_id='.$pep_con['person_id'].'">'
+			foreach($all_people_connections as $person_id) {
+				$person = $people[$person_id];
+				$all_people[] = '<a href="person.php?person_id='.$person_id.'">'
 					. stripslashes((empty($person['name']) ? $person['nickname'] : $person['name'])) 
 					. '</a>';
 			}

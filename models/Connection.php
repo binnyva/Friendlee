@@ -1,13 +1,17 @@
 <?php
 class Connection extends DBTable {
+	private $sql;
+
 	function __construct() {
+		global $sql;
+		$this->sql = $sql;
 		parent::__construct("Connection");
 	}
 
 	function add($type, $all_people) {
-		global $sql, $QUERY, $t_person, $i_plugin, $points;
+		global $QUERY, $t_person, $i_plugin, $points;
 
-		$connection_id = $sql->insert('Connection', array(
+		$connection_id = $this->sql->insert('Connection', array(
 			'type'		=> $type,
 			'start_on'	=> $QUERY['date'] . ' 00:00:00',
 			'user_id'	=> $_SESSION['user_id']
@@ -17,7 +21,7 @@ class Connection extends DBTable {
 
 		if($ids) {
 			foreach($ids as $person_id) {
-				$sql->insert("PersonConnection", array(
+				$this->sql->insert("PersonConnection", array(
 					'connection_id'	=> $connection_id,
 					'person_id'		=> $person_id
 				));
@@ -32,6 +36,59 @@ class Connection extends DBTable {
 		}
 
 		return $connection_id;
+	}
+
+	function edit($connection_id, $data, $all_people) {
+		global $t_person;
+
+		if($all_people) {
+			$ids = $t_person->getPeopleIds(explode(",", $all_people));
+			if($ids) {
+				$this->sql->remove("PersonConnection", "connection_id='$connection_id'");
+				foreach($ids as $person_id) {
+					$this->sql->insert("PersonConnection", array(
+						'connection_id'	=> $connection_id,
+						'person_id'		=> $person_id
+					));
+				}
+			}
+		}
+
+		$affected_count = $this->sql->update("Connection", array(
+									'intensity'	=> $data['intensity'],
+									'start_on'	=> $data['start_on'],
+									'end_on'	=> $data['end_on'],
+									'location'	=> $data['location'],
+									'note'		=> $data['note']
+								), "id=$connection_id");
+
+	}
+
+	/// Delete a connection - remove the person connection - and the the connection itself.
+	function remove($connection_id) {
+		global $t_personconnection, $t_person, $points;
+
+		// Reset the points given for this connection.
+		$connection_details = $this->find($connection_id);
+		$connection_people = $t_personconnection->find(array('connection_id'=>$connection_id));
+		foreach ($connection_people as $cp) {
+			$t_person->find($cp['person_id']);
+			$t_person->field['point'] = $t_person->field['point'] - $points[$connection_details['type']];
+			$t_person->save();
+		}
+
+		$this->sql->remove('PersonConnection', "connection_id=$connection_id");
+		$affected = $this->sql->remove('Connection', "id=$connection_id");
+
+		return $affected;
+	}
+
+	function getConnectionsOnDate($date, $type) {
+		return $this->sql->getAll("SELECT id FROM Connection WHERE user_id=$_SESSION[user_id] AND DATE(start_on)='$date' AND type='$type'");
+	}
+
+	function getPeopleIdsInConnection($connection_id) {
+		return $this->sql->getCol("SELECT person_id FROM PersonConnection WHERE connection_id=$connection_id");
 	}
 
 	function parse($type, $raw) {

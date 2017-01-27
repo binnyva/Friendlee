@@ -8,26 +8,12 @@ $new_people = array();
 
 if(i($QUERY, 'action') == 'Save') {
 	// If there is change in the people list, delete and re-insert.
+	$all_people = array();
 	if(i($QUERY, 'people') != i($QUERY, 'people_existing')) {
-		$all_people = explode(",", i($QUERY, 'people'));
-
-		$ids = newPeopleCheckAndInsert($all_people);
-
-		if($ids) {
-			$sql->remove("PersonConnection", "connection_id='$connection_id'");
-			foreach($ids as $person_id) {
-				$sql->insert("PersonConnection", array(
-					'connection_id'	=> $connection_id,
-					'person_id'		=> $person_id
-				));
-			}
-		}
+		$all_people = i($QUERY, 'people');
 	}
+	$t_connection->edit($connection_id, $QUERY, $all_people);
 	
-	$affected_count = $sql->update("Connection", array('intensity'=>$QUERY['intensity'], 'start_on'=>$QUERY['start_on'], 'end_on'=>$QUERY['end_on'], 
-										'location'=>$QUERY['location'], 'note'=>$QUERY['note']), "id=$connection_id");
-	
-
 	if($new_people) {
 		showAjaxMessage('Added new people to the system: ' . implode(', ', $new_people),'success');
 	} else {

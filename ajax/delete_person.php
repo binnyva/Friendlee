@@ -8,8 +8,7 @@ if(!$nick = $sql->getOne("SELECT nickname FROM Person WHERE id=$person_id AND us
 	exit;
 }
 
-$sql->remove('PersonConnection', "person_id=$person_id");
-$affected = $sql->remove('Person', "id=$person_id");
+$affected = $t_person->remove($person_id);
 
 if($affected) {
 	showMessage("'$nick' deleted", 'tree.php','success');

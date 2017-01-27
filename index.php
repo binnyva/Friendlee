@@ -34,12 +34,12 @@ render();
 
 
 function getPeople($type) {
-	global $QUERY, $sql, $t_person, $people, $new_people, $points, $i_plugin, $connection;
+	global $QUERY, $sql, $t_person, $people, $new_people, $points, $i_plugin, $t_connection;
 	
 	if(empty($QUERY[$type])) return;
 	
 	$raw = $QUERY[$type];
-	$connection_id = $connection->parse($type, $raw);
+	$connection_id = $t_connection->parse($type, $raw);
 
 	return $connection_id;
 }

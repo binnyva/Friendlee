@@ -10,8 +10,19 @@ $api = new API;
 
 /**
 
-/interaction/met/add/
-/met/add
+
+/connection/add/met/{people}		-> /met/{people}
+/connection/add/message/{people}	-> /message/{people}
+/connection/add/phone/{people}		-> /phone/{people}
+/connection/add/chat/{people}		-> /chat/{people}
+/connection/edit/{connection_id}
+/connection/delete/{connection_id}
+
+/person/add/
+/person/edit/{person_id}
+/person/delete/{person_id}
+
+/
 
 */
 
