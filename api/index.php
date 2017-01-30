@@ -8,218 +8,89 @@ header("Content-Type: application/json");
 $sql->options['error_handling'] = 'die';
 $api = new API;
 
-/**
-
-
-/connection/add/met/{people}		-> /met/{people}
-/connection/add/message/{people}	-> /message/{people}
-/connection/add/phone/{people}		-> /phone/{people}
-/connection/add/chat/{people}		-> /chat/{people}
-/connection/edit/{connection_id}
-/connection/delete/{connection_id}
-
-/person/add/
-/person/edit/{person_id}
-/person/delete/{person_id}
-
-/
-
-*/
-
-$api->post('/met/{people}', function() {
-	global $QUERY;
-
-
+$api->request('/met/{people}', function($people) {
+	addConnection('met', $people);
+});
+$api->request('/message/{people}', function($people) {
+	addConnection('message', $people);
+});
+$api->request('/phone/{people}', function($people) {
+	addConnection('phone', $people);
+});
+$api->request('/chat/{people}', function($people) {
+	addConnection('chat', $people);
 });
 
+function addConnection($type, $people) {
+	global $t_connection;
+	$connection_id = $t_connection->parse($type, $people);
 
-/*
-$api->post('/donation/add', function() {
-	global $QUERY;
+	if($connection_id) showSuccess("Connection created($connection_id)");
+	else showError("Error creating connection.");
+}
 
-	if(isset($QUERY['created_at']) and $QUERY['created_at']) $QUERY['created_at'] = date("Y-m-d", strtotime($QUERY['created_at']));
-	else $QUERY['created_at'] = date('Y-m-d H:i:s');
-	if(isset($QUERY['donation_type']) and $QUERY['donation_type'] == 'gg') $QUERY['donation_type'] = 'globalgiving';
+$api->request('/connection/edit/{connection_id}/{people}', function ($connection_id, $people) {
+	global $t_connection, $QUERY;
+	$affected = $t_connection->edit($connection_id, $QUERY, $people);
 
-	$donations = new Donation;
-	$donation_id = $donations->add($QUERY);
-
-	if($donation_id) showSuccess("Donation inserted succesfully : Donation ID '.$donation_id.'", array("donation" => array("id" => $donation_id)));
-	else showError("Failure in inserting donation at server. Try again after some time.");
+	if($affected) showSuccess("Connection updated");
+	else showError("Error updating connection.");
 });
 
-$api->post('/donation/validate', function() {
-	global $QUERY;
+$api->request('/connection/delete/{connection_id}', function ($connection_id) {
+	global $t_connection;
+	$affected = $t_connection->remove($connection_id);
 
-	if(isset($QUERY['created_at']) and $QUERY['created_at']) $QUERY['created_at'] = date("Y-m-d", strtotime($QUERY['created_at']));
-	else $QUERY['created_at'] = date('Y-m-d H:i:s');
-	if(isset($QUERY['donation_type']) and $QUERY['donation_type'] == 'gg') $QUERY['donation_type'] = 'globalgiving';
-
-	$donation = new Donation;
-	$result = $donation->validate($QUERY);
-
-	if($result) showSuccess("Validated successfully");
-	else showError($donation->error);
+	if($affected) showSuccess("Connection deleted");
+	else showError("Error deleting connection.");
 });
 
-$api->get('/donation/get_donations_by_user/{fundraiser_id}', function ($fundraiser_id) {
-	$donation = new Donation;
-	$my_donations = $donation->getDonationsByUser($fundraiser_id);
-
-	if($my_donations)
-		showSuccess(count($my_donations) . " donation(s).", array('donations' => $my_donations));
-	else {
-		$error = $donation->error;
-		if(!$error) $error = "Can't find any donations by this user";
-		showError($error);
-	}
+$api->request('/day/{date}', function ($date) {
+	global $t_connection;
+	$day = $t_connection->getDay(date('Y-m-d', strtotime($date)));
+	
+	showSuccess("Data for '$date'", $day);
 });
 
-$api->get('/donation/get_total_donation_by_email/{user_email}', function($user_email) {
-	$donation = new Donation;
-	$total = $donation->getTotalDonations(array('email' => $user_email));
+$api->request('/person/add/{nickname}', function($nickname) {
+	global $t_person;
+	$person_id = $t_person->add($nickname);
 
-	showSuccess("Donation Amount: $total", array('total' => $total));
+	if($person_id) showSuccess("Person created($person_id)");
+	else showError("Error creating person.");
 });
 
-$api->get('/donation/get_total_donation_by_email_for_fraise/{user_email}', function($user_email) {
-	$donation = new Donation;
-	$total = $donation->getTotalDonations(array('email' => $user_email));
+$api->request('/person/edit/{person_id}', function($person_id) {
+	global $t_person, $QUERY;
+	$affected = $t_person->edit($person_id, $QUERY, $people);
 
-	if($total) {
-		print $total;
-	}else{
-		print "0";
-	}
-
+	if($affected) showSuccess("Person updated");
+	else showError("Error updating person.");
 });
 
-$api->get('/donation/get_donations_for_poc_approval/{poc_id}', function ($poc_id) {
-	$donation = new Donation;
-	$donations_for_approval = $donation->getDonationsForPocApproval($poc_id);
+$api->request('/person/delete/{person_id}', function($person_id) {
+	global $t_person;
 
-	if($donations_for_approval)
-		showSuccess(count($donations_for_approval) . " donation(s) waiting for approval", array('donations' => $donations_for_approval));
-	else {
-		$error = $donation->error;
-		if(!$error) $error = "No donations to be collected.";
-		showError($error);
-	}
-});
+	$affected = $t_person->remove($person_id);
 
-$api->get('/donation/get_donations_for_fc_approval/{poc_id}', function ($poc_id) {
-	$donation = new Donation;
-	$donations_for_approval = $donation->getDonationsForFcApproval($poc_id);
-
-	if($donations_for_approval)
-		showSuccess(count($donations_for_approval) . " donation(s) waiting for approval", array('donations' => $donations_for_approval));
-	else {
-		$error = $donation->error;
-		if(!$error) $error = "No donations to be deposited.";
-		showError($error);
-	}
-});
-
-$api->get('/donation/get_poc_approved_donations/{poc_id}', function ($poc_id) {
-	$donation = new Donation;
-	$approved_donations = $donation->getPocApprovedDonations($poc_id);
-
-	if($approved_donations)
-		showSuccess(count($approved_donations) . " approved donation(s).", array('donations' => $approved_donations));
-	else {
-		$error = $donation->error;
-		if(!$error) $error = "Can't find any donations that's collected.";
-		showError($error);
-	}
-});
-
-$api->get('/donation/get_fc_approved_donations/{fc_id}', function ($fc_id) {
-	$donation = new Donation;
-	$approved_donations = $donation->getFcApprovedDonations($fc_id);
-
-	if($approved_donations)
-		showSuccess(count($approved_donations) . " approved donation(s).", array('donations' => $approved_donations));
-	else {
-		$error = $donation->error;
-		if(!$error) $error = "Can't find any donations that's deposited.";
-		showError($error);
-	}
-});
-
-$api->get('/donation/get_donations/{poc_id}/{status}', function ($poc_id, $status) {
-	$donation = new Donation;
-	$donations_matched = $donation->search(array('poc_id' => $poc_id, 'status' => $status));
-
-	if($donations_matched)
-		showSuccess(count($donations_matched) . " donation(s).", array('donations' => $donations_matched));
-	else {
-		$error = $donation->error;
-		if(!$error) $error = "Can't find any donations.";
-		showError($error);
-	}
-});
-
-$api->get('/donation/{donation_id}/poc_approve/{poc_id}', function ($donation_id, $poc_id) {
-	$donation = new Donation;
-	if($donation->pocApprove($donation_id, $poc_id)) {
-		showSuccess("Donation approved", array('donation_id' => $donation_id));
-	} else showError($donation->error);
-});
-
-$api->get('/donation/{donation_id}/poc_reject/{poc_id}', function ($donation_id, $poc_id) {
-	$donation = new Donation;
-	if($donation->pocReject($donation_id, $poc_id)) {
-		showSuccess("Donation rejected", array('donation_id' => $donation_id));
-	} else showError($donation->error);
-});
-
-
-$api->get('/donation/{donation_id}/fc_approve/{fc_id}', function ($donation_id, $fc_id) {
-	$donation = new Donation;
-	if($donation->fcApprove($donation_id, $fc_id)) {
-		showSuccess("Donation approved", array('donation_id' => $donation_id));
-	} else showError($donation->error);
-});
-
-$api->get('/donation/{donation_id}/fc_reject/{fc_id}', function ($donation_id, $fc_id) {
-	$donation = new Donation;
-	if($donation->fcReject($donation_id, $fc_id)) {
-		showSuccess("Donation rejected", array('donation_id' => $donation_id));
-	} else showError($donation->error);
-});
-
-$api->get('/donation/{donation_id}/delete/{poc_id}/{fc_poc}', function ($donation_id, $poc_id, $fc_poc) {
-	$donation = new Donation;
-	if($donation->remove($donation_id, $poc_id, $fc_poc)) {
-		showSuccess("Donation deleted", array('donation_id' => $donation_id));
-	} else showError($donation->error);
+	if($affected) showSuccess("Connection deleted");
+	else showError("Error deleting connection.");
 });
 
 $api->request("/user/login", function () {
-	global $QUERY;
-	$user = new User;
+	global $QUERY, $user;
 
-	$phone = i($QUERY, 'phone');
+	$username = i($QUERY, 'username');
 	$password = i($QUERY, 'password');
-	if(!$user->login($phone, $password)) {
+	if(!$user->login($username, $password)) {
 		showError($user->error, array('')); exit;
 	}
 
-	$return = array('user' => $user->user);
-	$return['user']['roles'] = $user->getRoles();
+	$return = array('user' => $user->getDetails());
 
 	showSuccess("Login successful", $return);
 });
 
-$api->request("/user/get_subordinates/{user_id}", function ($user_id) {
-	$user = new User;
-	$subordinates = $user->getSubordinates($user_id);
-
-	$return = array('subordinates' => $subordinates);
-
-	showSuccess("Login successful", $return);
-});
-*/
 
 $api->notFound(function() {
 	print "404";

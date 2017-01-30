@@ -54,13 +54,14 @@ class Connection extends DBTable {
 			}
 		}
 
-		$affected_count = $this->sql->update("Connection", array(
-									'intensity'	=> $data['intensity'],
-									'start_on'	=> $data['start_on'],
-									'end_on'	=> $data['end_on'],
-									'location'	=> $data['location'],
-									'note'		=> $data['note']
-								), "id=$connection_id");
+		$affected = $this->sql->update("Connection", array(
+						'intensity'	=> $data['intensity'],
+						'start_on'	=> $data['start_on'],
+						'end_on'	=> $data['end_on'],
+						'location'	=> $data['location'],
+						'note'		=> $data['note']
+					), "id=$connection_id");
+		return $affected;
 
 	}
 
@@ -83,12 +84,38 @@ class Connection extends DBTable {
 		return $affected;
 	}
 
+	function getDay($date) {
+		$connections = $this->sql->getAll("SELECT id,type,intensity,start_on,location,note 
+				FROM Connection 
+				WHERE user_id=$_SESSION[user_id] AND DATE(start_on)='$date'");
+		$data = array();
+
+		foreach ($connections as $con) {
+			$people = $this->sql->getById("SELECT P.id, P.nickname 
+					FROM Person P 
+					INNER JOIN PersonConnection PC ON PC.person_id=P.id
+					WHERE PC.connection_id=$con[id]");
+
+			$type = $con['type'];
+
+			if(!isset($data[$type])) $data[$type] = array();
+			$index = count($data[$type]);
+
+			$con['people'] = $people;
+
+			$data[$type][$index] = $con;
+		}
+		return $data;
+	}
+
 	function getConnectionsOnDate($date, $type) {
-		return $this->sql->getAll("SELECT id FROM Connection WHERE user_id=$_SESSION[user_id] AND DATE(start_on)='$date' AND type='$type'");
+		return $this->sql->getAll("SELECT id FROM Connection 
+				WHERE user_id=$_SESSION[user_id] AND DATE(start_on)='$date' AND type='$type'");
 	}
 
 	function getPeopleIdsInConnection($connection_id) {
-		return $this->sql->getCol("SELECT person_id FROM PersonConnection WHERE connection_id=$connection_id");
+		return $this->sql->getCol("SELECT person_id FROM PersonConnection 
+				WHERE connection_id=$connection_id");
 	}
 
 	function parse($type, $raw) {
