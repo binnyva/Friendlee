@@ -1,6 +1,7 @@
 <?php
 class User extends DBTable {
 	var $id = 0;
+	var $sql;
 	
 	//Configs
 	var $cookie_expire = 0;
@@ -95,7 +96,9 @@ class User extends DBTable {
 		global $sql, $QUERY;
 		
 		//Check if the username is already taken.
-		$result 	= $sql->getSql("SELECT id FROM User WHERE username='$username'");
+		$email_check = '';
+		if($email) $email_check = "OR email='$email'";
+		$result 	= $sql->getSql("SELECT id FROM User WHERE username='$username' $email_check");
 		$username_taken = $sql->fetchNumRows($result);
 	
 		if ($username_taken == 0) {
@@ -120,11 +123,53 @@ class User extends DBTable {
 				return $id;
 			}
 		} else {
-			$QUERY['error'] = "User with username '$username' already exists.";
+			$QUERY['error'] = "User with username '$username' or email '$email' already exists.";
 		}
 
 		return false;
 	}
+
+	function oAuthCheckUser($user_data = array()){
+		global $sql;
+
+    	$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE oauth_provider = '".$user_data['oauth_provider']."' AND oauth_uid = '".$user_data['oauth_uid']."'");
+
+		if(!$user_details) { // User not found in Database - insert.
+			list($username, $del) = explode("@", $user_data['email']);
+			// Check if another user exists with the same email ID. If so, 
+			$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE email = '$user_data[email]'");
+			if($user_details) {
+				$sql->update('User', array(
+										'username'		=> $username,
+										'oauth_provider'=> $user_data['oauth_provider'],
+										'oauth_uid'		=> $user_data['oauth_uid'],
+										'name'			=> $user_data['given_name'] . ' ' . $user_data['family_name'],
+										'gender'		=> ($user_data['gender'] == 'male') ? 'm' : 'f',
+										'image'			=> $user_data['picture'],
+									), "id=$user_details[id]");
+
+			// Not in database at all. Register as new user
+			} else {
+				$sql->insert("User", array(
+										'username'		=> $username,
+										'email'			=> $email,
+										'oauth_provider'=> $user_data['oauth_provider'],
+										'oauth_uid'		=> $user_data['oauth_uid'],
+										'name'			=> $user_data['given_name'] . ' ' . $user_data['family_name'],
+										'gender'		=> ($user_data['gender'] == 'male') ? 'm' : 'f',
+										'image'			=> $user_data['picture'],
+								));
+			}
+		} 
+
+		if($user_details) {
+			//Store the necessy stuff in the sesson
+			$this->setCurrentUser($user_details['id'],$username,$user_details['name']);
+		}
+        
+        //Return user data
+        return $user_details;
+    }
 	
 	/**
 	 * Edits the current user's profile.

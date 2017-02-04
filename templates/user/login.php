@@ -11,6 +11,11 @@
 </label>
 <button class="btn btn-lg btn-primary btn-block" type="submit" name="action" value="Login">Sign in</button><br />
 
+<h3>Alternatively...</h3>
+
+<div><?php echo $login_button; ?></div>
+
+<br /><br />
 <p>Don't have an account? <a href="signup.php">Sign up</a>!</p>
 </form>
 
