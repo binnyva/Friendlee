@@ -24,7 +24,9 @@ function getPeople($level_id) {
 }
 
 function attachPoints($person) {
-	$person['point'] = getPoints($person['id']);
+	global $t_person;
+	
+	$person['point'] = $t_person->getPoints($person['id']);
 	
 	return $person;
 }

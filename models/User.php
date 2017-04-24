@@ -45,7 +45,7 @@ class User extends DBTable {
 		global $sql;
 		$this->id = -1;
 		
-		$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE username='$username' AND password='$password'");
+		$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE (username='$username' OR email='$username') AND password='$password'");
 		if(!$user_details) { //Query did not run correctly
 			showMessage("Invalid Username/Password", "user/login.php", "error");
 
@@ -98,7 +98,7 @@ class User extends DBTable {
 		//Check if the username is already taken.
 		$email_check = '';
 		if($email) $email_check = "OR email='$email'";
-		$result 	= $sql->getSql("SELECT id FROM User WHERE username='$username' $email_check");
+		$result	= $sql->getSql("SELECT id FROM User WHERE username='$username' $email_check");
 		$username_taken = $sql->fetchNumRows($result);
 	
 		if ($username_taken == 0) {
@@ -134,33 +134,9 @@ class User extends DBTable {
 
     	$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE oauth_provider = '".$user_data['oauth_provider']."' AND oauth_uid = '".$user_data['oauth_uid']."'");
 
-		if(!$user_details) { // User not found in Database - insert.
-			list($username, $del) = explode("@", $user_data['email']);
-			// Check if another user exists with the same email ID. If so, 
-			$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE email = '$user_data[email]'");
-			if($user_details) {
-				$sql->update('User', array(
-										'username'		=> $username,
-										'oauth_provider'=> $user_data['oauth_provider'],
-										'oauth_uid'		=> $user_data['oauth_uid'],
-										'name'			=> $user_data['given_name'] . ' ' . $user_data['family_name'],
-										'gender'		=> ($user_data['gender'] == 'male') ? 'm' : 'f',
-										'image'			=> $user_data['picture'],
-									), "id=$user_details[id]");
-
-			// Not in database at all. Register as new user
-			} else {
-				$sql->insert("User", array(
-										'username'		=> $username,
-										'email'			=> $email,
-										'oauth_provider'=> $user_data['oauth_provider'],
-										'oauth_uid'		=> $user_data['oauth_uid'],
-										'name'			=> $user_data['given_name'] . ' ' . $user_data['family_name'],
-										'gender'		=> ($user_data['gender'] == 'male') ? 'm' : 'f',
-										'image'			=> $user_data['picture'],
-								));
-			}
-		} 
+    	if(!$user_details) { // User not found in Database - insert.
+	    	$user_details = $this->oAuthRegister($user_data);
+	    }
 
 		if($user_details) {
 			//Store the necessy stuff in the sesson
@@ -170,6 +146,67 @@ class User extends DBTable {
         //Return user data
         return $user_details;
     }
+
+    function oAuthRegister($user_data, $only_insert = false) {
+    	global $sql;
+		list($username, $del) = explode("@", $user_data['email']);
+		// Check if another user exists with the same email ID. If so, 
+		$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE email = '$user_data[email]'");
+		if($user_details and !$only_insert) {
+			$user_details['username'] = $username;
+			$sql->update('User', array(
+									'username'		=> $username,
+									'oauth_provider'=> $user_data['oauth_provider'],
+									'oauth_uid'		=> $user_data['oauth_uid'],
+									'name'			=> $user_data['given_name'] . ' ' . $user_data['family_name'],
+									'gender'		=> ($user_data['gender'] == 'male') ? 'm' : 'f',
+									'image'			=> $user_data['picture'],
+								), "id=$user_details[id]");
+
+		// Not in database at all. Register as new user
+		} else {
+			$user_details =  array(
+									'username'		=> $username,
+									'email'			=> $email,
+									'oauth_provider'=> $user_data['oauth_provider'],
+									'oauth_uid'		=> $user_data['oauth_uid'],
+									'name'			=> $user_data['given_name'] . ' ' . $user_data['family_name'],
+									'gender'		=> ($user_data['gender'] == 'male') ? 'm' : 'f',
+									'image'			=> $user_data['picture']);
+			$user_id = $sql->insert("User", $user_details);
+			$user_details['id'] = $user_id;
+		}
+
+		return $user_details;
+	}
+
+  	/**
+	 * Login the user with the given email - usually done after a third party oAuth authentication
+	 */
+	function oAuthIdVerify($id_token) {
+		global $sql;
+		$this->id = -1;
+		include_once '../includes/vendor/google/gpConfig.php';
+
+		$payload = $gClient->verifyIdToken($id_token);
+		if ($payload) {
+			$details = $payload->getAttributes();
+			$user_data = $details['payload'];
+			$user_details = $sql->getAssoc("SELECT id,name,username FROM User WHERE email = '$user_data[email]'");
+			if(!$user_details) $user_details = $this->oAuthRegister($user_data, true);
+			if($user_details) {
+				//Store the necessy stuff in the sesson
+				$this->setCurrentUser($user_details['id'],$user_details['username'],$user_details['name']);
+			}
+			
+			// showMessage("Hello, $user_data[name]", 'index.php', 'success');
+		} else {
+			// showMessage("Invalid Token", 'user/login.php', 'error');
+		}
+
+		return $this->id;
+	}
+
 	
 	/**
 	 * Edits the current user's profile.
@@ -194,7 +231,7 @@ class User extends DBTable {
 			return $this->save();
 		}
 	}
-	
+
 	/// Returns the details of the current user as a associative array.
 	function getDetails($id = 0) {
 		$id = ($id) ? $id : $this->id; 

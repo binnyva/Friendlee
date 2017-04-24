@@ -14,7 +14,8 @@ class Person extends DBTable {
 	}
 
 	function add($nickname) {
-		$nickname_exists = $this->find("LOWER(REPLACE(REPLACE(nickname, '\'',''), '\\\\',''))='$nickname' AND user_id='$_SESSION[user_id]'", 'id'); // Check if nickname exists... 
+		$nickname = str_replace(array("'"), array(""), stripslashes($nickname));
+		$nickname_exists = $this->find("LOWER(REPLACE(REPLACE(nickname, '\'',''), '\\\\',''))=\"$nickname\" AND user_id='$_SESSION[user_id]'", 'id'); // Check if nickname exists... 
 		if($nickname_exists) return $nickname_exists[0]; // If so, dont add..
 
 		// A very rough gender detection.

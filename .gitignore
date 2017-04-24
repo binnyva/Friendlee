@@ -1,3 +1,4 @@
 /configuration.php
 /bower_components/
 /Test/
+includes/vendor/google/gpConfig.php

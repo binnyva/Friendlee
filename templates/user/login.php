@@ -3,7 +3,7 @@
 <form action="login.php" method="post" class="form-signin" role="form">
 <h2 class="form-signin-heading">Login</h2>
 
-<input type="text" id="username" class="form-control" placeholder="Username" name="username" required autofocus>
+<input type="text" id="username" class="form-control" placeholder="Username/Email" name="username" required autofocus>
 <input type="password" id="password" class="form-control" placeholder="Password" name="password" required>
 <a href="forgot_password.php" class="pull-right">Forgot Password?</a>
 <label class="checkbox">

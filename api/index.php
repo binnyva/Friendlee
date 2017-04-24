@@ -29,7 +29,7 @@ function addConnection($type, $people) {
 	else showError("Error creating connection.");
 }
 
-$api->request('/connection/edit/{connection_id}/{people}', function ($connection_id, $people) {
+$api->request('/connection/{connection_id}/edit/{people}', function ($connection_id, $people) {
 	global $t_connection, $QUERY;
 	$affected = $t_connection->edit($connection_id, $QUERY, $people);
 
@@ -37,7 +37,7 @@ $api->request('/connection/edit/{connection_id}/{people}', function ($connection
 	else showError("Error updating connection.");
 });
 
-$api->request('/connection/delete/{connection_id}', function ($connection_id) {
+$api->request('/connection/{connection_id}/delete', function ($connection_id) {
 	global $t_connection;
 	$affected = $t_connection->remove($connection_id);
 
@@ -60,7 +60,7 @@ $api->request('/person/add/{nickname}', function($nickname) {
 	else showError("Error creating person.");
 });
 
-$api->request('/person/edit/{person_id}', function($person_id) {
+$api->request('/person/{person_id}/edit', function($person_id) {
 	global $t_person, $QUERY;
 	$affected = $t_person->edit($person_id, $QUERY, $people);
 
@@ -68,7 +68,7 @@ $api->request('/person/edit/{person_id}', function($person_id) {
 	else showError("Error updating person.");
 });
 
-$api->request('/person/delete/{person_id}', function($person_id) {
+$api->request('/person/{person_id}/delete', function($person_id) {
 	global $t_person;
 
 	$affected = $t_person->remove($person_id);
@@ -80,9 +80,9 @@ $api->request('/person/delete/{person_id}', function($person_id) {
 $api->request("/user/login", function () {
 	global $QUERY, $user;
 
-	$username = i($QUERY, 'username');
+	$email = i($QUERY, 'email');
 	$password = i($QUERY, 'password');
-	if(!$user->login($username, $password)) {
+	if(!$user->login($email, $password)) {
 		showError($user->error, array('')); exit;
 	}
 
@@ -90,7 +90,18 @@ $api->request("/user/login", function () {
 
 	showSuccess("Login successful", $return);
 });
+$api->request("/user/oauth_login", function () {
+	global $QUERY, $user;
 
+	$id_token = i($QUERY, 'id_token');
+	if(!$user->oAuthIdVerify($id_token)) {
+		showError($user->error, array('')); exit;
+	}
+
+	$return = array('user' => $user->getDetails());
+
+	showSuccess("Login successful", $return);
+});
 
 $api->notFound(function() {
 	print "404";
