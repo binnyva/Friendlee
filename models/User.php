@@ -9,7 +9,7 @@ class User extends DBTable {
 	
 	//The constructor
 	//Get the details of the current user on every page load.
-	function User() {
+	function __construct() {
 		global $sql, $config;
 		$this->cookie_prefix_for_site = unformat($config['site_title']) . '_';
 		$this->cookie_expire = time() + (60*60*24*30);//Will expire in 30 days
