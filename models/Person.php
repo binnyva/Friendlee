@@ -96,25 +96,65 @@ class Person extends DBTable {
 	/// Calculate the points of the given person and returns it as an array.
 	function calculatePoints($person_id)  {
 		global $points;
+
+		$count = array(
+					'met'		=> 0,
+					'phone'		=> 0,
+					'message'	=> 0,
+					'chat'		=> 0,
+					'email'		=> 0,
+					'other'		=> 0
+				);
+
+		$log = $this->getLog($person_id);
 		
-		$met_count		= $this->getConnectionCount($person_id, 'met');
-		$phone_count	= $this->getConnectionCount($person_id, 'phone');
-		$message_count	= $this->getConnectionCount($person_id, 'message');
-		$chat_count		= $this->getConnectionCount($person_id, 'chat');
-		$email_count	= $this->getConnectionCount($person_id, 'email');
-		$other_count	= $this->getConnectionCount($person_id, 'other');
+		for($i = 0; $i < count($log); $i++) {
+			$today = $log[$i];
+			if(isset($log[$i+1]) and $today['start_on'] == $log[$i+1]['start_on']) { // There was another connection for this person on the same date
+				// Go thru all the enteries for that day, find the highest connection type, and only count points for that.
+				$highest_type = $today['type'];
+				$highest_index = $i;
+
+				// Go thru each entry after the repeating entry.
+				for($j = $i; $j < count($log); $j++) {
+					if($today['start_on'] == $log[$j]['start_on']) { // See ifts on the same day.
+						// If it is, see if the type value is bigger than current highest.
+						if(compareType($log[$j]['type'], $highest_type)) {
+							$highest_type = $log[$j]['type'];
+							$highest_index = $j;
+						}
+					} else { // Some other day.
+						$i = $j; // make sure this area is not traversed again.
+						break; // Get out of the loop
+					}
+				}
+				if($i != $j) $i = count($log); // Edge case. If there are a lot of repetive call for the same person at the end of the log, this makes sure they aren't called.
+
+				$count[$highest_type]++;
+			} else {
+				$count[$today['type']]++;
+			}
+		}
+		
+		// Old logic. Added points even if multiple instance of meeting happened on the same day.
+		// $count['met']		= $this->getConnectionCount($person_id, 'met');
+		// $count['phone']		= $this->getConnectionCount($person_id, 'phone');
+		// $count['message']	= $this->getConnectionCount($person_id, 'message');
+		// $count['chat']		= $this->getConnectionCount($person_id, 'chat');
+		// $count['email']		= $this->getConnectionCount($person_id, 'email');
+		// $count['other']		= $this->getConnectionCount($person_id, 'other');
 
 		// The Algoritham. Will change over time.
-		$total_score = ($met_count * $points['met']) + ($phone_count * $points['phone']) + ($message_count * $points['message']) 
-						+ ($chat_count * $points['chat'])  + ($email_count * $points['email'])  + ($other_count * $points['other']) ;
+		$total_score = ($count['met'] * $points['met']) + ($count['phone'] * $points['phone']) + ($count['message'] * $points['message']) 
+						+ ($count['chat'] * $points['chat'])  + ($count['email'] * $points['email'])  + ($count['other'] * $points['other']) ;
 		
 		return array(	'total_score'	=> $total_score,
-						'met_count'		=> $met_count,
-						'phone_count'	=> $phone_count,
-						'message_count'	=> $message_count,
-						'chat_count'	=> $chat_count,
-						'email_count'	=> $email_count,
-						'other_count'	=> $other_count);
+						'met_count'		=> $count['met'],
+						'phone_count'	=> $count['phone'],
+						'message_count'	=> $count['message'],
+						'chat_count'	=> $count['chat'],
+						'email_count'	=> $count['email'],
+						'other_count'	=> $count['other']);
 	}
 
 	/// Returs the number of times the given person was contacted with the given contact type
@@ -129,7 +169,7 @@ class Person extends DBTable {
 	}
 
 	function getLog($person_id) {
-		$interaction_log = $this->sql->getAll("SELECT C.id,C.start_on,C.type 
+		$interaction_log = $this->sql->getAll("SELECT C.id,DATE(C.start_on) AS start_on,C.type 
 			FROM Connection C 
 			INNER JOIN PersonConnection PC ON C.id=PC.connection_id 
 			WHERE PC.person_id=$person_id 

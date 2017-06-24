@@ -48,7 +48,13 @@ function date_difference($a, $b) {
 	$gap = $interval->format('%a');
 
 	return $gap;
- }
+}
+
+function compareType($a, $b) {
+	global $points;
+
+	return $points[$a] > $points[$b];
+}
 
 function email($to, $subject, $body, $from = '') {
 	//return true; //:DEBUG:
