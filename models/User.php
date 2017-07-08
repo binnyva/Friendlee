@@ -132,7 +132,9 @@ class User extends DBTable {
 	function oAuthCheckUser($user_data = array()){
 		global $sql;
 
-    	$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE oauth_provider = '".$user_data['oauth_provider']."' AND oauth_uid = '".$user_data['oauth_uid']."'");
+		// For some reason, I'm not geting oauth_provider/oauth_uid from google. So using email.
+    	//$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE oauth_provider = '".$user_data['oauth_provider']."' AND oauth_uid = '".$user_data['oauth_uid']."'");
+    	$user_details = $sql->getAssoc("SELECT id,name,email,status FROM User WHERE email='$user_data[email]'");
 
     	if(!$user_details) { // User not found in Database - insert.
 	    	$user_details = $this->oAuthRegister($user_data);
@@ -150,32 +152,22 @@ class User extends DBTable {
     function oAuthRegister($user_data, $only_insert = false) {
     	global $sql;
 		list($username, $del) = explode("@", $user_data['email']);
-		// Check if another user exists with the same email ID. If so, 
-		$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE email = '$user_data[email]'");
-		if($user_details and !$only_insert) {
-			$user_details['username'] = $username;
-			$sql->update('User', array(
-									'username'		=> $username,
-									'oauth_provider'=> $user_data['oauth_provider'],
-									'oauth_uid'		=> $user_data['oauth_uid'],
-									'name'			=> $user_data['given_name'] . ' ' . $user_data['family_name'],
-									'gender'		=> ($user_data['gender'] == 'male') ? 'm' : 'f',
-									'image'			=> $user_data['picture'],
-								), "id=$user_details[id]");
-
-		// Not in database at all. Register as new user
-		} else {
-			$user_details =  array(
-									'username'		=> $username,
-									'email'			=> $email,
-									'oauth_provider'=> $user_data['oauth_provider'],
-									'oauth_uid'		=> $user_data['oauth_uid'],
-									'name'			=> $user_data['given_name'] . ' ' . $user_data['family_name'],
-									'gender'		=> ($user_data['gender'] == 'male') ? 'm' : 'f',
-									'image'			=> $user_data['picture']);
-			$user_id = $sql->insert("User", $user_details);
-			$user_details['id'] = $user_id;
+		// Check if another user exists with the same username. If so, 
+		$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE username = '$username'");
+		if($user_details) {
+			$username = $username . '-' . substr(md5(uniqid(mt_rand(), true)), 0, 3); // Make sure the username is unique
 		}
+
+		$user_details =  array(
+								'username'		=> $username,
+								'email'			=> $user_data['email'],
+								// 'oauth_provider'=> $user_data['oauth_provider'],
+								// 'oauth_uid'		=> $user_data['oauth_uid'],
+								'name'			=> $user_data['given_name'] . ' ' . $user_data['family_name'],
+								'gender'		=> ($user_data['gender'] == 'male') ? 'm' : 'f',
+								'image'			=> $user_data['picture']);
+		$user_id = $sql->insert("User", $user_details);
+		$user_details['id'] = $user_id;
 
 		return $user_details;
 	}
