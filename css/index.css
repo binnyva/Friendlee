@@ -44,3 +44,8 @@
 	background: url(../images/crud/up.png) no-repeat 0 5px;
 	padding-left:15px;
 }
+
+.curdate {
+	font-weight: bold;
+	font-size: 120%;
+}

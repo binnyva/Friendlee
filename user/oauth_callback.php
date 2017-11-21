@@ -20,7 +20,10 @@ if ($gClient->getAccessToken()) {
     if(empty($user_data)){
         showMessage("Error logging in...", "user/login.php", "error");
     } else {
+    	// dump($user_data, $user_profile); exit;
+
         showMessage("Welcome back, $_SESSION[user_name]", "index.php", "success");
+        $user->rememberLogin($user_data['id']);
     }
 
 } else {

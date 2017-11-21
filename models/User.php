@@ -5,7 +5,7 @@ class User extends DBTable {
 	
 	//Configs
 	var $cookie_expire = 0;
-	var $cookie_prefix_for_site = '';
+	var $cookie_prefix_for_site = 'friendlee_';
 	
 	//The constructor
 	//Get the details of the current user on every page load.
@@ -53,14 +53,21 @@ class User extends DBTable {
 			//Store the necessy stuff in the sesson
 			$this->setCurrentUser($user_details['id'],$username,$user_details['name']);
 
-			//Keep some token in the cookie so as to login the user automatically the next time
-			if($remember) {
-				setcookie($this->cookie_prefix_for_site . 'username', $username, $this->cookie_expire, '/');
-				setcookie($this->cookie_prefix_for_site . 'password_hash', md5($password.'#c*2u!'), $this->cookie_expire,'/');
-			}
+			if($remember) $this->rememberLogin($user_details['id']);
 		}
 		
 		return $this->id;
+	}
+
+	/// Keep some token in the cookie so as to login the user automatically the next time
+	function rememberLogin($user_id) {
+		$user_details = $sql->getAssoc("SELECT id,name,password FROM User WHERE id=$user_id");
+		extract($user_details);
+
+		setcookie($this->cookie_prefix_for_site . 'username', $username, $this->cookie_expire, '/');
+		setcookie($this->cookie_prefix_for_site . 'password_hash', md5($password.'#c*2u!'), $this->cookie_expire,'/');
+
+		return true;
 	}
 
 	/**

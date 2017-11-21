@@ -1,7 +1,7 @@
 <?php
 require('common.php');
 
-$person_id = $QUERY['person_id'];
+$person_id = i($QUERY, 'person_id');
 if(!$person_id) exit;
 $person = $t_person->find($person_id);
 if(!$person) die("Invalid Person ID Provided");
