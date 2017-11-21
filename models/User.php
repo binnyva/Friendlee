@@ -61,7 +61,8 @@ class User extends DBTable {
 
 	/// Keep some token in the cookie so as to login the user automatically the next time
 	function rememberLogin($user_id) {
-		$user_details = $sql->getAssoc("SELECT id,name,password FROM User WHERE id=$user_id");
+		global $sql;
+		$user_details = $sql->getAssoc("SELECT id,name,username,password FROM User WHERE id=$user_id");
 		extract($user_details);
 
 		setcookie($this->cookie_prefix_for_site . 'username', $username, $this->cookie_expire, '/');
