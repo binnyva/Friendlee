@@ -30,11 +30,11 @@ foreach($plugins as $p) {
 <div class="container">
 <ul id="date-changer" class="btn-group btn-group-justified center-block">
 <li class="btn btn-default"><a class="previous previous-day with-icon" href="?date=<?php echo date('Y-m-d', strtotime($date) - (60*60*24)); 
-		?>">Previous Day(<?php echo date('dS M', strtotime($date) - (60*60*24)); ?>)</a></li>
+		?>"><?php echo date('dS M', strtotime($date) - (60*60*24)); ?></a></li>
 <li class="btn btn-default"><span class="curdate"><?php echo date('dS M(l)', strtotime($date)); ?> <a href="#" id="change-day" class="icon calendar">Change</a></span></li>
 <?php if(date('Y-m-d', strtotime($date) + (60*60*24)) <= date('Y-m-d')) { ?>
 <li class="btn btn-default"><a class="next next-day with-icon" href="?date=<?php 
-		echo date('Y-m-d', strtotime($date) + (60*60*24)); ?>">Next Day(<?php echo date('dS M', strtotime($date) + (60*60*24)); ?>)</a></li><?php } ?>
+		echo date('Y-m-d', strtotime($date) + (60*60*24)); ?>"> <?php echo date('dS M', strtotime($date) + (60*60*24)); ?></a></li><?php } ?>
 </ul>
 </div>
 
@@ -47,11 +47,7 @@ foreach($plugins as $p) {
 <div class="col-md-6"><?php showBox('met'); ?> <?php $i_plugin->callHook('main_box_met_show_under'); ?></div>
 </div>
 <div class="row">
-<div class="col-md-6"><?php showBox('chat'); ?></div>
 <div class="col-md-6"><?php showBox('phone'); ?></div>
-</div>
-<div class="row">
-<div class="col-md-6"><?php showBox('email'); ?></div>
 <div class="col-md-6"><?php showBox('other'); ?></div>
 </div>
 </div>

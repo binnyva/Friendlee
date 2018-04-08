@@ -10,7 +10,8 @@
 }
 
 #date-changer {
-	width: 650px;
+	/*width: 650px;*/
+	padding: 0 !important;
 }
 
 
