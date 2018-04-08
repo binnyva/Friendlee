@@ -31,9 +31,9 @@ function ca_showAttepmtCount($person) {
 
 	?>
 	<td><span id="attempts-<?php echo $person['id'] ?>"><?php echo $person['contact_attempt'] ?></span>
-	<a class="btn btn-default btn-xs contact-attempt" href="plugins/attempt_contact/change.php?person_id=<?php echo $person['id'] ?>&amp;direction=1&amp;old_value=<?php echo $person['contact_attempt'] ?>">+</a>
+	<a class="btn btn-warning btn-sm contact-attempt" href="plugins/attempt_contact/change.php?person_id=<?php echo $person['id'] ?>&amp;direction=1&amp;old_value=<?php echo $person['contact_attempt'] ?>">+</a>
 	<?php if($person['contact_attempt'] >= $ca_number_of_attempts_before_demote_option) { ?>
-	<a class="btn btn-danger btn-xs demote" href="plugins/attempt_contact/demote.php?person_id=<?php echo $person['id'] ?>">Demote</a>
+	<a class="btn btn-danger btn-sm demote" href="plugins/attempt_contact/demote.php?person_id=<?php echo $person['id'] ?>">Demote</a>
 	<?php } ?>
 	</td>
 	<?php

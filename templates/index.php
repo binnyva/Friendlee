@@ -1,15 +1,17 @@
 <div id="top-area" class="row">
-<?php include('templates/uncontacted.php'); ?>
-
-<div id="links" class="col-md-6">
 <div class="col-md-6">
+<?php include('templates/uncontacted.php'); ?>
+</div>
+
+<div class="col-md-3 links-collection d-none d-md-block">
 <ul>
 <li><a href="tree.php" class="with-icon site">All Friends</a></li>
 <li><a href="uncontacted.php" class="with-icon phone">Uncontacted Friends</a></li>
 </ul>
 </div>
-<div class="col-md-6">
+
 <?php if($activate_plugins) { ?>
+<div class="col-md-3 links-collection d-none d-md-block">
 <ul>
 <?php
 $plugins = ls("*", joinPath($config['site_folder'], 'plugins'));
@@ -19,23 +21,25 @@ foreach($plugins as $p) {
 }
 ?>
 </ul>
+</div>
 <?php } ?>
-
-</div>
-</div>
 </div>
 
 <form action="" method="get" id="change-day-form"><input type="hidden" name="date" id="date" value="" /></form>
 
-<div class="container">
-<ul id="date-changer" class="btn-group btn-group-justified center-block">
-<li class="btn btn-default"><a class="previous previous-day with-icon" href="?date=<?php echo date('Y-m-d', strtotime($date) - (60*60*24)); 
-		?>"><?php echo date('dS M', strtotime($date) - (60*60*24)); ?></a></li>
-<li class="btn btn-default"><span class="curdate"><?php echo date('dS M(l)', strtotime($date)); ?> <a href="#" id="change-day" class="icon calendar">Change</a></span></li>
-<?php if(date('Y-m-d', strtotime($date) + (60*60*24)) <= date('Y-m-d')) { ?>
-<li class="btn btn-default"><a class="next next-day with-icon" href="?date=<?php 
-		echo date('Y-m-d', strtotime($date) + (60*60*24)); ?>"> <?php echo date('dS M', strtotime($date) + (60*60*24)); ?></a></li><?php } ?>
-</ul>
+<div class='wrapper text-center'>
+<?php 
+$date_format = 'd<\s\u\p>S<\/\s\u\p> M';
+?>
+<div class="btn-group mx-auto" role="group" aria-label="Browse thru Dates">
+	<a class="btn btn-secondary previous-day" href="?date=<?php echo date('Y-m-d', strtotime($date) - (60*60*24)); ?>"><i class="fas fa-angle-left"></i><?php echo date($date_format, strtotime($date) - (60*60*24)); ?></a>
+	<span class="btn btn-secondary curdate"><?php echo date($date_format, strtotime($date)); ?> 
+		<span class="d-none d-md-inline"><?php echo date('(l)', strtotime($date)); ?></span>
+		<a href="#" id="change-day" class="icon calendar">Change</a></span>
+	<?php if(date('Y-m-d', strtotime($date) + (60*60*24)) <= date('Y-m-d')) { ?>
+	<a class="btn btn-secondary next-day" href="?date=<?php  echo date('Y-m-d', strtotime($date) + (60*60*24)); ?>"><?php echo date($date_format, strtotime($date) + (60*60*24)); ?> <i class="fas fa-angle-right"></i></a>
+	<?php } ?>
+</div>
 </div>
 
 <form action="" method="post">
@@ -92,7 +96,7 @@ function showConnections($name) {
 					. '</a>';
 			}
 			
-			if($all_people)  print "<li class='btn btn-default'>".implode(', ', $all_people)." <a href='ajax/delete_connection.php?connection_id=$con[id]' "
+			if($all_people)  print "<li class='btn btn-secondary'>".implode(', ', $all_people)." <a href='ajax/delete_connection.php?connection_id=$con[id]' "
 									. "class='ajaxify ajaxify-remove-parent ajaxify-confirm delete icon' title=\"Delete '". stripslashes(empty($person['name']) ? $person['nickname'] : $person['name']) ."' connection\">Delete</a>"
 									. " <a href='popup/connection_details.php?connection_id=$con[id]' class='popup edit icon'>Details</a> $count</li>";
 		}

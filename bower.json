@@ -1,5 +1,5 @@
 {
-  "name": "Friendlee",
+  "name": "friendlee",
   "version": "1.00.A",
   "homepage": "https://github.com/binnyva/Friendlee",
   "authors": [
@@ -17,7 +17,7 @@
     "tests"
   ],
   "dependencies": {
-	"bootstrap": "~3.1.1",
+	"bootstrap": "4.0.0",
 	"jquery": "~2.1.1",
 	"jquery-ui": "~1.10.3",
     "sizzle": "1.10.16",
