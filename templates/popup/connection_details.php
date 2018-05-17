@@ -1,12 +1,13 @@
 <script type="text/javascript">
 $("#popup-title").html("Connection Details");
+jQuery.ajaxify.init();
 </script>
-<form action="<?php echo $config['site_url'] ?>popup/connection_details.php" method="post" class="form-area" id="connection-details">
+<form action="<?php echo $config['site_url'] ?>popup/connection_details.php" method="post" id="connection-details">
 
 <?php
-$html->buildInput("people", '', 'text', implode(", ", $names), array('class'=>"data"));
+$html->buildInput("people", '', 'text', implode(", ", $names), ['class' => "data form-control", 'no_br' => true]);
 $html->buildInput("people_existing", '', 'hidden', implode(",", $names));
-$intensity = array(
+$intensity = [
 	'5'	=> 'Once in a life-time Experiance',
 	'4'	=> 'Great Experiance',
 	'3'	=> 'Very Good Experiance',
@@ -17,17 +18,21 @@ $intensity = array(
 	'-2'=> 'Very Bad Experiance',
 	'-3'=> 'Horrible Experiance',
 	'-4'=> 'Death would have been better'
-);
-$html->buildInput("intensity", "Intensity",'select',$connection['intensity'],array('options'=>$intensity));
+];
+$html->buildInput("intensity", "Intensity",'select',$connection['intensity'], ['options' => $intensity, 'class' => 'form-control', 'no_br' => true]);
 
-$html->buildInput("start_on", "Start Time", 'text', $connection['start_on']);
-$html->buildInput("location", "Place", 'text', $connection['location']);
-$html->buildInput("note", 'Note', 'textarea', $connection['note']);
+$html->buildInput("start_on", "Start Time", 'text', $connection['start_on'], ['class' => 'form-control', 'no_br' => true]);
+$html->buildInput("location", "Place", 'text', $connection['location'], ['class' => 'form-control', 'no_br' => true]);
+$html->buildInput("note", 'Note', 'textarea', $connection['note'], ['class' => 'form-control', 'no_br' => true]);
 $html->buildInput("initiated_by", 'Initiated By Me', 'checkbox', $connection['initiated_by'] == 'me');
 
 $html->buildInput("end_on", "", 'hidden', $connection['end_on']);
 $html->buildInput("connection_id", '', 'hidden', $connection['id']);
-$html->buildInput("action", '&nbsp;', 'submit', 'Save');
+$html->buildInput("action", '', 'submit', 'Save', ['class' => 'btn btn-primary']);
+
 ?>
+
+<a href="ajax/delete_connection.php?connection_id=<?php echo $connection['id'] ?>" title="Delete connection"
+	class='ajaxify ajaxify-confirm ajaxify-custom-handler btn btn-sm btn-warning float-right'><i class="fas fa-trash"></i> Delete</a>
 
 </form>

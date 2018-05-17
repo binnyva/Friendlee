@@ -27,6 +27,7 @@ var people_with_points = <?php echo json_encode($all_people_with_points); ?>;
 <div id="loading">loading...</div>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<div class="container">
   <a class="navbar-brand" href="<?php echo $abs ?>"><?php echo $config['site_title'] ?></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -36,11 +37,9 @@ var people_with_points = <?php echo json_encode($all_people_with_points); ?>;
     <ul class="navbar-nav ml-auto">
     	<?php if(!empty($_SESSION['user_id'])) { ?>
 		<li class="nav-item mr-3"><form action="<?php echo $config['site_url']; ?>search.php" method="post" id="search-area" class="form-inline my-2 my-md-0 input-group">
-<input type="text" name="search" id="search" placeholder="Search..." value="<?php if(isset($search_term)) echo $search_term ?>" class="form-control" />
-<div class="input-group-append">
-<button type="submit" class="btn btn-outline-secondary btn-default"><i class="fas fa-search"></i></button>
-</div>
-</form></li>
+			<input type="text" name="search" id="search" placeholder="Search..." value="<?php if(isset($search_term)) echo $search_term ?>" class="form-control" />
+			<div class="input-group-append"><button type="submit" class="btn btn-outline-secondary btn-default"><i class="fas fa-search"></i></button></div>
+		</form></li>
 		<li class="nav-item"><a class="nav-link site with-icon" href="<?php echo $config['site_url'] ?>tree.php">People</a></li>
 		<li class="nav-item"><a class="nav-link calendar with-icon" href="<?php echo $config['site_url'] ?>?date=<?php echo date('Y-m-d', strtotime('yesterday')); ?>">Yesterday</a></li>
 		<li class="nav-item"><a class="nav-link add with-icon" href="<?php echo $config['site_url'] ?>?date=today">Today</a></li>
@@ -52,6 +51,7 @@ var people_with_points = <?php echo json_encode($all_people_with_points); ?>;
 	<?php } ?>
     </ul>
   </div>
+</div>
 </nav>
 
 <div id="content" class="container">
@@ -63,11 +63,19 @@ var people_with_points = <?php echo json_encode($all_people_with_points); ?>;
 <div class="message-area" id="success-message" <?php echo ($QUERY['success']) ? '':'style="display:none;"';?>><?php echo strip_tags(stripslashes($QUERY['success']))?></div>
 
 
-<div id="popup-area-holder" class="card card-primary popup-holder">
-<button type="button" class="close" onClick="closePopup()" aria-hidden="true">&times;</button>
-<div class="card-heading" id="popup-title"></div>
-
-<div id="popup-area" class="card-body"></div>
+<div id="popup-area-holder" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="popup-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick="closePopup()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="popup-area">
+	  </div>
+    </div>
+  </div>
 </div>
 
 <?php 

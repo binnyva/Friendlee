@@ -32,12 +32,12 @@ foreach($plugins as $p) {
 $date_format = 'd<\s\u\p>S<\/\s\u\p> M';
 ?>
 <div class="btn-group mx-auto" role="group" aria-label="Browse thru Dates">
-	<a class="btn btn-secondary previous-day" href="?date=<?php echo date('Y-m-d', strtotime($date) - (60*60*24)); ?>"><i class="fas fa-angle-left"></i><?php echo date($date_format, strtotime($date) - (60*60*24)); ?></a>
-	<span class="btn btn-secondary curdate"><?php echo date($date_format, strtotime($date)); ?> 
+	<a class="btn btn-primary previous-day" href="?date=<?php echo date('Y-m-d', strtotime($date) - (60*60*24)); ?>"><i class="fas fa-angle-left"></i><?php echo date($date_format, strtotime($date) - (60*60*24)); ?></a>
+	<span class="btn btn-primary curdate"><?php echo date($date_format, strtotime($date)); ?> 
 		<span class="d-none d-md-inline"><?php echo date('(l)', strtotime($date)); ?></span>
 		<a href="#" id="change-day" class="icon calendar">Change</a></span>
 	<?php if(date('Y-m-d', strtotime($date) + (60*60*24)) <= date('Y-m-d')) { ?>
-	<a class="btn btn-secondary next-day" href="?date=<?php  echo date('Y-m-d', strtotime($date) + (60*60*24)); ?>"><?php echo date($date_format, strtotime($date) + (60*60*24)); ?> <i class="fas fa-angle-right"></i></a>
+	<a class="btn btn-primary next-day" href="?date=<?php  echo date('Y-m-d', strtotime($date) + (60*60*24)); ?>"><?php echo date($date_format, strtotime($date) + (60*60*24)); ?> <i class="fas fa-angle-right"></i></a>
 	<?php } ?>
 </div>
 </div>
@@ -67,7 +67,7 @@ function showBox($name, $title='') {
 	?>
 <fieldset class="big-list-holders">
 <legend><?php echo $title; ?></legend>
-<input type="text" class="data" name="<?php echo $name ?>" id="<?php echo $name ?>" value="" />
+<input type="text" class="data form-control" name="<?php echo $name ?>" id="<?php echo $name ?>" value="" />
 
 <?php showConnections($name); ?>
 </fieldset>
@@ -91,13 +91,10 @@ function showConnections($name) {
 			
 			foreach($all_people_connections as $person_id) {
 				$person = $people[$person_id];
-				$all_people[] = '<a href="person.php?person_id='.$person_id.'">'
-					. stripslashes((empty($person['name']) ? $person['nickname'] : $person['name'])) 
-					. '</a>';
+				$all_people[] = '<a href="person.php?person_id='.$person_id.'" title="' . $person['nickname'] . '">' . firstName($person['nickname']) . '</a>';
 			}
 			
-			if($all_people)  print "<li class='btn btn-secondary'>".implode(', ', $all_people)." <a href='ajax/delete_connection.php?connection_id=$con[id]' "
-									. "class='ajaxify ajaxify-remove-parent ajaxify-confirm delete icon' title=\"Delete '". stripslashes(empty($person['name']) ? $person['nickname'] : $person['name']) ."' connection\">Delete</a>"
+			if($all_people)  print "<li class='btn btn-success'>" . implode(', ', $all_people)
 									. " <a href='popup/connection_details.php?connection_id=$con[id]' class='popup edit icon'>Details</a> $count</li>";
 		}
 		print "</ul>";

@@ -186,7 +186,7 @@ ul.big-list li {
 	float:left;
 }
 ul.big-list li a {
-	color:#ccc !important;
+	color:#fff !important;
 }
 ul.big-list .icon {
 	padding-top:13px;
@@ -220,7 +220,7 @@ ul.big-list .icon {
 }
 
 .ui-autocomplete {
-	z-index: 1040 !important;
+	z-index: 1060 !important;
 }
 
 #uncontacted-people .active {

@@ -30,6 +30,16 @@ if(isset($_SESSION['user_id'])) {
 	}
 }
 
+function buildInput($id, $label, $type, $value, $options = []) {
+	global $html;
+	if($type == 'text' or $type == 'textarea') {
+		$options['placeholder'] = $label;
+		$label = '';
+	}
+	$html->buildInput($id, $label, $type, $value, $options);
+}
+
+
 function checkUser() {
 	global $config;
 
@@ -54,6 +64,10 @@ function compareType($a, $b) {
 	global $points;
 
 	return $points[$a] > $points[$b];
+}
+
+function firstName($name) {
+	return @reset(explode(" ", $name));
 }
 
 function email($to, $subject, $body, $from = '') {

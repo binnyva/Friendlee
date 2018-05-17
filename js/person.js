@@ -13,3 +13,7 @@ function init() {
 		$("#toggle-advanced-options").hide();
 	});
 }
+
+function closeOptions() {
+	$("#more-options-area").hide();	
+}

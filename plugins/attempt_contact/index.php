@@ -6,4 +6,4 @@ $crud->setListingQuery("SELECT CA.* FROM Plugin_Contact_Attempt CA INNER JOIN Pe
 $crud->addListDataField('person_id', 'Person', 'Person', 'user_id='.$_SESSION['user_id'] . ' ORDER BY nickname', array('fields' => 'id,nickname'));
 $crud->addField("status", "Status", 'varchar', array(), array('none'=>'None', 'unresponsive'=>'Unresponsive', 'replied'=>'Replied'), 'select');
 
-$crud->render();
+render(joinPath($config['site_folder'],'plugins/attempt_contact/templates/index.php'), true, true); 

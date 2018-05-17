@@ -14,3 +14,7 @@ function init() {
 	autocomplete("#email", people_with_points, ',');
 	autocomplete("#other", people_with_points, ',');
 }
+
+function ajaxify_customHandler() {
+	closePopup();
+}

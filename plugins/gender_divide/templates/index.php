@@ -13,7 +13,8 @@ else echo 'normal'; ?>" id="gender-area-<?php echo $gender_id ?>">
 
 <ul id="gender-<?php echo $gender_id ?>" class="friend-gender big-list">
 <?php foreach($info['people'] as $person) { ?>
-<li id="person_<?php echo $person['id'] ?>" class="ui-state-default btn btn-default"><a href="../../person.php?person_id=<?php echo $person['id'] ?>"><?php echo (empty($person['name']) ? $person['nickname'] : $person['name']) . " <span class='badge'>$person[point]</span>" ?></a></li>
+<li id="person_<?php echo $person['id'] ?>" class="btn btn-secondary"><a href="../../person.php?person_id=<?php echo $person['id'] ?>"><?php 
+		echo (empty($person['name']) ? $person['nickname'] : $person['name']) . " <span class='badge badge-dark'>$person[point]</span>" ?></a></li>
 <?php } ?>
 </ul>
 </div>

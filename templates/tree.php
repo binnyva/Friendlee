@@ -2,7 +2,7 @@
 
 <h1>People</h1>
 <form method="post" action="">
-<input type="submit" name="recalculate_points" value="Recalculate Points" class="btn btn-success pull-right" />
+<input type="submit" name="recalculate_points" value="Recalculate Points" class="btn btn-success float-right" />
 </form>
 <input type="button" onclick="saveOrder()" value="Save Configuration" class="btn btn-primary" /><br />
 
@@ -13,8 +13,8 @@
   <div class="panel-body level big-list-holders">
 <ul id="level-<?php echo $level_id ?>" class="friend-level big-list">
 <?php foreach($info['people'] as $person) { ?>
-<li id="person_<?php echo $person['id'] ?>" class="ui-state-default btn btn-default"><a href="person.php?person_id=<?php echo $person['id'] ?>"><?php
-	echo (empty($person['name']) ? $person['nickname'] : $person['name']) . " <span class='badge'>$person[point]</span>" ?></a></li>
+<li id="person_<?php echo $person['id'] ?>" class="btn btn-secondary"><a href="person.php?person_id=<?php echo $person['id'] ?>"><?php
+	echo (empty($person['name']) ? $person['nickname'] : $person['name']) . " <span class='badge badge-dark'>$person[point]</span>" ?></a></li>
 <?php } ?>
 </ul>
 </div>

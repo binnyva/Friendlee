@@ -1,33 +1,34 @@
 (function($){
 $.ajaxify = {};
+
 $.ajaxify.init = function() {
 	$("a.ajaxify").click($.ajaxify.handleClick);
+	$("form.ajaxify").submit($.ajaxify.handleSubmit);
 };
 
 $.ajaxify.handleRequest = function(ele, data) {
-	if($(ele).hasClass("ajaxify-replace") && data) {
+	if(!data) return;
+
+	if($(ele).hasClass("ajaxify-custom-handler")) {
 		if(data.success) {
-			if(document.getElementById(ele.id + "_custom_handler")) {
-				var function_name = document.getElementById(ele.id + "_custom_handler").value;
-				try {
-					eval(function_name + "('"+encodeURIComponent(data.success)+"')");
-				} catch(E) {
-					alert("Error at Eval: " + E);
-				}
-			} else {
-				var new_node = document.createElement("span");
-				new_node.innerHTML = data.success;
-				ele.parentNode.replaceChild(new_node, ele);
+			if(ajaxify_customHandler) {
+				ajaxify_customHandler(data, ele);
 			}
+		}
+	} else if($(ele).hasClass("ajaxify-replace")) {
+		if(data.success) {
+			var new_node = document.createElement("span");
+			new_node.innerHTML = data.message;
+			ele.parentNode.replaceChild(new_node, ele);
 		} else {
-			alert("Attempt failed: " + data.error);
+			alert("Attempt failed: " + data.message);
 		}
 		
-	} else if($(ele).hasClass("ajaxify-remove-parent") && data) {
+	} else if($(ele).hasClass("ajaxify-remove-parent")) {
 		if(data.success) {
 			ele.parentNode.parentNode.removeChild(ele.parentNode);
 		} else {
-			alert("Attempt failed: " + data.error);
+			alert("Attempt failed: " + data.message);
 		}
 	}
 }
@@ -55,6 +56,22 @@ $.ajaxify.handleClick = function(e) {
 	});
 	return false;
 }
+
+$.ajaxify.handleSubmit = function(e) {
+	e.stopPropagation();
+	e.preventDefault();
+
+	var form = $(this);
+	var url = form.attr("action");
+	loading();
+	$.ajax({
+		"url": url,
+		"data": form.serialize() + "&action=Save&ajaxify=1",
+		"success":  function(data){loaded(); $.ajaxify.handleRequest(form, data);},
+	});
+	return false;
+}
+
 
 })(jQuery);
 jQuery(document).ready(jQuery.ajaxify.init);

@@ -8,29 +8,28 @@
 <input type="button" name="more" id="show-more-options" value="More Options" class="stealth auto-show btn btn-success btn-sm" />
 </div>
 
-<div id="more-options-area"  class="form-area panel panel-primary popup-holder">
-<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-<div class="panel-heading" id="popup-title">Details for '<?php echo $person['nickname'] ?>'</div>
-
-<div id="popup-area" class="panel-body">
+<div id="more-options-area" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Details for '<?php echo $person['nickname'] ?>'</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick="closeOptions()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="popup-area">
 <?php
-$html->buildInput("name", 'Name', 'text', $person['name']);
-$html->buildInput("email", 'Email', 'text', $person['email']);
-$html->buildInput("phone", 'Phone', 'text', $person['phone']);
-$html->buildInput("sex", "Sex", 'select', $person['sex'],
-	 		array('options' => array('m' => 'Male','f' => 'Female')));
+buildInput("name", 'Name', 'text', $person['name'], ['class' => 'form-control', 'no_br' => true]);
+buildInput("email", 'Email', 'text', $person['email'], ['class' => 'form-control', 'no_br' => true]);
+buildInput("phone", 'Phone', 'text', $person['phone'], ['class' => 'form-control', 'no_br' => true]);
+buildInput("sex", "Sex", 'select', $person['sex'], ['options' => ['m' => 'Male','f' => 'Female'], 'class' => 'form-control', 'no_br' => true]);
 
-$html->buildInput("facebook_id", 'Facebook ID', 'text', $person['facebook_id']);
-$html->buildInput("facebook", 'Facebook Username', 'text', $person['facebook']);
-$html->buildInput("twitter", 'Twitter Handle', 'text', $person['twitter']);
-$html->buildInput("birthday", 'Birthday', 'text', $person['birthday']);
-
-$html->buildInput("city_id", 'City', 'select', $person['city_id'], array('options' => $all_cities));
+buildInput("city_id", 'City', 'select', $person['city_id'], ['options' => $all_cities, 'class' => 'form-control', 'no_br' => true]);
 ?><label>&nbsp;</label><a href="cities.php?action=add">Another City?</a><br /><?php
-$html->buildInput("locality", 'Locality', 'text', $person['locality']);
-$html->buildInput("level_id", "Level", 'select', $person['level_id'], array('options' => $all_levels));
+buildInput("locality", 'Locality', 'text', $person['locality'], ['class' => 'form-control', 'no_br' => true]);
+buildInput("level_id", "Level", 'select', $person['level_id'], ['options' => $all_levels, 'class' => 'form-control', 'no_br' => true]);
 
-$html->buildInput("note", "Note...", 'textarea', $person['note']);
+buildInput("note", "Note...", 'textarea', $person['note'], ['class' => 'form-control', 'no_br' => true]);
 ?>
 <a href="#" id="toggle-advanced-options" class="with-icon settings">Advanced Options...</a>
 
@@ -38,22 +37,31 @@ $html->buildInput("note", "Note...", 'textarea', $person['note']);
 <fieldset>
 <legend>Advanced Options</legend>
 <?php
-$html->buildInput("autocomplete", 'Show in Auto Complete List', 'checkbox', $person['autocomplete']);
-$html->buildInput("automanaged", 'Hide in Uncontacted List', 'checkbox', $person['automanaged']);
+buildInput("facebook_id", 'Facebook ID', 'text', $person['facebook_id'], ['class' => 'form-control', 'no_br' => true]);
+buildInput("facebook", 'Facebook Username', 'text', $person['facebook'], ['class' => 'form-control', 'no_br' => true]);
+buildInput("twitter", 'Twitter Handle', 'text', $person['twitter'], ['class' => 'form-control', 'no_br' => true]);
+buildInput("birthday", 'Birthday', 'text', $person['birthday'], ['class' => 'form-control', 'no_br' => true]);
+
+buildInput("autocomplete", 'Show in Auto Complete List', 'checkbox', $person['autocomplete']);
+buildInput("automanaged", 'Hide in Uncontacted List', 'checkbox', $person['automanaged']);
 ?>
 </fieldset>
 </div>
 <?php
 
-$html->buildInput("person_id", "", 'hidden', $person['id']);
+buildInput("person_id", "", 'hidden', $person['id']);
 ?><br />
 
-<a href="ajax/delete_person.php?person_id=<?php echo $person['id'] ?>" class="with-icon delete confirm pull-right">Delete <?php echo $person['nickname'] ?></a>
 <input type="submit" name="action" value="Save" class="big btn btn-primary" />
 
+<a href="ajax/delete_person.php?person_id=<?php echo $person['id'] ?>" title="Delete <?php echo firstName($person['nickname']) ?>"
+	class='confirm btn btn-sm btn-warning float-right'><i class="fas fa-trash"></i> Delete <?php echo firstName($person['nickname']) ?></a>
+	  </div>
+    </div>
+  </div>
+</div>
+
 <!-- <input type="button" name="more" id="hide-more-options" class="auto-hide" value="Hide Options" /><br /> -->
-</div>
-</div>
 </form>
 
 

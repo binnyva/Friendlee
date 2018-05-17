@@ -179,6 +179,8 @@ function siteInit() {
 		
 		if(!confirm("Are you sure you want to " + action + "?")) {
 			e.stopPropagation();
+			e.preventDefault();
+			return false;
 		}
 	});
 
