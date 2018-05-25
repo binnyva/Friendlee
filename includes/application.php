@@ -20,7 +20,8 @@ $activate_plugins = false;
 if(isset($_SESSION['user_id']) and $sql->getOne("SELECT value FROM Setting WHERE name='activate_plugins' AND (user_id='$_SESSION[user_id]' OR user_id='0')")) 
 	$activate_plugins = true;
 
-$all_people = array();
+$all_people = [];
+$all_people_with_points = [];
 if(isset($_SESSION['user_id'])) {
 	$people = keyFormat($t_person->sort('nickname')->find(array('user_id'=>$_SESSION['user_id'], 'autocomplete'=>'1')));
 	
