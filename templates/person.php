@@ -22,13 +22,11 @@
 buildInput("name", 'Name', 'text', $person['name'], ['class' => 'form-control', 'no_br' => true]);
 buildInput("email", 'Email', 'text', $person['email'], ['class' => 'form-control', 'no_br' => true]);
 buildInput("phone", 'Phone', 'text', $person['phone'], ['class' => 'form-control', 'no_br' => true]);
-buildInput("sex", "Sex", 'select', $person['sex'], ['options' => ['m' => 'Male','f' => 'Female'], 'class' => 'form-control', 'no_br' => true]);
-
-buildInput("city_id", 'City', 'select', $person['city_id'], ['options' => $all_cities, 'class' => 'form-control', 'no_br' => true]);
-?><label>&nbsp;</label><a href="cities.php?action=add">Another City?</a><br /><?php
+buildInput("sex", "Sex", 'select', $person['sex'], ['options' => ['m' => 'Male','f' => 'Female'], 'class' => 'form-control popup-dropdown']);
+buildInput("city_id", 'City', 'select', $person['city_id'], ['options' => $all_cities, 'class' => 'form-control popup-dropdown', 'no_br' => true]);
+?><a href="cities.php?action=add">Another City?</a><br /><?php
 buildInput("locality", 'Locality', 'text', $person['locality'], ['class' => 'form-control', 'no_br' => true]);
-buildInput("level_id", "Level", 'select', $person['level_id'], ['options' => $all_levels, 'class' => 'form-control', 'no_br' => true]);
-
+buildInput("level_id", "Level", 'select', $person['level_id'], ['options' => $all_levels, 'class' => 'form-control popup-dropdown']);
 buildInput("note", "Note...", 'textarea', $person['note'], ['class' => 'form-control', 'no_br' => true]);
 ?>
 <a href="#" id="toggle-advanced-options" class="with-icon settings">Advanced Options...</a>
@@ -37,6 +35,7 @@ buildInput("note", "Note...", 'textarea', $person['note'], ['class' => 'form-con
 <fieldset>
 <legend>Advanced Options</legend>
 <?php
+buildInput("priority", "Priority", 'select', $person['priority'], ['options' => $all_priorities, 'class' => 'form-control popup-dropdown']);
 buildInput("facebook_id", 'Facebook ID', 'text', $person['facebook_id'], ['class' => 'form-control', 'no_br' => true]);
 buildInput("facebook", 'Facebook Username', 'text', $person['facebook'], ['class' => 'form-control', 'no_br' => true]);
 buildInput("twitter", 'Twitter Handle', 'text', $person['twitter'], ['class' => 'form-control', 'no_br' => true]);

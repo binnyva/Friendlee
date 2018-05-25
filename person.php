@@ -6,10 +6,10 @@ if(!$person_id) exit;
 $person = $t_person->find($person_id);
 if(!$person) die("Invalid Person ID Provided");
 
-$contact_thresholds = $sql->getById("SELECT element_id,`interval` FROM Frequency WHERE (user_id='$_SESSION[user_id]' OR user_id='0') AND data_type='level' AND type='any'");
 $all_cities = $sql->getById("SELECT id,name FROM City WHERE user_id=$_SESSION[user_id] ORDER BY name");
 $all_cities[0] = 'Unknown';
 $all_levels = $sql->getById("SELECT id,name FROM Level");
+$all_priorities = ['low' => 'Low', 'normal' => 'Normal', 'high' => 'High'];
 
 $last_message	= $t_person->getLastContact($person_id, 'message');
 $last_chat		= $t_person->getLastContact($person_id, 'chat');
@@ -28,6 +28,7 @@ if($last_other	and (!$last_contact or @strcmp($last_contact['start_on'], $last_o
 $data = $t_person->calculatePoints($person_id);
 extract($data);
 
+$contact_thresholds = $sql->getById("SELECT element_id,`interval` FROM Frequency WHERE (user_id='$_SESSION[user_id]' OR user_id='0') AND data_type='level' AND type='any'");
 $frequency = $contact_thresholds[$person['level_id']];
 
 $interaction_log = $t_person->getLog($person_id);

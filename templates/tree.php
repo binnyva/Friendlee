@@ -9,7 +9,7 @@
 <div class="row">
 <?php foreach($level as $level_id => $info) { ?>
 <div class="col-md-6"><div class="panel panel-default">
-  <div class="panel-heading"><h3 class="panel-title"><?php echo $info['name'] ?> <span class='badge'><?php echo count($info['people']); ?></span></h3></div>
+  <div class="panel-heading"><h3 class="panel-title"><?php echo $info['name'] ?> <span class='badge badge-secondary'><?php echo count($info['people']); ?></span></h3></div>
   <div class="panel-body level big-list-holders">
 <ul id="level-<?php echo $level_id ?>" class="friend-level big-list">
 <?php foreach($info['people'] as $person) { ?>

@@ -226,4 +226,9 @@ ul.big-list .icon {
 #uncontacted-people .active {
 	background-image: none !important;
 }
-/* */
+
+.popup-dropdown {
+	margin-left: 20px;
+	display: inline !important;
+	width: inherit !important;
+}

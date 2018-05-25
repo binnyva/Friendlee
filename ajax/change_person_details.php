@@ -3,7 +3,7 @@ require('../common.php');
 
 $person_id = intval($QUERY['person_id']);
 
-$fields_to_update = array('name','nickname','email','phone', 'sex','facebook_id','twitter','birthday','city_id','locality','level_id', 'note', 'automanaged', 'autocomplete');
+$fields_to_update = array('name','nickname','email','phone', 'sex','facebook_id','twitter','birthday','city_id','locality','level_id', 'note', 'automanaged', 'autocomplete', 'priority');
 
 $data = array();
 foreach($fields_to_update as $f) $data[$f] = $QUERY[$f];
