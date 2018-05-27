@@ -78,7 +78,7 @@ buildInput("person_id", "", 'hidden', $person['id']);
 <?php } ?>
 
 <table id="score-table">
-<tr><th>Met</th><th>Phone</th><th>Message</th><th>Chat</th><th>Email</th><th>Other</th></tr>
+<tr><th>Met</th><th>Phone</th><th>Message</th><th>Other</th></tr>
 <tr><td>
 <span class="count"><?php echo $met_count ?></span> x 
 <span class="point"><?php echo $points['met'] ?></span><br />
@@ -92,19 +92,11 @@ buildInput("person_id", "", 'hidden', $person['id']);
 <span class="point"><?php echo $points['message'] ?></span><br />
 <span class="score"><?php echo $message_count * $points['message'] ?></span>
 </td><td>
-<span class="count"><?php echo $chat_count ?></span> x 
-<span class="point"><?php echo $points['chat'] ?></span><br />
-<span class="score"><?php echo $chat_count * $points['chat'] ?></span>
-</td><td>
-<span class="count"><?php echo $email_count ?></span> x 
-<span class="point"><?php echo $points['email'] ?></span><br />
-<span class="score"><?php echo $email_count * $points['email'] ?></span>
-</td><td>
 <span class="count"><?php echo $other_count ?></span> x 
 <span class="point"><?php echo $points['other'] ?></span><br />
 <span class="score"><?php echo $other_count * $points['other'] ?></span>
 </td></tr>
-<tr><td colspan="6"><span class="total-score"><?php echo $total_score ?></span></td></tr>
+<tr><td colspan="4"><span class="total-score"><?php echo $total_score ?></span></td></tr>
 </table>
 
 <p><a href="analytics/person.php?person_id=<?php echo $person_id ?>" class="with-icon analytics">Analytics for <?php echo first_name($person['nickname']) ?></a></p>

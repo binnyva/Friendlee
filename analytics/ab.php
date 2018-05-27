@@ -4,6 +4,7 @@ require '../common.php';
 $person_id = i($QUERY, 'person_id', 382);
 $from = i($QUERY, 'from', date('Y-m-d', strtotime('last month')));
 $to = i($QUERY, 'to', date('Y-m-d'));
+$output = i($QUERY, 'output', 'text');
 $connection_type = 'met';
 
 $contacts = $sql->getAll("SELECT DATE(C.start_on) AS start_on, C.type, C.note, C.location
@@ -14,11 +15,26 @@ $contacts = $sql->getAll("SELECT DATE(C.start_on) AS start_on, C.type, C.note, C
 
 $a = 0;
 $b = 0;
+$data = array();
 foreach ($contacts as $cont) {
 	if($cont['note'] and preg_match('/(\d+)\:(\d+)/', $cont['note'], $matches)) {
-		$a += intval($matches[1]);
-		$b += intval($matches[2]);
+		$a_value = intval($matches[1]);
+		$b_value = intval($matches[2]);
+
+		$a += $a_value;
+		$b += $b_value;
+		$data[] = array('date' => $cont['start_on'], 'a' => $a_value, 'b' => $b_value);
 	}
+}
+
+if($output == 'json') {
+	echo json_encode($data);
+	exit;
+} elseif($output == 'csv') {
+	foreach($data as $d) {
+		echo "$d[date],$d[a],$d[b]\n";
+	}
+	exit;
 }
 
 $interval = date_diff(date_create($from), date_create($to));
