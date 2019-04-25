@@ -15,10 +15,8 @@ $template->setTitle($title);
 
 if(!empty($QUERY['action'])) {
 	$met_connection_id = getPeople('met');
-	$chat_connection_id = getPeople('chat');
 	$phone_connection_id = getPeople('phone');
 	$sms_connection_id = getPeople('message');
-	$email_connection_id = getPeople('email');
 	$other_connection_id = getPeople('other');
 }
 

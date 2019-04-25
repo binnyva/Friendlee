@@ -109,8 +109,6 @@ $i_plugin->callHook("display_content_end");
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
 <script src="<?php echo $config['site_url']; ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-
-
 <script src="<?php echo $config['site_url']; ?>js/library/ajaxify.js" type="text/javascript"></script>
 <script src="<?php echo $config['site_url']; ?>js/library/calendar/calendar.js" type="text/javascript"></script>
 <script src="<?php echo $config['site_url']; ?>js/application.js" type="text/javascript"></script>

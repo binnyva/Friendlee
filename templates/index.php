@@ -47,7 +47,7 @@ $date_format = 'd<\s\u\p>S<\/\s\u\p> M';
 
 <div class="container" id="contact-area">
 <div class="row">
-<div class="col-md-6"><?php showBox('message', 'Whatsapp/Text'); ?></div>
+<div class="col-md-6"><?php showBox('message'); ?></div>
 <div class="col-md-6"><?php showBox('met'); ?> <?php $i_plugin->callHook('main_box_met_show_under'); ?></div>
 </div>
 <div class="row">

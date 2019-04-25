@@ -31,8 +31,10 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 	foreach ($uncontacted_in_level as $person) {
 		$gap_days = $person['gap'];
 		if($gap_days > 30) {
-			$gap_days = floor($gap_days / 30) . ' months';
-			if($gap_days % 30) $gap_days .= ', ' . ($gap_days % 30) . ' days';
+			$gap_months = floor($gap_days / 30) . ' months';
+			if($gap_days % 30) $gap_months .= ', ' . (string) ($gap_days % 30) . ' days';
+
+			$gap_days = $gap_months;
 		}
 		else $gap_days .= ' days';
 
