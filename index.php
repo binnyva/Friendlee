@@ -11,7 +11,7 @@ if($date == 'guess') {
 $new_people = array();
 
 $title = 'Friendlee : ' . date('dS F, Y', strtotime($date));
-$template->setTitle($title);
+iapp('template')->setTitle($title);
 
 if(!empty($QUERY['action'])) {
 	$met_connection_id = getPeople('met');
@@ -26,8 +26,8 @@ if($new_people) {
 	$QUERY['success'] = 'Added new people to the system: ' . implode(', ', $new_people);
 }
 
-$template->addResource("../bower_components/jquery.tablesorter/js/jquery.tablesorter.min.js", "js");
-$template->addResource("uncontacted.css", "css");
+iapp('template')->addResource("../bower_components/jquery.tablesorter/js/jquery.tablesorter.min.js", "js");
+iapp('template')->addResource("uncontacted.css", "css");
 render();
 
 

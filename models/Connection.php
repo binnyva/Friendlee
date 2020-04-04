@@ -1,10 +1,11 @@
 <?php
+use iframe\DB\DBTable;
+
 class Connection extends DBTable {
 	private $sql;
 
 	function __construct() {
-		global $sql;
-		$this->sql = $sql;
+		$this->sql = iframe\App::$db;
 		parent::__construct("Connection");
 	}
 
@@ -109,13 +110,11 @@ class Connection extends DBTable {
 	}
 
 	function getConnectionsOnDate($date, $type) {
-		return $this->sql->getAll("SELECT id FROM Connection 
-				WHERE user_id=$_SESSION[user_id] AND DATE(start_on)='$date' AND type='$type'");
+		return $this->sql->getAll("SELECT id FROM Connection WHERE user_id=$_SESSION[user_id] AND DATE(start_on)='$date' AND type='$type'");
 	}
 
 	function getPeopleIdsInConnection($connection_id) {
-		return $this->sql->getCol("SELECT person_id FROM PersonConnection 
-				WHERE connection_id=$connection_id");
+		return $this->sql->getCol("SELECT person_id FROM PersonConnection WHERE connection_id=$connection_id");
 	}
 
 	function parse($type, $raw) {

@@ -1,7 +1,7 @@
 <?php
 require('../../common.php');
-$html = new HTML;
-$t_city = new DBTable('City');
+$html = new iframe\HTML\HTML;
+$t_city = new iframe\DB\DBTable('City');
 
 $current_trip = $sql->getAssoc("SELECT T.id,T.name,T.city_id,C.name AS city_name,T.status,T.start_on 
 		FROM Plugin_Meetup_Trip T INNER JOIN City C ON T.city_id=C.id

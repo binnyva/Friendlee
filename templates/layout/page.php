@@ -3,16 +3,14 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title><?php echo $title?></title>
-<link href="<?php echo $abs?>css/style.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo $abs?>images/silk_theme.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo $abs?>js/library/calendar/calendar.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo $abs?>bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-<!-- <link href="<?php echo $abs?>bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet"> -->
-<link href="<?php echo $abs?>bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet">
-<link href="<?php echo $abs?>bower_components/jquery-ui/themes/base/minified/jquery.ui.autocomplete.min.css" rel="stylesheet">
-<link href="<?php echo $abs?>bower_components/components-font-awesome/css/fontawesome-all.min.css" rel="stylesheet">
+<title><?php echo $config['app_name'] ?></title>
+<link href="<?php echo $config['app_url'] ?>assets/css/style.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $config['app_url'] ?>assets/images/silk_theme.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $config['app_url'] ?>assets/js/library/calendar/calendar.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $config['app_url'] ?>bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo $config['app_url'] ?>bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet">
+<link href="<?php echo $config['app_url'] ?>bower_components/jquery-ui/themes/base/minified/jquery.ui.autocomplete.min.css" rel="stylesheet">
+<link href="<?php echo $config['app_url'] ?>bower_components/components-font-awesome/css/fontawesome-all.min.css" rel="stylesheet">
 
 <?php 
 echo $css_includes;
@@ -28,7 +26,7 @@ var people_with_points = <?php echo json_encode($all_people_with_points); ?>;
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 <div class="container">
-  <a class="navbar-brand" href="<?php echo $abs ?>"><?php echo $config['site_title'] ?></a>
+  <a class="navbar-brand" href="<?php echo $config['app_url']  ?>"><?php echo $config['site_title'] ?></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -36,18 +34,18 @@ var people_with_points = <?php echo json_encode($all_people_with_points); ?>;
   <div class="collapse navbar-collapse my-0" id="navbar-main">
     <ul class="navbar-nav ml-auto">
     	<?php if(!empty($_SESSION['user_id'])) { ?>
-		<li class="nav-item mr-3"><form action="<?php echo $config['site_url']; ?>search.php" method="post" id="search-area" class="form-inline my-2 my-md-0 input-group">
+		<li class="nav-item mr-3"><form action="<?php echo $config['app_url']; ?>search.php" method="post" id="search-area" class="form-inline my-2 my-md-0 input-group">
 			<input type="text" name="search" id="search" placeholder="Search..." value="<?php if(isset($search_term)) echo $search_term ?>" class="form-control" />
 			<div class="input-group-append"><button type="submit" class="btn btn-outline-secondary btn-default"><i class="fas fa-search"></i></button></div>
 		</form></li>
-		<li class="nav-item"><a class="nav-link site with-icon" href="<?php echo $config['site_url'] ?>tree.php">People</a></li>
-		<li class="nav-item"><a class="nav-link calendar with-icon" href="<?php echo $config['site_url'] ?>?date=<?php echo date('Y-m-d', strtotime('yesterday')); ?>">Yesterday</a></li>
-		<li class="nav-item"><a class="nav-link add with-icon" href="<?php echo $config['site_url'] ?>?date=today">Today</a></li>
+		<li class="nav-item"><a class="nav-link site with-icon" href="<?php echo $config['app_url'] ?>tree.php">People</a></li>
+		<li class="nav-item"><a class="nav-link calendar with-icon" href="<?php echo $config['app_url'] ?>?date=<?php echo date('Y-m-d', strtotime('yesterday')); ?>">Yesterday</a></li>
+		<li class="nav-item"><a class="nav-link add with-icon" href="<?php echo $config['app_url'] ?>?date=today">Today</a></li>
 		<?php if(!isset($config['single_user']) or !$config['single_user']) { ?>
-		<li class="nav-item"><a class="nav-link logout with-icon" href="<?php echo $config['site_url'] ?>user/logout.php">Logout</a></li>
+		<li class="nav-item"><a class="nav-link logout with-icon" href="<?php echo $config['app_url'] ?>user/logout.php">Logout</a></li>
 	<?php }
 		} else { ?>
-		<li class="nav-item"><a class="nav-link info with-icon" href="<?php echo $config['site_url'] ?>about/">About</a></li>
+		<li class="nav-item"><a class="nav-link info with-icon" href="<?php echo $config['app_url'] ?>about/">About</a></li>
 	<?php } ?>
     </ul>
   </div>
@@ -86,10 +84,10 @@ $i_plugin->callHook("display_content_top");
 <?php 
 /////////////////////////////////// The Template file will appear here ////////////////////////////
 
-if(isset($crud) and $GLOBALS['template']->template == '') {
+if(isset($crud) and iapp('template')->template == '') {
 	$crud->printAction();
 } else {
-	include($GLOBALS['template']->template); 
+	include(iapp('template')->template); 
 }
 
 /////////////////////////////////// The Template file will appear here ////////////////////////////
@@ -103,17 +101,15 @@ $i_plugin->callHook("display_content_end");
 </div>
 
 <div id="footer"></div>
-<script src="<?php echo $config['site_url']; ?>bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+<script src="<?php echo $config['app_url']; ?>bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
-<script src="<?php echo $config['site_url']; ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="<?php echo $config['app_url']; ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-<script src="<?php echo $config['site_url']; ?>js/library/ajaxify.js" type="text/javascript"></script>
-<script src="<?php echo $config['site_url']; ?>js/library/calendar/calendar.js" type="text/javascript"></script>
-<script src="<?php echo $config['site_url']; ?>js/application.js" type="text/javascript"></script>
-<script src="<?php echo $config['site_url']; ?>bower_components/jquery-ui/ui/minified/jquery-ui.min.js" type="text/javascript"></script>
-<script src="<?php echo $config['site_url']; ?>bower_components/jquery-ui/ui/minified/jquery.ui.autocomplete.min.js" type="text/javascript"></script>
+<script src="<?php echo $config['app_url']; ?>assets/js/library/ajaxify.js" type="text/javascript"></script>
+<script src="<?php echo $config['app_url']; ?>assets/js/library/calendar/calendar.js" type="text/javascript"></script>
+<script src="<?php echo $config['app_url']; ?>assets/js/application.js" type="text/javascript"></script>
+<script src="<?php echo $config['app_url']; ?>bower_components/jquery-ui/ui/minified/jquery-ui.min.js" type="text/javascript"></script>
+<script src="<?php echo $config['app_url']; ?>bower_components/jquery-ui/ui/minified/jquery.ui.autocomplete.min.js" type="text/javascript"></script>
 
 <?php 
 echo $js_includes;

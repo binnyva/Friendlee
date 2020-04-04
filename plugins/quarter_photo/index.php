@@ -14,7 +14,7 @@ $people = $t_person->sort('nickname')->find($where);
 $sent_photos = $sql->getById("SELECT DISTINCT person_id, MAX(point_status) FROM Plugin_Quarter_Photo 
 			WHERE user_id=$_SESSION[user_id] GROUP BY person_id");
 
-$template->addResource('js/index.js','js',true);
+iframe\App::$template->addResource('js/index.js','js',true);
 
-$html = new HTML;
+$html = new iframe\HTML\HTML;
 render(joinPath($config['site_folder'],'plugins/quarter_photo/templates/index.php'), true, true);

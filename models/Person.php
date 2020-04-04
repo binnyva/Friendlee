@@ -1,10 +1,11 @@
 <?php
+use iframe\DB\DBTable;
+
 class Person extends DBTable {
 	private $sql;
 
 	function __construct() {
-		global $sql;
-		$this->sql = $sql;
+		$this->sql = iframe\App::$db;
 
 		parent::__construct("Person");
 	}

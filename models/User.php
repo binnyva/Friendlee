@@ -1,17 +1,20 @@
 <?php
+use iframe\DB\DBTable;
+
 class User extends DBTable {
-	var $id = 0;
-	var $sql;
+	public $id = 0;
+	public $sql;
 	
 	//Configs
-	var $cookie_expire = 0;
-	var $cookie_prefix_for_site = 'friendlee_';
+	public $cookie_expire = 0;
+	public $cookie_prefix_for_site = 'friendlee_';
 	
 	//The constructor
 	//Get the details of the current user on every page load.
 	function __construct() {
-		global $sql, $config;
-		$this->cookie_prefix_for_site = unformat($config['site_title']) . '_';
+		$config = iframe\App::$config;
+		$this->sql = iframe\App::$db;
+		$this->cookie_prefix_for_site = unformat($config['app_name']) . '_';
 		$this->cookie_expire = time() + (60*60*24*30);//Will expire in 30 days
 		parent::__construct("User");
 
@@ -23,7 +26,7 @@ class User extends DBTable {
 		//This is a User who have enabled the 'Remember me' Option - so there is a cookie in the users system
 		if(isset($_COOKIE[$this->cookie_prefix_for_site.'username']) and $_COOKIE[$this->cookie_prefix_for_site.'username'] and isset($_COOKIE[$this->cookie_prefix_for_site.'password_hash'])) {
 
-			$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE username='" . $_COOKIE[$this->cookie_prefix_for_site . 'username'] . "' "
+			$user_details = $this->sql->getAssoc("SELECT id,name FROM User WHERE username='" . $_COOKIE[$this->cookie_prefix_for_site . 'username'] . "' "
 											. " AND MD5(CONCAT(password,'#c*2u!'))='" . $_COOKIE[$this->cookie_prefix_for_site . 'password_hash'] . "'");
 		
 			if($user_details) { //If it is valid, store it in session
@@ -42,10 +45,9 @@ class User extends DBTable {
 	 * Login the user with the username and password given as the argument
 	 */
 	function login($username,$password,$remember=0) {
-		global $sql;
 		$this->id = -1;
 		
-		$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE (username='$username' OR email='$username') AND password='$password'");
+		$user_details = $this->sql->getAssoc("SELECT id,name FROM User WHERE (username='$username' OR email='$username') AND password='$password'");
 		if(!$user_details) { //Query did not run correctly
 			showMessage("Invalid Username/Password", "user/login.php", "error");
 
@@ -61,8 +63,7 @@ class User extends DBTable {
 
 	/// Keep some token in the cookie so as to login the user automatically the next time
 	function rememberLogin($user_id) {
-		global $sql;
-		$user_details = $sql->getAssoc("SELECT id,name,username,password FROM User WHERE id=$user_id");
+		$user_details = $this->sql->getAssoc("SELECT id,name,username,password FROM User WHERE id=$user_id");
 		extract($user_details);
 
 		setcookie($this->cookie_prefix_for_site . 'username', $username, $this->cookie_expire, '/');
@@ -101,13 +102,13 @@ class User extends DBTable {
 	 * Registers the user with the details provided in the arguments. If the specified username is already taken, an error will be shown.
 	 */
 	function register($username, $password, $name, $email) {
-		global $sql, $QUERY;
+		global $QUERY;
 		
 		//Check if the username is already taken.
 		$email_check = '';
 		if($email) $email_check = "OR email='$email'";
-		$result	= $sql->getSql("SELECT id FROM User WHERE username='$username' $email_check");
-		$username_taken = $sql->fetchNumRows($result);
+		$result	= $this->sql->getSql("SELECT id FROM User WHERE username='$username' $email_check");
+		$username_taken = $this->sql->fetchNumRows($result);
 	
 		if ($username_taken == 0) {
 			$errors = check(array(
@@ -138,11 +139,9 @@ class User extends DBTable {
 	}
 
 	function oAuthCheckUser($user_data = array()){
-		global $sql;
-
 		// For some reason, I'm not geting oauth_provider/oauth_uid from google. So using email.
-    	//$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE oauth_provider = '".$user_data['oauth_provider']."' AND oauth_uid = '".$user_data['oauth_uid']."'");
-    	$user_details = $sql->getAssoc("SELECT id,name,email,status FROM User WHERE email='$user_data[email]'");
+    	//$user_details = $this->sql->getAssoc("SELECT id,name FROM User WHERE oauth_provider = '".$user_data['oauth_provider']."' AND oauth_uid = '".$user_data['oauth_uid']."'");
+    	$user_details = $this->sql->getAssoc("SELECT id,name,email,status FROM User WHERE email='$user_data[email]'");
 
     	if(!$user_details) { // User not found in Database - insert.
 	    	$user_details = $this->oAuthRegister($user_data);
@@ -158,10 +157,9 @@ class User extends DBTable {
     }
 
     function oAuthRegister($user_data, $only_insert = false) {
-    	global $sql;
 		list($username, $del) = explode("@", $user_data['email']);
 		// Check if another user exists with the same username. If so, 
-		$user_details = $sql->getAssoc("SELECT id,name FROM User WHERE username = '$username'");
+		$user_details = $this->sql->getAssoc("SELECT id,name FROM User WHERE username = '$username'");
 		if($user_details) {
 			$username = $username . '-' . substr(md5(uniqid(mt_rand(), true)), 0, 3); // Make sure the username is unique
 		}
@@ -174,7 +172,7 @@ class User extends DBTable {
 								'name'			=> $user_data['given_name'] . ' ' . $user_data['family_name'],
 								'gender'		=> ($user_data['gender'] == 'male') ? 'm' : 'f',
 								'image'			=> $user_data['picture']);
-		$user_id = $sql->insert("User", $user_details);
+		$user_id = $this->sql->insert("User", $user_details);
 		$user_details['id'] = $user_id;
 
 		return $user_details;
@@ -184,7 +182,6 @@ class User extends DBTable {
 	 * Login the user with the given email - usually done after a third party oAuth authentication
 	 */
 	function oAuthIdVerify($id_token) {
-		global $sql;
 		$this->id = -1;
 		include_once '../includes/vendor/google/gpConfig.php';
 
@@ -192,7 +189,7 @@ class User extends DBTable {
 		if ($payload) {
 			$details = $payload->getAttributes();
 			$user_data = $details['payload'];
-			$user_details = $sql->getAssoc("SELECT id,name,username FROM User WHERE email = '$user_data[email]'");
+			$user_details = $this->sql->getAssoc("SELECT id,name,username FROM User WHERE email = '$user_data[email]'");
 			if(!$user_details) $user_details = $this->oAuthRegister($user_data, true);
 			if($user_details) {
 				//Store the necessy stuff in the sesson
@@ -212,7 +209,7 @@ class User extends DBTable {
 	 * Edits the current user's profile.
 	 */
 	function update($id, $password, $name, $email, $url) {
-		global $sql, $QUERY;
+		global $QUERY;
 		
 		$errors = check(array(
 			array('name'=>'username','is'=>'empty'),
@@ -247,12 +244,12 @@ class User extends DBTable {
 	 * 	$user->passwordRetrival(array('email'=>'binnyva@gmail.com'));
 	 */
 	 function passwordRetrival($data) {
-	 	global $sql, $config;
+	 	$config = iframe\App::$config;
 	 	
 	 	if(isset($data['username'])) {
-		 	extract($sql->getAssoc("SELECT name,username,password,email FROM User WHERE username='$data[username]'"));
+		 	extract($this->sql->getAssoc("SELECT name,username,password,email FROM User WHERE username='$data[username]'"));
 	 	} elseif(isset($data['email'])) {
-	 		extract($sql->getAssoc("SELECT name,username,password,email FROM User WHERE email='$data[email]'"));
+	 		extract($this->sql->getAssoc("SELECT name,username,password,email FROM User WHERE email='$data[email]'"));
 	 	} else {
 	 		showMessage("Please provide either the username or the password.", "forgot_password.php", "error");
 	 	}

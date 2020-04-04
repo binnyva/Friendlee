@@ -9,8 +9,8 @@ if($city_id) {
 $all_cities = $sql->getById("SELECT id,name FROM City WHERE user_id=$_SESSION[user_id] ORDER BY name");
 $all_cities[0] = 'All';
 
-$html = new HTML;
-$crud = new Crud('Plugin_Meetup_Trip', "Trips");
+$html = new iframe\HTML\HTML;
+$crud = new iframe\iframe\Crud('Plugin_Meetup_Trip', "Trips");
 $crud->code['before_content'] = '<form action="" method="get">
 <label for="city_id">Filter by City: </label>' . $html->buildDropDownArray($all_cities,"city_id",$city_id, array(), false) .
 '<input type="submit" name="action" value="Go" />

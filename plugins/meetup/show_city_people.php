@@ -12,8 +12,8 @@ $all_cities[0] = 'All';
 
 $people = $t_person->sort($order)->find($where);
 
-$html = new HTML;
+$html = new iframe\HTML\HTML;
 
-$template->addResource('js/show_city_people.js','js',true);
-$template->addResource("../bower_components/jquery.tablesorter/js/jquery.tablesorter.min.js", "js");
+iapp('template')->addResource('js/show_city_people.js','js',true);
+iapp('template')->addResource("../bower_components/jquery.tablesorter/js/jquery.tablesorter.min.js", "js");
 render(joinPath($config['site_folder'],'plugins/meetup/templates/show_city_people.php'), true, true);

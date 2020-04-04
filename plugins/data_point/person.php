@@ -3,7 +3,7 @@ require('../../common.php');
 
 $person_id = i($QUERY, 'person_id');
 
-$data = new Crud("Plugin_Data_Point");
+$data = new iframe\iframe\Crud("Plugin_Data_Point");
 $data->title = "Data Point";
 $data->setListingQuery("SELECT id,name,data,value,status FROM Plugin_Data_Point WHERE user_id=$_SESSION[user_id] AND person_id=$person_id");
 $data->setListingFields("name", "data", "status");

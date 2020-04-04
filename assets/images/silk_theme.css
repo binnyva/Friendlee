@@ -46,3 +46,44 @@
 /*Project Specific Stuff*/
 
 .menu-with-icon li {background-position:4px 5px;}
+
+/* iframe v2 Format. */
+/*Actions*/
+.icon-add {background-image:url(silk_icons/add.png);}
+.icon-done,.icon-accept {background-image:url(silk_icons/accept.png);}
+.icon-edit {background-image:url(silk_icons/pencil.png);}
+.icon-delete {background-image:url(silk_icons/bin_empty.png);}
+
+/* Active/Deactive */
+.icon-deactivate {background-image:url(silk_icons/cross.png);}
+.icon-activate {background-image:url(silk_icons/tick.png);}
+/* Activate/Deactivate - oppostite of active/deactive */
+.icon-active {background-image:url(silk_icons/tick.png);}
+.icon-deactive,.icon-inactive {background-image:url(silk_icons/cross.png);}
+
+/*Paging*/
+.icon-page-next,.icon-next {background-image:url(silk_icons/resultset_next.png);}
+.icon-page-back,.icon-previous,.icon-page-previous {background-image:url(silk_icons/resultset_previous.png);}
+.icon-page-first,.icon-first {background-image:url(silk_icons/resultset_first.png);}
+.icon-page-last,.icon-last {background-image:url(silk_icons/resultset_last.png);}
+.icon-home {background-image:url(silk_icons/house.png);}
+
+/*Common Stuff*/
+.icon-settings {background-image:url(silk_icons/wrench.png);}
+.icon-logout {background-image:url(silk_icons/door_out.png);}
+.icon-calendar,.icon-date {background-image:url(silk_icons/calendar.png);}
+.icon-info {background-image:url(silk_icons/information.png);}
+.icon-plugin {background-image:url(silk_icons/plugin.png);}
+.icon-search {background-image:url(silk_icons/find.png);}
+.icon-site,.icon-link {background-image:url(silk_icons/world.png);}
+.icon-rss,.icon-feed {background-image:url(silk_icons/feed.png);}
+.icon-save {background-image:url(silk_icons/disk.png);}
+.icon-comment {background-image:url(silk_icons/comment.png);}
+.icon-wait {background-image:url(silk_icons/hourglass.png);}
+.icon-favorite {background-image:url(silk_icons/heart.png);}
+.icon-password,.icon-key {background-image:url(silk_icons/key.png);}
+.icon-idea {background-image:url(silk_icons/lightbulb.png);}
+.icon-print {background-image:url(silk_icons/printer.png);}
+.icon-folder {background-image:url(silk_icons/folder.png);}
+.icon-email,.icon-mail,.icon-write {background-image:url(silk_icons/email.png);}
+.icon-phone,.icon-sms {background-image:url(silk_icons/phone.png);}

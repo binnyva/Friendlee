@@ -1,7 +1,29 @@
 <?php
-require_once(joinPath($config['site_folder'] , 'models/User.php'));
-require_once(joinPath($config['site_folder'] , 'models/Person.php'));
-require_once(joinPath($config['site_folder'] , 'models/Connection.php'));
+use iframe\DB\DBTable;
+
+// Backward compatibility for iframe 1
+$config = iframe\App::$config;
+
+$config['app_title'] = $config['app_name'];
+$config['app_home'] = $config['app_url'];
+// Lots of site_ config options were moved to app_. Eg site_title is now app_title
+foreach($config as $key => $value) {
+	if(preg_match("/^app_/", $key)) {
+		$site_key = str_replace('app_', "site_", $key);
+		$config[$site_key] = $value;
+	}
+}
+$config['mode'] = $config['env'];
+$sql = iframe\App::$db;
+
+// iframe\App::$template->css_folder = 'css';
+// iframe\App::$template->js_folder = 'js';
+// Everything up can be replaced by this...
+// setupBackwardCompatibility();
+
+require_once(joinPath($config['app_folder'] , 'models/User.php'));
+require_once(joinPath($config['app_folder'] , 'models/Person.php'));
+require_once(joinPath($config['app_folder'] , 'models/Connection.php'));
 
 $user = new User;
 
@@ -14,6 +36,7 @@ $t_personconnection = new DBTable('PersonConnection');
 $t_note = new DBTable('Note');
 $t_person = new Person;
 $t_connection = new Connection;
+$i_plugin = new iframe\iframe\Plugin($config['app_folder'] , 'plugins');
 
 // Activate plugins depending on the current users setting - or global setting.
 $activate_plugins = false;
@@ -49,7 +72,7 @@ function checkUser() {
 	}
 	
 	if((!isset($_SESSION['user_id']) or !$_SESSION['user_id']))
-		showMessage("Please login to use this feature", $config['site_url'] . 'user/login.php', "error");
+		iframe\App::showMessage("Please login to use this feature", $config['site_url'] . 'user/login.php', "error");
 }
 
 function date_difference($a, $b) {
