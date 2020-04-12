@@ -14,7 +14,7 @@
 
 <?php 
 echo $css_includes;
-$i_plugin->callHook("display_page_head");
+iframe\App::$plugin->callHook("display_page_head");
 ?>
 <script type="text/javascript">
 var people = <?php echo json_encode($all_people); ?>;
@@ -77,7 +77,7 @@ var people_with_points = <?php echo json_encode($all_people_with_points); ?>;
 </div>
 
 <?php 
-$i_plugin->callHook("display_content_top");
+iframe\App::$plugin->callHook("display_content_top");
 ?>
 
 <!-- Begin Content -->
@@ -94,7 +94,7 @@ if(isset($crud) and iapp('template')->template == '') {
 ?>
 
 <?php 
-$i_plugin->callHook("display_content_end");
+iframe\App::$plugin->callHook("display_content_end");
 ?>
 
 <!-- End Content -->
@@ -113,7 +113,7 @@ $i_plugin->callHook("display_content_end");
 
 <?php 
 echo $js_includes;
-$i_plugin->callHook("display_page_end");
+iframe\App::$plugin->callHook("display_page_end");
 ?>
 </body>
 </html>

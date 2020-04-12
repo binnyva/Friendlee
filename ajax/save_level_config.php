@@ -16,7 +16,7 @@ foreach($config as $level_id => $person_ids) {
 }
 
 if($count) {
-	showAjaxMessage("Configuration Saved - $count people updated.",'success');
+	iframe\App::showAjaxMessage("Configuration Saved - $count people updated.",'success');
 } else {
-	showAjaxMessage('Could not save configuration.','error');
+	iframe\App::showAjaxMessage('Could not save configuration.','error');
 }

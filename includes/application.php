@@ -91,7 +91,8 @@ function compareType($a, $b) {
 }
 
 function firstName($name) {
-	return @reset(explode(" ", $name));
+	$name_parts = explode(" ", $name);
+	return reset($name_parts);
 }
 
 function email($to, $subject, $body, $from = '') {

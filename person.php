@@ -33,5 +33,5 @@ $frequency = $contact_thresholds[$person['level_id']];
 
 $interaction_log = $t_person->getLog($person_id);
 
-$html = new HTML;
+$html = new iframe\HTML\HTML;
 render();

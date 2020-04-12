@@ -22,12 +22,13 @@ function drawChart() {
 	]);
 
 	// Set chart options
-	var options = {'title':'Friendlee Growth Chart',
-	               'width':600,
-	               'height':300,
-	               'vAxis': {title: "People"},
-	               'hAxis': {title: "Points"},
-	           };
+	var options = {
+		'title':'Friendlee Growth Chart',
+		'width':600,
+		'height':300,
+		'vAxis': {title: "People"},
+		'hAxis': {title: "Points"}
+	};
 
 	// Instantiate and draw our chart, passing in some options.
 	var chart = new google.visualization.BarChart(document.getElementById('chart_div'));

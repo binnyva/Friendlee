@@ -26,7 +26,6 @@ if($new_people) {
 	$QUERY['success'] = 'Added new people to the system: ' . implode(', ', $new_people);
 }
 
-iapp('template')->addResource("../bower_components/jquery.tablesorter/js/jquery.tablesorter.min.js", "js");
 iapp('template')->addResource("uncontacted.css", "css");
 render();
 

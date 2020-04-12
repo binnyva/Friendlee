@@ -1,5 +1,4 @@
 <?php
-
 function ca_injectAttepmtData($data) {
 	global $sql;
 
@@ -25,10 +24,8 @@ function ca_injectAttepmtData($data) {
 }
 $this->addHook("data_uncontacted_people", "ca_injectAttepmtData");
 
-
-function ca_showAttepmtCount($person) {
+function ca_showAttemptCount($person) {
 	$ca_number_of_attempts_before_demote_option = 3;
-
 	?>
 	<td><span id="attempts-<?php echo $person['id'] ?>"><?php echo $person['contact_attempt'] ?></span>
 	<a class="btn btn-warning btn-sm contact-attempt" href="plugins/attempt_contact/change.php?person_id=<?php echo $person['id'] ?>&amp;direction=1&amp;old_value=<?php echo $person['contact_attempt'] ?>">+</a>
@@ -38,7 +35,7 @@ function ca_showAttepmtCount($person) {
 	</td>
 	<?php
 }
-$this->addHook("display_uncontacted_people_row", "ca_showAttepmtCount");
+$this->addHook("display_uncontacted_people_row", "ca_showAttemptCount");
 
 function ca_showAttepmtHeader() {
 	print "<th>Attempts</th>";

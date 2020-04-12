@@ -17,8 +17,8 @@ $people_last_contact = $sql->getById("SELECT P.id,P.nickname,P.name,P.level_id, 
 			WHERE P.level_id!=$last_level_id AND (P.user_id=$_SESSION[user_id] OR P.user_id=0) AND (P.automanaged=0 OR P.priority='high')
 				GROUP BY PC.person_id ORDER BY P.level_id");
 
-if($i_plugin->isHook("data_uncontacted_people")) {
-	$people_last_contact = $i_plugin->callHook("data_uncontacted_people", array($people_last_contact), true);
+if(iframe\App::$plugin->isHook("data_uncontacted_people")) {
+	$people_last_contact = iframe\App::$plugin->callHook("data_uncontacted_people", array($people_last_contact), true);
 }
 
 $uncontacted_people = array();

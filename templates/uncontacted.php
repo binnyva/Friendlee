@@ -24,7 +24,7 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 	print "<table class='table table-sm uncontacted-table'>\n";
 	if(count($uncontacted_in_level) > 3) {
 		print "<thead><tr><th>Name</th><th class='d-none d-md-table-cell'>Last Contact</th>";
-		$i_plugin->callHook("display_uncontacted_people_header");
+		iframe\App::$plugin->callHook("display_uncontacted_people_header");
 		print "</tr></thead>";
 	}
 	print "<tbody>";
@@ -40,7 +40,7 @@ foreach ($uncontacted_people as $level_id => $uncontacted_in_level) {
 
 		print "<tr><td><a href='person.php?person_id=$person[id]'>$person[nickname]</a></td>";
 		print "<td data='$person[gap]' class='d-none d-md-table-cell'>".ucfirst($person['type'])." $gap_days ago</td>";
-		$i_plugin->callHook("display_uncontacted_people_row", array($person));
+		iframe\App::$plugin->callHook("display_uncontacted_people_row", array($person));
 
 		print "</tr>\n";
 	}

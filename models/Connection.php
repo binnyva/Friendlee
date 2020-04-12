@@ -10,7 +10,7 @@ class Connection extends DBTable {
 	}
 
 	function add($type, $all_people) {
-		global $QUERY, $t_person, $i_plugin, $points;
+		global $QUERY, $t_person, $points;
 
 		$connection_id = $this->sql->insert('Connection', array(
 			'type'		=> $type,
@@ -32,7 +32,7 @@ class Connection extends DBTable {
 				$t_person->field['point'] = $t_person->field['point'] + $points[$type];
 				$t_person->save();
 
-				$i_plugin->callHook('action_person_connection_made', array($person_id, $type));
+				iframe\App::$plugin->callHook('action_person_connection_made', array($person_id, $type));
 			}
 		}
 

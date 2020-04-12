@@ -99,7 +99,7 @@ buildInput("person_id", "", 'hidden', $person['id']);
 <tr><td colspan="4"><span class="total-score"><?php echo $total_score ?></span></td></tr>
 </table>
 
-<p><a href="analytics/person.php?person_id=<?php echo $person_id ?>" class="with-icon analytics">Analytics for <?php echo first_name($person['nickname']) ?></a></p>
+<p><a href="analytics/person.php?person_id=<?php echo $person_id ?>" class="with-icon analytics">Analytics for <?php echo firstName($person['nickname']) ?></a></p>
 
 <?php $i_plugin->callHook("profile_middle_display", array($person)); ?>
 

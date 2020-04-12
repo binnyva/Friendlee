@@ -35,7 +35,7 @@ if(i($QUERY, 'action') == 'Save') {
 	}
 }
 
-$html = new HTML;
+$html = new iframe\HTML\HTML;
 
-$template->options['layout_file'] = 'templates/layout/popup.php';
-render();
+// $template->options['layout_file'] = 'templates/layout/popup.php';
+iapp('template')->render(false, ['use_layout' => false]);
