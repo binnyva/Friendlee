@@ -1,18 +1,18 @@
 <div id="top-area" class="row">
-<div class="col-md-6">
+<div class="col-md-8">
 <?php include('templates/uncontacted.php'); ?>
 </div>
 
-<div class="col-md-3 links-collection d-none d-md-block">
-<ul>
+<div class="col-md-2 links-collection d-none d-md-block">
+<ul id="quick-links">
 <li><a href="tree.php" class="with-icon site">All Friends</a></li>
 <li><a href="uncontacted.php" class="with-icon phone">Uncontacted Friends</a></li>
 </ul>
 </div>
 
 <?php if($activate_plugins) { ?>
-<div class="col-md-3 links-collection d-none d-md-block">
-<ul>
+<div class="col-md-2 links-collection d-none d-md-block">
+<ul id="plugin-list">
 <?php
 $plugins = ls("*", joinPath($config['site_folder'], 'plugins'));
 foreach($plugins as $p) {

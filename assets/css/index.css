@@ -19,7 +19,7 @@
 	margin-bottom: 10px;
 }
 #uncontacted-people .tab-content {
-	height:100px;
+	height:150px;
 	overflow: auto;
 	margin: 0 0 5px 0;
 	border: 1px solid #dddddd;
@@ -48,4 +48,10 @@
 
 .curdate {
 	font-weight: bold;
+}
+#quick-links {
+	padding: 0;
+}
+#plugin-list {
+	padding: 0;
 }
