@@ -1,6 +1,6 @@
 <?php
 include("../common.php");
-include_once '../includes/vendor/google/gpConfig.php';
+include_once '../includes/google_config.php';
 
 $user->logout();
 
@@ -13,4 +13,4 @@ if (isset($_SESSION['token'])) {
 	$gClient->revokeToken();
 }
 
-showMessage("User logged out.", "user/login.php");
+iframe\App::showMessage("User logged out.", "user/login.php");

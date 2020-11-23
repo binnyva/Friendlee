@@ -1,29 +1,22 @@
 <?php
 require '../common.php';
-include_once '../includes/vendor/google/gpConfig.php';
+include_once '../includes/google_config.php';
 
-if(isset($_GET['code'])){
-	$gClient->authenticate($_GET['code']);
-	$_SESSION['token'] = $gClient->getAccessToken();
-	header('Location: ' . filter_var($redirectURL, FILTER_SANITIZE_URL));
-}
+if (isset($_GET['code'])) {
+    $token = $gClient->fetchAccessTokenWithAuthCode($_GET['code']);
+    $gClient->setAccessToken($token['access_token']);
 
-if (isset($_SESSION['token'])) {
-	$gClient->setAccessToken($_SESSION['token']);
-}
+    // get profile info
+    $google_oauth = new Google_Service_Oauth2($gClient);
+    $google_account_info = $google_oauth->userinfo->get();
+    $user_data = $user->oAuthCheckUser($google_account_info);
 
-if ($gClient->getAccessToken()) {
-	//Get user profile data from google
-	$user_profile = $google_oauthV2->userinfo->get();
-    $user_data = $user->oAuthCheckUser($user_profile);
-	
     if(empty($user_data)){
-        showMessage("Error logging in...", "user/login.php", "error");
+        iframe\App::showMessage("Error logging in...", "user/login.php", "error");
     } else {
-    	$user->rememberLogin($user_data['id']);
-        showMessage("Welcome back, $_SESSION[user_name]", "index.php", "success");
+        $user->rememberLogin($user_data['id']);
+        iframe\App::showMessage("Welcome back, $user_data[name]", "index.php", "success");
     }
-
 } else {
-   showMessage("Error logging in...", "user/login.php", "error");
+    iframe\App::showMessage("Error logging in...", "user/login.php", "error");
 }

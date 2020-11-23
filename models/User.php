@@ -141,7 +141,7 @@ class User extends DBTable {
 	function oAuthCheckUser($user_data = array()){
 		// For some reason, I'm not geting oauth_provider/oauth_uid from google. So using email.
     	//$user_details = $this->sql->getAssoc("SELECT id,name FROM User WHERE oauth_provider = '".$user_data['oauth_provider']."' AND oauth_uid = '".$user_data['oauth_uid']."'");
-    	$user_details = $this->sql->getAssoc("SELECT id,name,email,status FROM User WHERE email='$user_data[email]'");
+    	$user_details = $this->sql->getAssoc("SELECT id,name,username,email,status FROM User WHERE email='$user_data[email]'");
 
     	if(!$user_details) { // User not found in Database - insert.
 	    	$user_details = $this->oAuthRegister($user_data);
@@ -149,7 +149,7 @@ class User extends DBTable {
 
 		if($user_details) {
 			//Store the necessy stuff in the sesson
-			$this->setCurrentUser($user_details['id'],$username,$user_details['name']);
+			$this->setCurrentUser($user_details['id'],$user_details['username'],$user_details['name']);
 		}
         
         //Return user data
@@ -169,7 +169,7 @@ class User extends DBTable {
 								'email'			=> $user_data['email'],
 								// 'oauth_provider'=> $user_data['oauth_provider'],
 								// 'oauth_uid'		=> $user_data['oauth_uid'],
-								'name'			=> $user_data['given_name'] . ' ' . $user_data['family_name'],
+								'name'			=> $user_data['name'],
 								'gender'		=> ($user_data['gender'] == 'male') ? 'm' : 'f',
 								'image'			=> $user_data['picture']);
 		$user_id = $this->sql->insert("User", $user_details);
