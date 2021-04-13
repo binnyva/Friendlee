@@ -15,9 +15,9 @@ if(i($QUERY, 'action') == 'Save') {
 	$t_connection->edit($connection_id, $QUERY, $all_people);
 	
 	if($new_people) {
-		showAjaxMessage('Added new people to the system: ' . implode(', ', $new_people),'success');
+		showMessage('Added new people to the system: ' . implode(', ', $new_people),'', 'success',[],true,true);
 	} else {
-		showAjaxMessage('Connection updated','success');
+		showMessage('Connection updated.','', 'success',[],true,true);
 	}
 	exit;
 	

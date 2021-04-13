@@ -1,6 +1,8 @@
 <?php
 require('../common.php');
 
+// To use this, go to: http://localhost/Projects/Friendlee/System/Remove_Duplicate.php?org_id=825&dup_id=790   - PS: Change the IDs
+
 $org_person_id = intval($_REQUEST['org_id']);
 $dup_person_id = intval($_REQUEST['dup_id']);
 

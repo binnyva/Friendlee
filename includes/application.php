@@ -50,7 +50,7 @@ if(isset($_SESSION['user_id'])) {
 	
 	foreach($people as $p) {
 		$all_people[] = $p['nickname'];
-		$all_people_with_points[] = array('name' => $p['nickname'], 'point' => intval($p['point']));
+		$all_people_with_points[] = array('name' => $p['nickname'], 'point' => intval($p['point']), 'id' => $p['id']);
 	}
 }
 
@@ -133,4 +133,55 @@ function email($to, $subject, $body, $from = '') {
 	}
 	
 	return true;
+}
+
+/// Iframe backward compatibility
+/**
+ * Shows the final message - redirects to a new page with the message in the URL
+ */
+function showMessage($message, $url='', $status="success",$extra_data=array(), $use_existing_params=true, $ajax = false) {
+	global $config;	
+	if($config['server_host'] == 'cli') {
+		print $message . "\n";
+		if($status == 'error') exit;
+
+	} elseif(isset($_REQUEST['ajax']) or $ajax) {
+		//If it is an ajax request, Just print the data
+		$success = '';
+		$error = '';
+		$insert_id = '';
+
+		if($status == 'success') $success = $message;
+		if($status == 'error' or $status == 'failure') $error = $message;
+
+		$data = array(
+			"success"	=> $success,
+			"error"		=> $error
+		) + $extra_data;
+
+		print json_encode($data);
+
+	} elseif(isset($_REQUEST['layout']) and $_REQUEST['layout']==='cli') {
+		if($status === 'success') print $message . "\n";
+
+	} else {
+		if(!$url) {
+			global $QUERY;
+			$QUERY[$status] = $message;
+			return;
+		}
+	
+		if(strpos($url, 'http://') === false) {
+			global $config;
+			$url = joinPath($config['site_url'], $url);
+		}
+		
+		$goto = str_replace('&amp;', '&', getLink($url, array($status=>$message) + $extra_data, $use_existing_params));
+		header("Location:$goto");
+	}
+	exit;
+}
+/// Shortcut for showMessage when using ajax.
+function showAjaxMessage($message, $type='success') {
+	showMessage($message,'',$type,array(),true,true);
 }

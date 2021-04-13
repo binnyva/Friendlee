@@ -15,10 +15,20 @@ class Person extends DBTable {
 	}
 
 	function add($nickname) {
-		$nickname = str_replace(array("'"), array(""), stripslashes($nickname));
-		$nickname_exists = $this->find("LOWER(REPLACE(REPLACE(nickname, '\'',''), '\\\\',''))=\"$nickname\" AND user_id='$_SESSION[user_id]'", 'id'); // Check if nickname exists... 
-		if($nickname_exists) return $nickname_exists[0]; // If so, dont add..
+		global $all_people_with_points;
+		// Check if nickname exists... 
 
+		// For some reson, the Query fails once in a while. No idea why.
+		// $nickname_exists = $this->find("LOWER( REGEXP_REPLACE( nickname, '/[^A-Za-z0-9]/', '') )=LOWER( REGEXP_REPLACE( \"$nickname\", '/[^A-Za-z0-9]/', '') )
+		// 				 AND user_id='$_SESSION[user_id]'");
+		// if($nickname_exists) return $nickname_exists[0]; // If so, dont add..
+		foreach($all_people_with_points as $p) {
+			if(strtolower(preg_replace("/[^A-Za-z ]/", '', $nickname)) == strtolower(preg_replace("/[^A-Za-z ]/", '', $p['name']))) {
+				$p['nickname'] = $p['name'];
+				return $p;
+			}
+		}
+		
 		// A very rough gender detection.
 		$first_name = @reset(explode(" ", $nickname));
 		$last_letter = substr($first_name, -1);

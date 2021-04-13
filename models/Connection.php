@@ -28,9 +28,13 @@ class Connection extends DBTable {
 				));
 
 				// Increment person's points
-				$t_person->find($person_id);
-				$t_person->field['point'] = $t_person->field['point'] + $points[$type];
-				$t_person->save();
+				if($type) {
+					$t_person->find($person_id);
+					if(isset($t_person->field['point']) and $t_person->field['point']) {
+						$t_person->field['point'] = $t_person->field['point'] + $points[$type];
+						$t_person->save();
+					}
+				}
 
 				iframe\App::$plugin->callHook('action_person_connection_made', array($person_id, $type));
 			}
@@ -58,7 +62,6 @@ class Connection extends DBTable {
 		$affected = $this->sql->update("Connection", array(
 						'intensity'	=> $data['intensity'],
 						'start_on'	=> $data['start_on'],
-						'end_on'	=> $data['end_on'],
 						'location'	=> $data['location'],
 						'note'		=> $data['note']
 					), "id=$connection_id");
