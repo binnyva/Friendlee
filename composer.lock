@@ -4,8 +4,60 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3e6e79e410cd98a8d86f36f772fe3690",
+    "content-hash": "2457468f111bdba93686ab606b9c7c2b",
     "packages": [
+        {
+            "name": "binnyva/iframe",
+            "version": "2.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/binnyva/iframe.git",
+                "reference": "b88589b814bdf3b8e564b62b2d3744bd91e42367"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/binnyva/iframe/zipball/b88589b814bdf3b8e564b62b2d3744bd91e42367",
+                "reference": "b88589b814bdf3b8e564b62b2d3744bd91e42367",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers/shortcuts.php",
+                    "src/helpers/misc.php"
+                ],
+                "psr-4": {
+                    "iframe\\": "src/classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Binny V A",
+                    "email": "binnyva@gmail.com",
+                    "homepage": "http://binnyva.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "iFrame is a PHP micro framework",
+            "keywords": [
+                "framework",
+                "microframework",
+                "mvc",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/binnyva/iframe/issues",
+                "source": "https://github.com/binnyva/iframe/tree/v2.0.8"
+            },
+            "time": "2022-08-06T12:55:47+00:00"
+        },
         {
             "name": "firebase/php-jwt",
             "version": "v5.2.0",
@@ -920,5 +972,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }

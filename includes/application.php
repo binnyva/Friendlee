@@ -18,12 +18,13 @@ $sql = iframe\App::$db;
 
 // iframe\App::$template->css_folder = 'css';
 // iframe\App::$template->js_folder = 'js';
+
+// require_once(joinPath($config['app_folder'] , 'models/User.php'));
+// require_once(joinPath($config['app_folder'] , 'models/Person.php'));
+// require_once(joinPath($config['app_folder'] , 'models/Connection.php'));
+
 // Everything up can be replaced by this...
 // setupBackwardCompatibility();
-
-require_once(joinPath($config['app_folder'] , 'models/User.php'));
-require_once(joinPath($config['app_folder'] , 'models/Person.php'));
-require_once(joinPath($config['app_folder'] , 'models/Connection.php'));
 
 $user = new User;
 

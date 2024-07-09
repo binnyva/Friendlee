@@ -1,6 +1,9 @@
 <?php
-require('/mnt/x/Data/www/iframe2/iframe-skeleton/includes/backward-compatible.php');
-require('/mnt/x/Data/www/iframe2/iframe-skeleton/common.php');
+require('includes/backward-compatible.php');
+error_reporting(E_ALL ^ E_DEPRECATED);
+require_once 'vendor/autoload.php';
+
+$app = new iframe\App();
 
 $points = array(
 	'met'		=> 10,

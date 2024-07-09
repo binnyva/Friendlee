@@ -1,6 +1,8 @@
+.DS_Store
 /configuration.php
 /bower_components/
 /Test/
 includes/vendor/google/gpConfig.php
 includes/google_config.php
 vendor/
+0LD/
