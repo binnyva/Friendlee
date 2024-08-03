@@ -96,6 +96,13 @@ function firstName($name) {
 	return reset($name_parts);
 }
 
+// Use this prevent form resubmit error on back button
+function getRefreshUrl($params = []) {
+	return str_replace('&amp;','&', 
+		getLink(iapp('config')->current_page,$params,true)
+	);
+}
+
 function email($to, $subject, $body, $from = '') {
 	//return true; //:DEBUG:
 	global $config;

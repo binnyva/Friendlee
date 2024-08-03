@@ -14,21 +14,25 @@ $title = 'Friendlee : ' . date('dS F, Y', strtotime($date));
 iapp('template')->setTitle($title);
 
 if(!empty($QUERY['action'])) {
-	$met_connection_id = getPeople('met');
-	$phone_connection_id = getPeople('phone');
-	$sms_connection_id = getPeople('message');
-	$other_connection_id = getPeople('other');
+	getPeople('met');
+	getPeople('phone');
+	getPeople('message');
+	getPeople('other');
+
+	$url = getRefreshUrl();
+	if($new_people) {
+		$QUERY['success'] = 'Added new people to the system: ' . implode(', ', $new_people);
+		$url = getRefreshUrl(['success' => $QUERY['success']]);
+	}
+	
+	header("Location: $url"); // Fix the resubmit on back issue.
+	exit;
 }
 
 require('includes/uncontacted.php');
 
-if($new_people) {
-	$QUERY['success'] = 'Added new people to the system: ' . implode(', ', $new_people);
-}
-
 iapp('template')->addResource("uncontacted.css", "css");
 render();
-
 
 function getPeople($type) {
 	global $QUERY, $sql, $t_person, $people, $new_people, $points, $i_plugin, $t_connection;
