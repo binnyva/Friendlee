@@ -18,10 +18,10 @@ class Person extends DBTable {
 		global $all_people_with_points;
 		// Check if nickname exists... 
 
-		// For some reson, the Query fails once in a while. No idea why.
+		// For some reason, the Query fails once in a while. No idea why.
 		// $nickname_exists = $this->find("LOWER( REGEXP_REPLACE( nickname, '/[^A-Za-z0-9]/', '') )=LOWER( REGEXP_REPLACE( \"$nickname\", '/[^A-Za-z0-9]/', '') )
 		// 				 AND user_id='$_SESSION[user_id]'");
-		// if($nickname_exists) return $nickname_exists[0]; // If so, dont add..
+		// if($nickname_exists) return $nickname_exists[0]; // If so, don't add..
 		foreach($all_people_with_points as $p) {
 			if(strtolower(preg_replace("/[^A-Za-z ]/", '', $nickname)) == strtolower(preg_replace("/[^A-Za-z ]/", '', $p['name']))) {
 				$p['nickname'] = $p['name'];
@@ -73,7 +73,7 @@ class Person extends DBTable {
 			$person_data = $this->add($nickname_org);
 			$person_id = $person_data['id'];
 
-			$people[$person_id]['nickname'] = $nickname_org; // Add the newly added person to the chached people list
+			$people[$person_id]['nickname'] = $nickname_org; // Add the newly added person to the cached people list
 			if(isset($person_data['new'])) $new_people[] = $nickname_org . " (".strtoupper($person_data['sex']).")";
 
 			$ids[] = $person_id;
@@ -81,7 +81,7 @@ class Person extends DBTable {
 		return $ids;
 	}
 
-	/// Get the last conacted details for this person with the given contact type.
+	/// Get the last contacted details for this person with the given contact type.
 	function getLastContact($person_id, $type) {
 		$connection = $this->sql->getAssoc("SELECT C.* FROM Connection C 
 			INNER JOIN PersonConnection PC ON C.id=PC.connection_id 
@@ -122,13 +122,13 @@ class Person extends DBTable {
 		for($i = 0; $i < count($log); $i++) {
 			$today = $log[$i];
 			if(isset($log[$i+1]) and $today['start_on'] == $log[$i+1]['start_on']) { // There was another connection for this person on the same date
-				// Go thru all the enteries for that day, find the highest connection type, and only count points for that.
+				// Go thru all the entries for that day, find the highest connection type, and only count points for that.
 				$highest_type = $today['type'];
 				$highest_index = $i;
 
 				// Go thru each entry after the repeating entry.
 				for($j = $i; $j < count($log); $j++) {
-					if($today['start_on'] == $log[$j]['start_on']) { // See ifts on the same day.
+					if($today['start_on'] == $log[$j]['start_on']) { // See if its on the same day.
 						// If it is, see if the type value is bigger than current highest.
 						if(compareType($log[$j]['type'], $highest_type)) {
 							$highest_type = $log[$j]['type'];
@@ -139,7 +139,7 @@ class Person extends DBTable {
 						break; // Get out of the loop
 					}
 				}
-				if($i != $j) $i = count($log); // Edge case. If there are a lot of repetive call for the same person at the end of the log, this makes sure they aren't called.
+				if($i != $j) $i = count($log); // Edge case. If there are a lot of repeated call for the same person at the end of the log, this makes sure they aren't called.
 
 				$count[$highest_type]++;
 			} else {
@@ -155,7 +155,7 @@ class Person extends DBTable {
 		// $count['email']		= $this->getConnectionCount($person_id, 'email');
 		// $count['other']		= $this->getConnectionCount($person_id, 'other');
 
-		// The Algoritham. Will change over time.
+		// The Algorithm. Will change over time.
 		$total_score = ($count['met'] * $points['met']) + ($count['phone'] * $points['phone']) + ($count['message'] * $points['message']) 
 						+ ($count['chat'] * $points['chat'])  + ($count['email'] * $points['email'])  + ($count['other'] * $points['other']) ;
 		
@@ -168,7 +168,7 @@ class Person extends DBTable {
 						'other_count'	=> $count['other']);
 	}
 
-	/// Returs the number of times the given person was contacted with the given contact type
+	/// Returns the number of times the given person was contacted with the given contact type
 	function getConnectionCount($person_id, $type) {
 		$count = $this->sql->getOne("SELECT COUNT(C.id) FROM Connection C 
 			INNER JOIN PersonConnection PC ON C.id=PC.connection_id 

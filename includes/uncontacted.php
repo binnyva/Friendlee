@@ -9,7 +9,7 @@ if(!$contact_thresholds) // If no Contact Thresholds, get default ones.
 				WHERE user_id=0 AND data_type='level' AND type='any'");
 $last_level_id = $sql->getOne("SELECT MAX(id) FROM Level WHERE user_id=$_SESSION[user_id] OR user_id=0");
 
-// Get all people in all levels execpt Aquantences.
+// Get all people in all levels except acquaintances.
 $people_last_contact = $sql->getById("SELECT P.id,P.nickname,P.name,P.level_id, P.priority, MAX(C.start_on) AS last_contact_on
 			FROM Person P 
 			INNER JOIN PersonConnection PC ON P.id=PC.person_id 
@@ -36,10 +36,10 @@ foreach($people_last_contact as $person) {
 											WHERE PC.person_id = $pid AND C.start_on = '{$person['last_contact_on']}'");
 
 
-		// This block is specifically for the contact_attepmt plugin.
+		// This block is specifically for the contact_attempt plugin.
 		if(isset($person['contact_attempt']) and $person['contact_attempt']) {
 			$gap = date_difference($person['last_attempt'], date('Y-m-d'));
-			if($gap < $contact_thresholds[$level_id]) { // Last attepmt was within the threshold.
+			if($gap < $contact_thresholds[$level_id]) { // Last attempt was within the threshold.
 				continue;
 			}
 		}
